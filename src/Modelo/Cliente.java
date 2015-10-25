@@ -17,9 +17,124 @@
 
 package Modelo;
 
+import java.util.Date;
+
 /**
  * @author rob3ns
  */
-public class Cliente {
+public class Cliente extends Usuario{
+
+    private String Dni;
+    private String correo;
+    private int telefono;
+    private int cuentaBanc;
+    private int faltas;
+    //private Reserva reserva;
+    private Date fechaRegistro;
+    private int deuda;
+
+    /**
+     * Constructor vacío
+     */
+    public Cliente() {
+    }
+
+    /**
+     * Constructor solo parámetros usuario.
+     * @param username
+     * @param password
+     * @param nombre
+     * @param apellidos 
+     */
+    public Cliente(String username, String password, String nombre, String apellidos) {
+        super(username, password, nombre, apellidos);
+    }
+
+    /**
+     * Constructor con parámetros de usuario y cliente.
+     * @param Dni
+     * @param correo
+     * @param telefono
+     * @param cuentaBanc
+     * @param faltas
+     * @param fechaRegistro
+     * @param deuda
+     * @param username
+     * @param password
+     * @param nombre
+     * @param apellidos 
+     */
+    public Cliente(String Dni, String correo, int telefono, int cuentaBanc, int faltas, Date fechaRegistro, int deuda, String username, String password, String nombre, String apellidos/*, Reserva reserva*/) {
+        super(username, password, nombre, apellidos);
+        this.Dni = Dni;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.cuentaBanc = cuentaBanc;
+        this.faltas = faltas;
+        this.fechaRegistro = fechaRegistro;
+        this.deuda = deuda;
+        //this.reserva = reserva;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public int getCuentaBanc() {
+        return cuentaBanc;
+    }
+
+    public int getDeuda() {
+        return deuda;
+    }
+
+    public String getDni() {
+        return Dni;
+    }
+
+    public int getFaltas() {
+        return faltas;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public int getTelefono() {
+        return telefono; 
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setCuentaBanc(int cuentaBanc) {
+        this.cuentaBanc = cuentaBanc;
+    }
+
+    public void setDeuda(int deuda) {
+        this.deuda = deuda;
+    }
+
+    public void setDni(String Dni) {
+        this.Dni = Dni;
+    }
+
+    public void setFaltas(int faltas) {
+        this.faltas = faltas;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente: " + super.toString();
+    }
 
 }

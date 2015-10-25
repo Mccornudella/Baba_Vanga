@@ -22,4 +22,72 @@ package Modelo;
  */
 public class Usuario {
 
+    private String username;
+    private String password;
+    private String nombre;
+    private String apellidos;
+
+    /**
+     * Constructor simple.
+     * @param username
+     * @param password
+     * @param nombre
+     * @param apellidos Ambos apellidos separados por un espacio.
+     */
+    public Usuario(String username, String password, String nombre, String apellidos) {
+        this.username = username;
+        this.password = password;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
+
+    /**
+     * Constructor vacío.
+     */
+    public Usuario() {
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+    
+    
 }

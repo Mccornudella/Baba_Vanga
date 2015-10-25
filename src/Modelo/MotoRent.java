@@ -17,9 +17,31 @@
 
 package Modelo;
 
+import java.io.Serializable;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  * @author rob3ns
  */
-public class MotoRent {
+public class MotoRent implements Serializable {
 
+    //private List<Local> locales;
+    private Admin admin;
+    private List<Cliente> clientes;
+    private List<Gerente> gerentes;
+    private Scanner sc;
+
+    public MotoRent() {
+        //locales = new ArrayList();
+        gerentes = new ArrayList();
+        clientes = new ArrayList();
+        sc = new Scanner(System.in);
+    }
+    
+    public static void main(String[] args) throws ParseException {
+        MotoRent b = new MotoRent();
+    }
 }

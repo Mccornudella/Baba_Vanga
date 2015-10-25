@@ -20,6 +20,74 @@ package Modelo;
 /**
  * @author rob3ns
  */
-public class Empleado {
 
+public class Empleado extends Usuario{
+
+    private String correo;
+    private int numeroPers;
+
+    /**
+     * Constructor simple, solo parámetros de empleado.
+     * @param correo
+     * @param numeroPers Teléfono.
+     */
+    public Empleado(String correo, int numeroPers) {
+        this.correo = correo;
+        this.numeroPers = numeroPers;
+    }
+    
+    /**
+     * Constructor solo parámetros de usuario.
+     * @param username
+     * @param password
+     * @param nombre
+     * @param apellidos 
+     */
+    public Empleado(String username, String password, String nombre, String apellidos) {
+        super(username, password, nombre, apellidos);
+    }
+
+    /**
+     * Constructor con parámetros de usuario y empleado.
+     * @param correo
+     * @param numeroPers
+     * @param username
+     * @param password
+     * @param nombre
+     * @param apellidos 
+     */
+    public Empleado(String correo, int numeroPers, String username, String password, String nombre, String apellidos) {
+        super(username, password, nombre, apellidos);
+        this.correo = correo;
+        this.numeroPers = numeroPers;
+    }
+    
+    /**
+     * Constructor vacío.
+     */
+    public Empleado() {
+        super(null, null, null, null);
+    }     
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public int getNumeroPers() {
+        return numeroPers;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setNumeroPers(int numeroPers) {
+        this.numeroPers = numeroPers;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+    
 }
