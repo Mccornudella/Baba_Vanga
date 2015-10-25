@@ -17,11 +17,13 @@
 
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  * @author rob3ns
  */
 
-public class Empleado extends Usuario{
+public class Empleado extends Usuario implements Serializable{
 
     private String correo;
     private int numeroPers;

@@ -17,12 +17,13 @@
 
 package Modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author rob3ns
  */
-public class Cliente extends Usuario{
+public class Cliente extends Usuario implements Serializable{
 
     private String Dni;
     private String correo;

@@ -17,10 +17,12 @@
 
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  * @author rob3ns
  */
-public class Usuario {
+public class Usuario implements Serializable{
 
     private String username;
     private String password;
