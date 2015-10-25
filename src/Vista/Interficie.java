@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class Interficie {
     
-    Scanner sc;
+    private Scanner sc;
     
     
     /**
@@ -23,7 +23,10 @@ public class Interficie {
     public Interficie(){
         sc = new Scanner(System.in);
     }
-    
+
+    public Scanner getSc() {
+        return sc;
+    }
     
    /**
     * Escriu un valor enter a la pantalla.

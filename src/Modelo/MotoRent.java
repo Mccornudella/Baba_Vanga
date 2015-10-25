@@ -17,6 +17,7 @@
 
 package Modelo;
 
+import Vista.Interficie;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -32,13 +33,13 @@ public class MotoRent implements Serializable {
     private Admin admin;
     private List<Cliente> clientes;
     private List<Gerente> gerentes;
-    private Scanner sc;
+    private Interficie interficie;
 
     public MotoRent() {
         //locales = new ArrayList();
         gerentes = new ArrayList();
         clientes = new ArrayList();
-        sc = new Scanner(System.in);
+        interficie = new Interficie();
     }
     
     public static void main(String[] args) throws ParseException {
