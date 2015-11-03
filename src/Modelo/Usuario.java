@@ -43,6 +43,11 @@ public class Usuario implements Serializable{
         this.apellidos = apellidos;
     }
 
+    public Usuario(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+        
     /**
      * Constructor vacío.
      */
@@ -81,15 +86,14 @@ public class Usuario implements Serializable{
         this.username = username;
     }
 
+    public boolean checkPass(String username, String password) {
+        return this.username == username && this.password == password;
+    }
     @Override
     public String toString() {
         return super.toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
     
     
 }

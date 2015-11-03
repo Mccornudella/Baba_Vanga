@@ -3,6 +3,7 @@ package Vista;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
@@ -66,8 +67,11 @@ public class Interficie {
      * @return int
      */
     public int llegeixInt(){
-        int i = sc.nextInt();
-        return i;
+        while (!sc.hasNextInt()) {
+            System.out.println("Eso no es un número.");
+            sc.next();
+        }
+        return sc.nextInt();
     }
     
     /**
@@ -79,6 +83,26 @@ public class Interficie {
         return s;
     }
     
+    public int selNumMenu(String[] l)
+    {
+        int num = llegeixInt();
+        while (l.length < num){
+            System.out.println("El número debe pertenecer a la lista(máximo " + (l.length) + ").");
+            num = llegeixInt();
+        }
+        return num;  
+    }
+    
+    public int selNumLista(ArrayList l)
+    {
+        int num = llegeixInt();
+        while (l.size() - 1 < num){
+            System.out.println("El número debe pertenecer a la lista(máximo " + (l.size() - 1) + ").");
+            num = llegeixInt();
+        }
+        return num;  
+    }
+        
     /**
      * Llegeix un String que despres transforma en un Date i el retorna.
      * @return 
