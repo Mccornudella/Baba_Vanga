@@ -99,6 +99,7 @@ public class MotoRent implements Serializable {
             opc = menu.generarMenu();
             switch(opc) {
                 case 1: //Reserv
+                  
                     break;
                 case 2: //Modificar dest
                     break;
@@ -117,7 +118,7 @@ public class MotoRent implements Serializable {
         while (opc != -1) {
             opc = menu.generarMenu();
             switch(opc) {
-                case 1: //Compr res
+                case 1: //EntregarMoto
                     break;
                 case 2: //Gest local
                     break;
@@ -210,5 +211,5 @@ public class MotoRent implements Serializable {
         
         System.out.println("Datos incorrectos.");
         return login;
-    }
+    } 
 }

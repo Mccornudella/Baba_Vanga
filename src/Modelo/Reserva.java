@@ -12,12 +12,16 @@ import java.util.Date;
  * @author Jose
  */
 public class Reserva {
-    double preu;
-    int codi;
-    Date inici;
-    Date fi;
-    Trajecte trajecte;
-    Moto moto;
+    private final int precioHora = 1;
+    private final int precioDia = 15;
+    
+    private double preu;
+    private int codi;
+    private Date inici;
+    private Date fi;
+    private Trajecte trajecte;
+    private Moto moto;
+    private EstadoReserva estado;
     
     /**
      * Constructor buit.
@@ -38,8 +42,8 @@ public class Reserva {
         this.fi = fi;
         this.trajecte = trajecte;
         this.moto = moto;
-        preu = calcularPreu(inici,fi,trajecte);
-        codi = crearCodi(inici,fi,trajecte);
+        preu = calcularPreu();
+        codi = crearCodi();
     }
     
     public double getPreu(){
@@ -65,6 +69,17 @@ public class Reserva {
     public Moto getMoto(){
         return moto;
     }
+
+    public void setActiva(){
+        estado.setActiva(!estado.isActiva());
+    }
+    
+    public void setFinaliztada(){
+        this.setActiva();
+        estado.setFinalitzada(true);
+    }
+    
+    
     
     /**
      * Calcula el preu de la reserva a partir de les dates d'inici i fi, i del tajecte que es fara.
@@ -73,7 +88,7 @@ public class Reserva {
      * @param trajecte
      * @return 
      */
-    public double calcularPreu(Date inici, Date fi, Trajecte trajecte){
+    private double calcularPreu(){
         return 0;
     }
     
@@ -84,7 +99,7 @@ public class Reserva {
      * @param trajecte
      * @return 
      */
-    public int crearCodi(Date inici, Date fi, Trajecte trajecte){
+    private int crearCodi(){
         return 0;
     }
 }

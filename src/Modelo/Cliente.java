@@ -18,6 +18,7 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -30,7 +31,7 @@ public class Cliente extends Usuario implements Serializable{
     private int telefono;
     private int cuentaBanc;
     private int faltas;
-    //private Reserva reserva;
+    private ArrayList<Reserva> reserves;
     private Date fechaRegistro;
     private int deuda;
 
@@ -65,16 +66,16 @@ public class Cliente extends Usuario implements Serializable{
      * @param nombre
      * @param apellidos 
      */
-    public Cliente(String Dni, String correo, int telefono, int cuentaBanc, int faltas, Date fechaRegistro, int deuda, String username, String password, String nombre, String apellidos/*, Reserva reserva*/) {
+    public Cliente(String Dni, String correo, int telefono, int cuentaBanc, Date fechaRegistro, String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
         this.Dni = Dni;
         this.correo = correo;
         this.telefono = telefono;
         this.cuentaBanc = cuentaBanc;
-        this.faltas = faltas;
+        faltas = 0;
         this.fechaRegistro = fechaRegistro;
-        this.deuda = deuda;
-        //this.reserva = reserva;
+        deuda = 0;
+        reserves = new ArrayList();
     }
 
     public String getCorreo() {
@@ -131,6 +132,11 @@ public class Cliente extends Usuario implements Serializable{
 
     public void setTelefono(int telefono) {
         this.telefono = telefono;
+    }
+    
+    public void addReserva(Reserva res){
+        reserves.add(res);
+        
     }
 
     @Override
