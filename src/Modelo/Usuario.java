@@ -87,13 +87,11 @@ public class Usuario implements Serializable{
     }
 
     public boolean checkPass(String username, String password) {
-        return this.username == username && this.password == password;
+        return this.username.equals(username) && this.password.equals(password);
     }
+    
     @Override
     public String toString() {
         return super.toString();
     }
-
-    
-    
 }

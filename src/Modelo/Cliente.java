@@ -26,10 +26,10 @@ import java.util.Date;
  */
 public class Cliente extends Usuario implements Serializable{
 
-    private String Dni;
+    private String dni;
     private String correo;
     private int telefono;
-    private int cuentaBanc;
+    private CompteBancari cuentaBanc;
     private int faltas;
     private ArrayList<Reserva> reserves;
     private Date fechaRegistro;
@@ -54,27 +54,23 @@ public class Cliente extends Usuario implements Serializable{
 
     /**
      * Constructor con parámetros de usuario y cliente.
-     * @param Dni
+     * @param dni
      * @param correo
      * @param telefono
      * @param cuentaBanc
-     * @param faltas
-     * @param fechaRegistro
-     * @param deuda
      * @param username
      * @param password
      * @param nombre
      * @param apellidos 
      */
-    public Cliente(String Dni, String correo, int telefono, int cuentaBanc, Date fechaRegistro, String username, String password, String nombre, String apellidos) {
+    public Cliente(String dni, String correo, int telefono, CompteBancari cuentaBanc, String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
-        this.Dni = Dni;
+        this.dni = dni;
         this.correo = correo;
         this.telefono = telefono;
         this.cuentaBanc = cuentaBanc;
         faltas = 0;
-        this.fechaRegistro = fechaRegistro;
-        deuda = 0;
+        fechaRegistro = new Date();
         reserves = new ArrayList();
     }
 
@@ -82,7 +78,7 @@ public class Cliente extends Usuario implements Serializable{
         return correo;
     }
 
-    public int getCuentaBanc() {
+    public CompteBancari getCuentaBanc() {
         return cuentaBanc;
     }
 
@@ -91,7 +87,7 @@ public class Cliente extends Usuario implements Serializable{
     }
 
     public String getDni() {
-        return Dni;
+        return dni;
     }
 
     public int getFaltas() {
@@ -110,7 +106,7 @@ public class Cliente extends Usuario implements Serializable{
         this.correo = correo;
     }
 
-    public void setCuentaBanc(int cuentaBanc) {
+    public void setCuentaBanc(CompteBancari cuentaBanc) {
         this.cuentaBanc = cuentaBanc;
     }
 
@@ -118,8 +114,8 @@ public class Cliente extends Usuario implements Serializable{
         this.deuda = deuda;
     }
 
-    public void setDni(String Dni) {
-        this.Dni = Dni;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public void setFaltas(int faltas) {
@@ -136,9 +132,12 @@ public class Cliente extends Usuario implements Serializable{
     
     public void addReserva(Reserva res){
         reserves.add(res);
-        
     }
 
+    public boolean checkDni(String dni) {
+        return this.dni.equals(dni);
+    }
+    
     @Override
     public String toString() {
         return "Cliente: " + super.toString();

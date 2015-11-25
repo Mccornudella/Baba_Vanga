@@ -1,5 +1,5 @@
-
 package Vista;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,105 +9,114 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
- * Classe que s'encarrega de l'interacció del programa amb el teclat i la pantalla.
+ * Classe que s'encarrega de l'interacció del programa amb el teclat i la
+ * pantalla.
+ *
  * @author Jose
  */
 public class Interficie {
-    
+
+    private static String lletres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static String numeros = "0123456789";
     private Scanner sc;
-    
-    
+
     /**
      * Constructor de la classse.
      */
-    public Interficie(){
+    public Interficie() {
         sc = new Scanner(System.in);
+
     }
 
     public Scanner getSc() {
         return sc;
     }
-    
-   /**
-    * Escriu un valor enter a la pantalla.
-    * @param i 
-    */
-    public void escriu(int i){
+
+    /**
+     * Escriu un valor enter a la pantalla.
+     *
+     * @param i
+     */
+    public void escriu(int i) {
         System.out.println(i);
     }
-    
+
     /**
      * Escriu un String per pantalla.
-     * @param s 
+     *
+     * @param s
      */
-    public void escriu(String s){
+    public void escriu(String s) {
         System.out.println(s);
     }
-    
+
     /**
      * Escriu un valor en coma flotant a la pantalla.
-     * @param f 
+     *
+     * @param f
      */
-    public void escriu(float f){
+    public void escriu(float f) {
         System.out.println(f);
     }
-    
+
     /**
      * Escriu una data per pantalla.
-     * @param d 
+     *
+     * @param d
      */
-    public void escriu (Date d){
+    public void escriu(Date d) {
         System.out.println(d);
     }
-    
-    
+
     /**
      * Llegeix un valor enter que s'ha entrat per teclat i el retorna.
+     *
      * @return int
      */
-    public int llegeixInt(){
+    public int llegeixInt() {
         while (!sc.hasNextInt()) {
             System.out.println("Eso no es un número.");
             sc.next();
         }
         return sc.nextInt();
     }
-    
+
     /**
      * Llegeix un String que s'ha entrat per teclat i el retorna.
-     * @return 
+     *
+     * @return
      */
-    public String llegeixString(){
+    public String llegeixString() {
         String s = sc.next();
         return s;
     }
-    
-    public int selNumMenu(String[] l)
-    {
+
+    public int selNumMenu(String[] l) {
         int num = llegeixInt();
-        while (l.length < num){
-            System.out.println("El número debe pertenecer a la lista(máximo " + (l.length) + ").");
+        while (l.length + 1 < num) {
+            System.out.println("El número debe pertenecer a la lista(máximo " + (l.length + 1) + ").");
             num = llegeixInt();
         }
-        return num;  
+        return num;
     }
-    
-    public int selNumLista(ArrayList l)
-    {
+
+    public int selNumLista(ArrayList l) {
         int num = llegeixInt();
-        while (l.size() - 1 < num){
+        while (l.size() - 1 < num) {
             System.out.println("El número debe pertenecer a la lista(máximo " + (l.size() - 1) + ").");
             num = llegeixInt();
         }
-        return num;  
+        return num;
     }
-        
+
     /**
      * Llegeix un String que despres transforma en un Date i el retorna.
-     * @return 
+     *
+     * @return
      */
-    public Date llegeixData(){
+    public Date llegeixData() {
         String s = sc.next();
         DateFormat format = new SimpleDateFormat("dd/mm/yyyy", Locale.ENGLISH);
         Date d = null;
@@ -118,4 +127,65 @@ public class Interficie {
         }
         return d;
     }
+
+    public String llegeixDNI() {
+        String s = sc.nextLine();
+        boolean correcte = false;
+        while (!correcte) {
+            boolean es_numero = true;
+            boolean es_lletra = false;
+            if (s.length() == 9) {
+                int i = 0;
+                while (i < 8 && es_numero) {
+                    String c = s.substring(i, i + 1);
+                    es_numero = numeros.contains(c);
+                    i++;
+
+                }
+                String c = s.substring(8, 9);
+                es_lletra = lletres.contains(c);
+            }
+
+            if (es_numero && es_lletra) {
+                correcte = true;
+            } else {
+                System.out.println("Aquest no es un dni valid, entra un DNI amb 8 numeros i una lletra MAJUSCULA si us plau: ");
+                s = sc.nextLine();
+            }
+        }
+        return s;
+    }
+
+    public String llegeixCB() {
+        String s = sc.nextLine();
+        boolean correcte = false;
+        while (!correcte) {
+            boolean llargada_correcte = false;
+            boolean es_numero = true;
+            boolean es_lletra = true;
+            if (s.length() == 34) {
+                llargada_correcte = true;
+                int i = 2;
+                while (i < 34 && es_numero) {
+                    String c = s.substring(i, i + 1);
+                    es_numero = numeros.contains(c);
+                    i++;
+                }
+                String c = s.substring(0, 2);
+                while (i < 2 && es_lletra) {
+                    String b = s.substring(i, i + 1);
+                    es_lletra = lletres.contains(b);
+                }
+            }
+
+            if (es_numero && es_lletra && llargada_correcte) {
+                correcte = true;
+            } else {
+                System.out.println("Aquest no es un Compte Bancari valid, entra un IBAN corresponent a un compte valid, si us plau: ");
+                s = sc.nextLine();
+            }
+        }
+        return s;
+    }
+
 }

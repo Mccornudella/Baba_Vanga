@@ -12,17 +12,18 @@ import java.util.Date;
  * @author Jose
  */
 public class EstadoReserva {
+
     private boolean activa;
     private boolean finalitzada;
     private Date retraso;
     private boolean estadoMoto;
-    
+
     /**
      * Constructor vacio.
      */
-    public EstadoReserva(){
+    public EstadoReserva() {
         this.activa = false;
-        this.finalitzada= false;
+        this.finalitzada = false;
     }
 
     public void setActiva(boolean activa) {
@@ -59,9 +60,6 @@ public class EstadoReserva {
 
     @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return super.toString();
     }
-    
-    
-    
 }
