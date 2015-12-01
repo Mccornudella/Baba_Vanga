@@ -79,7 +79,21 @@ public class Reserva {
         estado.setFinalitzada(true);
     }
     
+    public int obtenirRetras(){
+        return 0;
+    }
     
+    public void apuntarEndarrediment(Date retras){
+        
+    }
+    
+    public void realitzarDescompte(){
+        
+    }
+    
+    public boolean checkMonth(int month){
+        return true;
+    }
     
     /**
      * Calcula el preu de la reserva a partir de les dates d'inici i fi, i del tajecte que es fara.

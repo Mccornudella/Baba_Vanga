@@ -11,11 +11,11 @@ package Modelo;
  */
 public class Direccio {
     
-    String pais;
-    String ciutat;
-    String carrer;
-    int numero;
-    int cp;
+    private String pais;
+    private String ciutat;
+    private String carrer;
+    private int numero;
+    private int cp;
     
     /**
      * Constructor buit.

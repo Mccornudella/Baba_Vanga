@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Modelo;
 
 import java.io.Serializable;
@@ -22,74 +21,52 @@ import java.io.Serializable;
 /**
  * @author rob3ns
  */
-
-public class Empleado extends Usuario implements Serializable{
-
-    private String correo;
-    private int numeroPers;
+public class Gerent extends Empleat implements Serializable {
+    
+    private Local local;
+    
+    public Gerent(Local local) {
+        this.local = local;
+    }
 
     /**
-     * Constructor simple, solo parámetros de empleado.
+     * Constructor solo parámetros de empleado.
+     *
      * @param correo
-     * @param numeroPers Teléfono.
+     * @param numeroPers
      */
-    public Empleado(String correo, int numeroPers) {
-        this.correo = correo;
-        this.numeroPers = numeroPers;
+    public Gerent(String correo, int numeroPers) {
+        super(correo, numeroPers);
     }
-    
+
     /**
      * Constructor solo parámetros de usuario.
+     *
      * @param username
      * @param password
      * @param nombre
-     * @param apellidos 
+     * @param apellidos
      */
-    public Empleado(String username, String password, String nombre, String apellidos) {
+    public Gerent(String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
     }
 
     /**
      * Constructor con parámetros de usuario y empleado.
+     *
      * @param correo
      * @param numeroPers
      * @param username
      * @param password
      * @param nombre
-     * @param apellidos 
+     * @param apellidos
      */
-    public Empleado(String correo, int numeroPers, String username, String password, String nombre, String apellidos) {
-        super(username, password, nombre, apellidos);
-        this.correo = correo;
-        this.numeroPers = numeroPers;
-    }
-    
-    /**
-     * Constructor vacío.
-     */
-    public Empleado() {
-        super(null, null, null, null);
-    }     
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public int getNumeroPers() {
-        return numeroPers;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public void setNumeroPers(int numeroPers) {
-        this.numeroPers = numeroPers;
+    public Gerent(String correo, int numeroPers, String username, String password, String nombre, String apellidos) {
+        super(correo, numeroPers, username, password, nombre, apellidos);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Gerente: " + super.toString();
     }
-    
 }

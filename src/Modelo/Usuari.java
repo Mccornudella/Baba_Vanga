@@ -22,28 +22,28 @@ import java.io.Serializable;
 /**
  * @author rob3ns
  */
-public class Usuario implements Serializable{
+public class Usuari implements Serializable{
 
     private String username;
     private String password;
-    private String nombre;
-    private String apellidos;
+    private String nom;
+    private String cognoms;
 
     /**
      * Constructor simple.
      * @param username
      * @param password
      * @param nombre
-     * @param apellidos Ambos apellidos separados por un espacio.
+     * @param apellidos Ambos cognoms separados por un espacio.
      */
-    public Usuario(String username, String password, String nombre, String apellidos) {
+    public Usuari(String username, String password, String nombre, String apellidos) {
         this.username = username;
         this.password = password;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
+        this.nom = nombre;
+        this.cognoms = apellidos;
     }
 
-    public Usuario(String username, String password) {
+    public Usuari(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -51,15 +51,15 @@ public class Usuario implements Serializable{
     /**
      * Constructor vacío.
      */
-    public Usuario() {
+    public Usuari() {
     }
 
     public String getApellidos() {
-        return apellidos;
+        return cognoms;
     }
 
     public String getNombre() {
-        return nombre;
+        return nom;
     }
 
     public String getPassword() {
@@ -71,11 +71,11 @@ public class Usuario implements Serializable{
     }
 
     public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+        this.cognoms = apellidos;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nom = nombre;
     }
 
     public void setPassword(String password) {
@@ -86,14 +86,15 @@ public class Usuario implements Serializable{
         this.username = username;
     }
 
-    public boolean checkPass(String username, String password) {
-        return this.username == username && this.password == password;
+    public boolean checkLogin(String username, String password) {
+        return this.username.equals(username) && this.password.equals(password);
+    }
+    
+    public boolean checkUserName(String username){
+        return true;
     }
     @Override
     public String toString() {
         return super.toString();
     }
-
-    
-    
 }

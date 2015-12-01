@@ -11,8 +11,8 @@ package Modelo;
  */
 public class Trajecte {
     
-    Local inici;
-    Local fi;
+    private Local inici;
+    private Local fi;
     
     /**
      * Constructor buit.
