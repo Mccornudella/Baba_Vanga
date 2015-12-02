@@ -12,17 +12,27 @@ import java.util.Date;
  * @author Jose
  */
 public class EstadoReserva {
+
     private boolean activa;
     private boolean finalitzada;
-    private Date retraso;
+    private Endarrediment retras;
+    private Falta falta;
+
+    public EstadoReserva(boolean activa, boolean finalitzada, Endarrediment retras, Falta falta, boolean estadoMoto) {
+        this.activa = activa;
+        this.finalitzada = finalitzada;
+        this.retras = retras;
+        this.falta = falta;
+        this.estadoMoto = estadoMoto;
+    }
     private boolean estadoMoto;
-    
+
     /**
      * Constructor vacio.
      */
-    public EstadoReserva(){
+    public EstadoReserva() {
         this.activa = false;
-        this.finalitzada= false;
+        this.finalitzada = false;
     }
 
     public void setActiva(boolean activa) {
@@ -37,17 +47,10 @@ public class EstadoReserva {
         this.finalitzada = finalitzada;
     }
 
-    public void setRetraso(Date retraso) {
-        this.retraso = retraso;
-    }
-
     public void setEstadoMoto(boolean estadoMoto) {
         this.estadoMoto = estadoMoto;
     }
 
-    public Date getRetraso() {
-        return retraso;
-    }
 
     public boolean isActiva() {
         return activa;
@@ -56,12 +59,13 @@ public class EstadoReserva {
     public boolean isEstadoMoto() {
         return estadoMoto;
     }
+    
+    public void apuntarEndarrediment(Date retras){
+        
+    }
 
     @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return super.toString();
     }
-    
-    
-    
 }

@@ -24,12 +24,12 @@ import java.util.Date;
 /**
  * @author rob3ns
  */
-public class Cliente extends Usuario implements Serializable{
+public class Client extends Usuari implements Serializable{
 
-    private String Dni;
+    private String dni;
     private String correo;
     private int telefono;
-    private int cuentaBanc;
+    private CompteBancari compteBan;
     private int faltas;
     private ArrayList<Reserva> reserves;
     private Date fechaRegistro;
@@ -38,7 +38,7 @@ public class Cliente extends Usuario implements Serializable{
     /**
      * Constructor vacío
      */
-    public Cliente() {
+    public Client() {
     }
 
     /**
@@ -48,33 +48,29 @@ public class Cliente extends Usuario implements Serializable{
      * @param nombre
      * @param apellidos 
      */
-    public Cliente(String username, String password, String nombre, String apellidos) {
+    public Client(String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
     }
 
     /**
      * Constructor con parámetros de usuario y cliente.
-     * @param Dni
+     * @param dni
      * @param correo
      * @param telefono
      * @param cuentaBanc
-     * @param faltas
-     * @param fechaRegistro
-     * @param deuda
      * @param username
      * @param password
      * @param nombre
      * @param apellidos 
      */
-    public Cliente(String Dni, String correo, int telefono, int cuentaBanc, Date fechaRegistro, String username, String password, String nombre, String apellidos) {
+    public Client(String dni, String correo, int telefono, CompteBancari cuentaBanc, String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
-        this.Dni = Dni;
+        this.dni = dni;
         this.correo = correo;
         this.telefono = telefono;
-        this.cuentaBanc = cuentaBanc;
+        this.compteBan = cuentaBanc;
         faltas = 0;
-        this.fechaRegistro = fechaRegistro;
-        deuda = 0;
+        fechaRegistro = new Date();
         reserves = new ArrayList();
     }
 
@@ -82,8 +78,8 @@ public class Cliente extends Usuario implements Serializable{
         return correo;
     }
 
-    public int getCuentaBanc() {
-        return cuentaBanc;
+    public CompteBancari getCuentaBanc() {
+        return compteBan;
     }
 
     public int getDeuda() {
@@ -91,7 +87,7 @@ public class Cliente extends Usuario implements Serializable{
     }
 
     public String getDni() {
-        return Dni;
+        return dni;
     }
 
     public int getFaltas() {
@@ -110,16 +106,16 @@ public class Cliente extends Usuario implements Serializable{
         this.correo = correo;
     }
 
-    public void setCuentaBanc(int cuentaBanc) {
-        this.cuentaBanc = cuentaBanc;
+    public void setCuentaBanc(CompteBancari cuentaBanc) {
+        this.compteBan = cuentaBanc;
     }
 
     public void setDeuda(int deuda) {
         this.deuda = deuda;
     }
 
-    public void setDni(String Dni) {
-        this.Dni = Dni;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public void setFaltas(int faltas) {
@@ -136,9 +132,40 @@ public class Cliente extends Usuario implements Serializable{
     
     public void addReserva(Reserva res){
         reserves.add(res);
-        
     }
 
+    public boolean checkDNI(String dni) {
+        return this.dni.equals(dni);
+    }
+    
+    public boolean estaBloquejat(){
+        return true;
+    }
+    
+    public boolean comprovarReserva(Reserva res){
+        return true;
+    }
+    
+    public boolean comprobarCodigo(int codi){
+        return true;
+    }
+    
+    public boolean isVIP(){
+        return true;
+    }
+    
+    public Reserva getReserva(){
+        return null;
+    }
+    
+    public void finalitzarRecollida(){
+        
+    }
+    
+    public String infoReservas(int month){
+        return null;
+    }
+    
     @Override
     public String toString() {
         return "Cliente: " + super.toString();

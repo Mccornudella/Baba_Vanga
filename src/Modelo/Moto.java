@@ -10,73 +10,70 @@ package Modelo;
  * @author Jose
  */
 public class Moto {
-    
-    String color;
-    String marca;
-    String model;
-    int ID;
-    String estat;
-    
+
+    private EspecMoto espec;
+    private int ID;
+    private boolean estat;
+
     /**
      * Constructor buit.
      */
-    public Moto(){
-        
+    public Moto() {
     }
-    
-    /**
-     * Constructor simple.
-     * @param color
-     * @param marca
-     * @param model
-     * @param ID
-     * @param estat 
-     */
-    public Moto(String color,String marca, String model, int ID, String estat){
-        this.color = color;
-        this.marca = marca;
-        this.model = model;
+
+    public Moto(EspecMoto espec, int ID, boolean estat) {
+        this.espec = espec;
         this.ID = ID;
         this.estat = estat;
     }
-    
-    public String getColor(){
-        return color;
+
+
+    public String getColor() {
+        return espec.getColor();
     }
-    
-    public void setColor(String color){
-        this.color = color;
+
+    public void setColor(String color) {
+        espec.setColor(color);
     }
-    
-    public String getMarca(){
-        return marca;
+
+    public String getMarca() {
+        return espec.getMarca();
     }
-    
-    public void setMarca(String marca){
-        this.marca = marca;
+
+    public void setMarca(String marca) {
+        espec.setMarca(marca);
     }
-    
-    public String getModel(){
-        return model;
+
+    public String getModel() {
+        return espec.getModel();
     }
-    
-    public void setModel(String model){
-        this.model = model;
+
+    public void setModel(String model) {
+        espec.setModel(model);
     }
-    
-    public int getID(){
+
+    public int getID() {
         return ID;
     }
-    
-    public void setID(int ID){
+
+    public void setID(int ID) {
         this.ID = ID;
     }
     
-    public String getEstat(){
-        return estat;
+    public int getCilindrada(){
+        return espec.getCilindrada();
     }
     
-    public void setEstat(String estat){
-        this.estat = estat;
+    public void setCilindrada(int i){
+        espec.setCilindrada(i);
+    }
+
+    public boolean getEstat() {
+        return estat;
+    }
+
+
+    public void disponible() {
+        estat = true;
     }
 }
