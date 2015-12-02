@@ -1,10 +1,12 @@
-package Controlador;
+package controlador.parser;
 
-import Controlador.Consola;
-import Controlador.MotoRentXMLParser;
-import Modelo.Admin;
-import Modelo.Client;
-import Modelo.Gerent;
+import controlador.Consola;
+import controlador.Consola;
+import controlador.MotoRent;
+import controlador.parser.MotoRentXMLParser;
+import modelo.Admin;
+import modelo.Client;
+import modelo.Gerent;
 
 /**
  * Data manager per MotoRent . Crea les estructures de dades necessàries per a

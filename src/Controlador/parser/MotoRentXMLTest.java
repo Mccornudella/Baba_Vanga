@@ -1,6 +1,6 @@
-package Controlador;
+package controlador.parser;
 
-import Controlador.MotoRentDataManager;
+import controlador.parser.MotoRentDataManager;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**

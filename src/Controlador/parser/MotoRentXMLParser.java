@@ -1,6 +1,6 @@
-package Controlador;
+package controlador.parser;
 
-import Controlador.MotoRentDataManager;
+import controlador.parser.MotoRentDataManager;
 import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
