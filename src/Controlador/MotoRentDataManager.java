@@ -2,6 +2,9 @@ package Controlador;
 
 import Controlador.Consola;
 import Controlador.MotoRentXMLParser;
+import Modelo.Admin;
+import Modelo.Client;
+import Modelo.Gerent;
 
 /**
  * Data manager per MotoRent . Crea les estructures de dades necessàries per a
@@ -21,7 +24,13 @@ public class MotoRentDataManager {
      * -------------------------------------------------------------------
      */
     private MotoRent motoRent;
-    
+
+    /**
+     * Constructor vacío
+     */
+    public MotoRentDataManager() {
+    }
+
     /**
      * Obté les dades del fitxer XML passat per paràmetre
      *
@@ -35,6 +44,7 @@ public class MotoRentDataManager {
     public void iniciar(MotoRent mr) {
         this.motoRent = mr;
     }
+
     /**
      * Crea a partir de la informacio obtinguda del fitxer XML
      *
@@ -115,14 +125,17 @@ public class MotoRentDataManager {
      * @param nom nom del administrador
      * @param usuari usuari del administrador
      * @param password password del administrador
+     * @param cognoms del administrador
      */
-    public void crearAdmin(String id, String nom, String usuari, String password) {
+    public void crearAdmin(String id, String nom, String cognoms, String usuari, String password) {
 
-        /* TODO: Creeu aqui el vostre admin
-         */
+        Admin adm = new Admin(usuari, password, nom, cognoms);
+        this.motoRent.setAdmin(adm);
+
         Consola.escriu("\nAdmin ID: " + id + "\n");
         Consola.escriu("-----------------\n");
         Consola.escriu("Nom: " + nom + "\n");
+        Consola.escriu("Cognoms: " + cognoms + "\n");
         Consola.escriu("Usuari: " + usuari + "\n");
         Consola.escriu("Password: " + password + "\n");
     }
@@ -134,14 +147,17 @@ public class MotoRentDataManager {
      * @param nom nom del gestor
      * @param usuari usuari del gestor
      * @param password password del gestor
+     * @param cognoms cognoms del gestor
      */
-    public void crearGestor(String id, String nom, String usuari, String password) {
+    public void crearGestor(String id, String nom, String cognoms, String usuari, String password) {
 
-        /* TODO: Creeu aqui el vostre admin
-         */
+        Gerent nGer = new Gerent(usuari, password, nom, cognoms);
+        this.motoRent.getGerentes().add(nGer);
+
         Consola.escriu("\nGestor ID: " + id + "\n");
         Consola.escriu("-----------------\n");
         Consola.escriu("Nom: " + nom + "\n");
+        Consola.escriu("Cognoms: " + cognoms + "\n");
         Consola.escriu("Usuari: " + usuari + "\n");
         Consola.escriu("Password: " + password + "\n");
     }
@@ -151,27 +167,31 @@ public class MotoRentDataManager {
      *
      * @param id id del client
      * @param nom nom del client
+     * @param cognoms cognoms del client
      * @param dni dni del client
      * @param adreca adreça del client
      * @param usuari usuari al sistema del client
      * @param password password del client
      * @param vip true si el client es vip. false si no
-     * @param renovacio true si el client renova automaticament. false si no
      * @param faltes nombre de faltes
      */
-    public void crearClient(String id, String nom, String dni, String adreca, String usuari, String password, String vip, String renovacio, String faltes) {
+    public void crearClient(String id, String nom, String cognoms, String dni, String adreca, String usuari, String password, String vip, String faltes) {
 
-        /* TODO: Creeu aqui el vostre client
-         */
+        boolean esVip = vip.equals("true");
+
+        Client nCl = new Client(dni, adreca, Integer.valueOf(faltes), usuari, password, nom, cognoms, esVip);
+        this.motoRent.getClientes().add(nCl);
+
         Consola.escriu("\nClient ID: " + id + "\n");
         Consola.escriu("-----------------\n");
         Consola.escriu("Nom: " + nom + "\n");
+        Consola.escriu("Cognoms: " + cognoms + "\n");
         Consola.escriu("Usuari: " + usuari + "\n");
         Consola.escriu("Dni: " + dni + "\n");
         Consola.escriu("Adreça: " + adreca + "\n");
         Consola.escriu("Password: " + password + "\n");
         Consola.escriu("Es VIP: " + vip + "\n");
-        Consola.escriu("Renovació automàtica: " + renovacio + "\n");
+        //Consola.escriu("Renovació automàtica: " + renovacio + "\n");
         Consola.escriu("Nombre de faltes: " + faltes + "\n");
     }
 }

@@ -27,12 +27,17 @@ public class MotoRent implements Serializable {
     private Interficie interficie;
     private ArrayList<String[]> opciones;
     private Menu menu;
+    private MotoRentDataManager dataMgr;
 
     public MotoRent() {
         locales = new ArrayList();
         gerentes = new ArrayList();
         clientes = new ArrayList();
         interficie = new Interficie();
+        dataMgr = new MotoRentDataManager();
+
+        //Cargar datos
+        iniciarManager();
 
         // Menu
         opciones = new ArrayList(); // [0][x] - usuario, [1][x] - cliente, [2][x] - gerente, [3][x] - admin
@@ -45,6 +50,11 @@ public class MotoRent implements Serializable {
     public static void main(String[] args) throws ParseException {
         MotoRent mrent = new MotoRent();
         mrent.inicioUsuario();
+    }
+
+    private void iniciarManager() {
+        dataMgr.iniciar(this);
+        dataMgr.obtenirDades("data/MotoRent.xml");
     }
 
     private void inicializarOpciones() {
@@ -173,8 +183,6 @@ public class MotoRent implements Serializable {
         clientes.add(c);
         Gerent g = new Gerent("usuari2", "usuari2", "as", "d");
         gerentes.add(g);
-        Admin a = new Admin("usuari3", "usuari3", "jjj", "ul");
-        admin = a;
 
         System.out.println("Usuario: ");
         String usuario = interficie.llegeixString();
@@ -299,5 +307,21 @@ public class MotoRent implements Serializable {
 
     private String generarInforme(int month) {
         return null;
+    }
+
+    public List<Client> getClientes() {
+        return clientes;
+    }
+
+    public List<Gerent> getGerentes() {
+        return gerentes;
+    }
+
+    public List<Local> getLocales() {
+        return locales;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 }

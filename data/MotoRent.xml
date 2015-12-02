@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MotoRent>
+	<clients>
+		<client id="1" vip="true" faltes="0">
+			<nom>Client1</nom>
+			<cognoms>Coguno Cogdos</cognoms>
+			<dni>47584459X</dni>
+			<adreca>clientemaligno@gmail.com</adreca>
+			<usuari>client1</usuari>
+			<password>pclient1</password>
+		</client>
+	</clients>
+	
+	<gerents>
+		<gerent id="1">
+			<nom>Gerent1</nom>
+			<cognoms>Coguno Cogdos</cognoms>
+			<usuari>gerent1</usuari>
+			<password>pgerent1</password>
+		</gerent>
+	</gerents>
+	
+	<admin id="1">
+		<nom>Admin1</nom>
+		<cognoms>Coguno Cogdos</cognoms>
+		<usuari>admin1</usuari>
+		<password>padmin1</password>
+	</admin>
+</MotoRent>

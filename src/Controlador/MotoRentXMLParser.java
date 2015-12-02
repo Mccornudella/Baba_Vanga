@@ -15,273 +15,280 @@ import org.xml.sax.SAXParseException;
 
 /**
  * Parser per a obtenir dades d'un fitxer XML d'MotoRent
- * 
+ *
  * @author Professors disseny de software
  */
 public class MotoRentXMLParser {
 
-	/**
-	 * Data manager
-	 */
-	MotoRentDataManager dataManager;
+    /**
+     * Data manager
+     */
+    MotoRentDataManager dataManager;
 
-	/**
-	 * Constructor
-	 */
-	public MotoRentXMLParser(MotoRentDataManager dataManager) {
-		this.dataManager = dataManager;
-	}
-	
-	/**
-	 * Parseja un fitxer XML de MotoRent i guarda les dades al sistema
-	 * 
-	 * @param nomFitxer
-	 */
-	public void parse(String nomFitxer) {
-		try {
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-			Document doc = docBuilder.parse (new File(nomFitxer));
-			doc.getDocumentElement().normalize();
+    /**
+     * Constructor
+     */
+    public MotoRentXMLParser(MotoRentDataManager dataManager) {
+        this.dataManager = dataManager;
+    }
 
-			// Obtenim dades
-			this.obtenirLocals(doc);
-			this.obtenirReserves(doc);
-			this.obtenirAdministradors(doc);
-			this.obtenirGestors(doc);
-			this.obtenirClients(doc);
-		}
-		catch (SAXParseException err) {
-			System.out.println ("** Error parsejant" +", linia " + err.getLineNumber () + ", uri " + err.getSystemId ());
-			System.out.println(" " + err.getMessage ());
-		}
-		catch (SAXException e) {
-			Exception x = e.getException ();
-			((x == null) ? e : x).printStackTrace (); 
-		}
-		catch (Throwable t) {
-			t.printStackTrace ();
-		}
-	}
+    /**
+     * Parseja un fitxer XML de MotoRent i guarda les dades al sistema
+     *
+     * @param nomFitxer
+     */
+    public void parse(String nomFitxer) {
+        try {
+            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(new File(nomFitxer));
+            doc.getDocumentElement().normalize();
 
-	/**
-	 * Obte els locals de MotoRent
-	 * 
-	 * @param doc document XML del que obtenir les dades
-	 */
-	private void obtenirLocals(Document doc) {
-		NodeList locals = doc.getElementsByTagName("local");
-		String id, mida, nomLocal, adreca;
-		int numLocals = locals.getLength();
+            // Obtenim dades
+            /*this.obtenirLocals(doc);
+            this.obtenirReserves(doc);*/
+            this.obtenirAdministradors(doc);
+            this.obtenirGestors(doc);
+            this.obtenirClients(doc);
+        } catch (SAXParseException err) {
+            System.out.println("** Error parsejant" + ", linia " + err.getLineNumber() + ", uri " + err.getSystemId());
+            System.out.println(" " + err.getMessage());
+        } catch (SAXException e) {
+            Exception x = e.getException();
+            ((x == null) ? e : x).printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
 
-		// Parsejo tots els elements locals
-		for(int i=0; i<numLocals; i++) {
-			Node local = locals.item(i);
+    /**
+     * Obte els locals de MotoRent
+     *
+     * @param doc document XML del que obtenir les dades
+     */
+    private void obtenirLocals(Document doc) {
+        NodeList locals = doc.getElementsByTagName("local");
+        String id, mida, nomLocal, adreca;
+        int numLocals = locals.getLength();
 
-			if(local.getNodeType() == Node.ELEMENT_NODE){
-				Element eLocal = (Element)local;
-				id = local.getAttributes().getNamedItem("id").getTextContent();
-				mida = local.getAttributes().getNamedItem("capacitat").getTextContent();
-				
-				NodeList nNomLocal = eLocal.getElementsByTagName("gestorID");
-				Element eNomLocal = (Element)nNomLocal.item(0);
-				nomLocal = eNomLocal.getTextContent();
-				
-				NodeList nAdreca = eLocal.getElementsByTagName("adreca");
-				Element eAdreca = (Element)nAdreca.item(0);
-				adreca = eAdreca.getTextContent();
+        // Parsejo tots els elements locals
+        for (int i = 0; i < numLocals; i++) {
+            Node local = locals.item(i);
 
-				
-				// Creem una nova local amb la informacio obtinguda
-				dataManager.crearLocal(id, mida, nomLocal, adreca);
-				
-				// Obtenim informacio de les bicicletes
-				this.obtenirMotos(eLocal);
-			}
-		}
-	}
+            if (local.getNodeType() == Node.ELEMENT_NODE) {
+                Element eLocal = (Element) local;
+                id = local.getAttributes().getNamedItem("id").getTextContent();
+                mida = local.getAttributes().getNamedItem("capacitat").getTextContent();
 
-	/**
-	 * Obte informacio sobre les bicicletes d'una estacio
-	 * 
-	 * @param eLocal estacio del que buscar les biciletes
-	 */
-	private void obtenirMotos(Element eLocal) {
-		NodeList motos = eLocal.getElementsByTagName("moto");
-		String id, matricula, marca, model, color, estat;
-		int numMotos = motos.getLength();
+                NodeList nNomLocal = eLocal.getElementsByTagName("gestorID");
+                Element eNomLocal = (Element) nNomLocal.item(0);
+                nomLocal = eNomLocal.getTextContent();
 
-		// Parsejo tots els elements bici
-		for(int i=0; i<numMotos; i++) {
-			Node moto = motos.item(i);
+                NodeList nAdreca = eLocal.getElementsByTagName("adreca");
+                Element eAdreca = (Element) nAdreca.item(0);
+                adreca = eAdreca.getTextContent();
 
-			if(moto.getNodeType() == Node.ELEMENT_NODE){
-				id = moto.getAttributes().getNamedItem("id").getTextContent();
-				matricula = moto.getAttributes().getNamedItem("matricula").getTextContent();
-                                marca = moto.getAttributes().getNamedItem("marca").getTextContent();
-                                model = moto.getAttributes().getNamedItem("model").getTextContent();
-                                color = moto.getAttributes().getNamedItem("color").getTextContent();
-				estat = moto.getAttributes().getNamedItem("estat").getTextContent();
-				
-				dataManager.crearMoto(id, matricula, marca, model, color, estat);
-			}			
-		}
-	}
-	
-	/**
-	 * Obte informacio sobre els reserves
-	 * 
-	 * @param doc fitxer XML del que obtenir les dades
-	 */
-	
-	private void obtenirReserves(Document doc) {
-		NodeList reserves = doc.getElementsByTagName("reserva");
-		String id, client, moto, cost, falta, local_inici, local_fi, hora_inici, hora_fi, fecha_inici, fecha_fi;
-		int numTrajectes = reserves.getLength();
+                // Creem una nova local amb la informacio obtinguda
+                dataManager.crearLocal(id, mida, nomLocal, adreca);
 
-		// Parsejo tots els elements trajecte
-		for(int i=0; i<numTrajectes; i++) {
-			Node reserva = reserves.item(i);
+                // Obtenim informacio de les bicicletes
+                this.obtenirMotos(eLocal);
+            }
+        }
+    }
 
-			if(reserva.getNodeType() == Node.ELEMENT_NODE){
-				Element eReserva = (Element)reserva;
-				id = reserva.getAttributes().getNamedItem("id").getTextContent();
-				client = reserva.getAttributes().getNamedItem("client").getTextContent();
-				moto = reserva.getAttributes().getNamedItem("moto").getTextContent();
-                                cost = reserva.getAttributes().getNamedItem("cost").getTextContent(); 
-                                falta = reserva.getAttributes().getNamedItem("falta").getTextContent(); 
-				
-				NodeList nInici = eReserva.getElementsByTagName("inici");
-				hora_inici = nInici.item(0).getAttributes().getNamedItem("hora").getTextContent();
-				local_inici = nInici.item(0).getAttributes().getNamedItem("local").getTextContent();
-				fecha_inici = nInici.item(0).getAttributes().getNamedItem("data").getTextContent();
-				
-				NodeList nFi = eReserva.getElementsByTagName("fi");
-				hora_fi = nFi.item(0).getAttributes().getNamedItem("hora").getTextContent();
-				local_fi = nFi.item(0).getAttributes().getNamedItem("local").getTextContent();
-				fecha_fi = nFi.item(0).getAttributes().getNamedItem("data").getTextContent();
-				
-				dataManager.crearReserva(id,client,moto,cost, falta, local_inici,hora_inici,fecha_inici, local_fi,hora_fi, fecha_fi);
-			}			
-		}
-	}
-	
-	/**
-	 * Obte informacio sobre els administradors 
-	 * 
-	 * @param doc fitxer XML del que obtenir les dades
-	 */
-	private void obtenirAdministradors(Document doc) {
-		NodeList admins = doc.getElementsByTagName("admin");
-		String id, nom, usuari, password;
-		int numAdmins = admins.getLength();
+    /**
+     * Obte informacio sobre les bicicletes d'una estacio
+     *
+     * @param eLocal estacio del que buscar les biciletes
+     */
+    private void obtenirMotos(Element eLocal) {
+        NodeList motos = eLocal.getElementsByTagName("moto");
+        String id, matricula, marca, model, color, estat;
+        int numMotos = motos.getLength();
 
-		// Parsejo tots els elements admin
-		for(int i=0; i<numAdmins; i++) {
-			Node admin = admins.item(i);
+        // Parsejo tots els elements bici
+        for (int i = 0; i < numMotos; i++) {
+            Node moto = motos.item(i);
 
-			if(admin.getNodeType() == Node.ELEMENT_NODE){
-				id = admin.getAttributes().getNamedItem("id").getTextContent();
-				Element eAdmin = (Element)admin;
+            if (moto.getNodeType() == Node.ELEMENT_NODE) {
+                id = moto.getAttributes().getNamedItem("id").getTextContent();
+                matricula = moto.getAttributes().getNamedItem("matricula").getTextContent();
+                marca = moto.getAttributes().getNamedItem("marca").getTextContent();
+                model = moto.getAttributes().getNamedItem("model").getTextContent();
+                color = moto.getAttributes().getNamedItem("color").getTextContent();
+                estat = moto.getAttributes().getNamedItem("estat").getTextContent();
 
-				NodeList nNom = eAdmin.getElementsByTagName("nom");
-				Element eNom = (Element)nNom.item(0);
-				nom = eNom.getTextContent();
+                dataManager.crearMoto(id, matricula, marca, model, color, estat);
+            }
+        }
+    }
 
-				NodeList nUsuari = eAdmin.getElementsByTagName("usuari");
-				Element eUsuari = (Element)nUsuari.item(0);
-				usuari = eUsuari.getTextContent();
+    /**
+     * Obte informacio sobre els reserves
+     *
+     * @param doc fitxer XML del que obtenir les dades
+     */
+    private void obtenirReserves(Document doc) {
+        NodeList reserves = doc.getElementsByTagName("reserva");
+        String id, client, moto, cost, falta, local_inici, local_fi, hora_inici, hora_fi, fecha_inici, fecha_fi;
+        int numTrajectes = reserves.getLength();
 
-				NodeList nPassword = eAdmin.getElementsByTagName("password");
-				Element ePassword = (Element)nPassword.item(0);
-				password = ePassword.getTextContent();
+        // Parsejo tots els elements trajecte
+        for (int i = 0; i < numTrajectes; i++) {
+            Node reserva = reserves.item(i);
 
-				// Creem l'admin
-				dataManager.crearAdmin(id, nom, usuari, password);
-			}
-		}
-	}
-	
-	/**
-	 * Obte informacio sobre els gestors dels locals 
-	 * 
-	 * @param doc fitxer XML del que obtenir les dades
-	 */
-	private void obtenirGestors(Document doc) {
-		NodeList gestors = doc.getElementsByTagName("gestor");
-		String id, nom, usuari, password;
-		int numGestors = gestors.getLength();
+            if (reserva.getNodeType() == Node.ELEMENT_NODE) {
+                Element eReserva = (Element) reserva;
+                id = reserva.getAttributes().getNamedItem("id").getTextContent();
+                client = reserva.getAttributes().getNamedItem("client").getTextContent();
+                moto = reserva.getAttributes().getNamedItem("moto").getTextContent();
+                cost = reserva.getAttributes().getNamedItem("cost").getTextContent();
+                falta = reserva.getAttributes().getNamedItem("falta").getTextContent();
 
-		// Parsejo tots els elements admin
-		for(int i=0; i<numGestors; i++) {
-			Node gestor = gestors.item(i);
+                NodeList nInici = eReserva.getElementsByTagName("inici");
+                hora_inici = nInici.item(0).getAttributes().getNamedItem("hora").getTextContent();
+                local_inici = nInici.item(0).getAttributes().getNamedItem("local").getTextContent();
+                fecha_inici = nInici.item(0).getAttributes().getNamedItem("data").getTextContent();
 
-			if(gestor.getNodeType() == Node.ELEMENT_NODE){
-				id = gestor.getAttributes().getNamedItem("id").getTextContent();
-				Element eGestor = (Element)gestor;
+                NodeList nFi = eReserva.getElementsByTagName("fi");
+                hora_fi = nFi.item(0).getAttributes().getNamedItem("hora").getTextContent();
+                local_fi = nFi.item(0).getAttributes().getNamedItem("local").getTextContent();
+                fecha_fi = nFi.item(0).getAttributes().getNamedItem("data").getTextContent();
 
-				NodeList nNom = eGestor.getElementsByTagName("nom");
-				Element eNom = (Element)nNom.item(0);
-				nom = eNom.getTextContent();
+                dataManager.crearReserva(id, client, moto, cost, falta, local_inici, hora_inici, fecha_inici, local_fi, hora_fi, fecha_fi);
+            }
+        }
+    }
 
-				NodeList nUsuari = eGestor.getElementsByTagName("usuari");
-				Element eUsuari = (Element)nUsuari.item(0);
-				usuari = eUsuari.getTextContent();
+    /**
+     * Obte informacio sobre els administradors
+     *
+     * @param doc fitxer XML del que obtenir les dades
+     */
+    private void obtenirAdministradors(Document doc) {
+        NodeList admins = doc.getElementsByTagName("admin");
+        String id, nom, usuari, password, cognoms;
+        int numAdmins = admins.getLength();
 
-				NodeList nPassword = eGestor.getElementsByTagName("password");
-				Element ePassword = (Element)nPassword.item(0);
-				password = ePassword.getTextContent();
+        // Parsejo tots els elements admin
+        for (int i = 0; i < numAdmins; i++) {
+            Node admin = admins.item(i);
 
-				// Creem l'admin
-				dataManager.crearGestor(id, nom, usuari, password);
-			}
-		}
-	}
+            if (admin.getNodeType() == Node.ELEMENT_NODE) {
+                id = admin.getAttributes().getNamedItem("id").getTextContent();
+                Element eAdmin = (Element) admin;
 
-	/**
-	 * Obte informacio sobre els clients
-	 * 
-	 * @param doc fitxer XML del que obtenir les dades
-	 */
-	private void obtenirClients(Document doc) {
-		NodeList clients = doc.getElementsByTagName("client");
-		String id, nom, usuari, password, vip, renovacio, faltes, dni, adreca;
-		int numAdmins = clients.getLength();
+                NodeList nNom = eAdmin.getElementsByTagName("nom");
+                Element eNom = (Element) nNom.item(0);
+                nom = eNom.getTextContent();
 
-		// Parsejo tots els elements client
-		for(int i=0; i<numAdmins; i++) {
-			Node client = clients.item(i);
+                NodeList nCognoms = eAdmin.getElementsByTagName("cognoms");
+                Element eCognoms = (Element) nCognoms.item(0);
+                cognoms = eCognoms.getTextContent();
 
-			if(client.getNodeType() == Node.ELEMENT_NODE){
-				id = client.getAttributes().getNamedItem("id").getTextContent();
-				vip = client.getAttributes().getNamedItem("vip").getTextContent();
-				renovacio = client.getAttributes().getNamedItem("renovacio").getTextContent();
-				faltes = client.getAttributes().getNamedItem("faltes").getTextContent();
-				Element eClient = (Element)client;
+                NodeList nUsuari = eAdmin.getElementsByTagName("usuari");
+                Element eUsuari = (Element) nUsuari.item(0);
+                usuari = eUsuari.getTextContent();
 
-				NodeList nNom = eClient.getElementsByTagName("nom");
-				Element eNom = (Element)nNom.item(0);
-				nom = eNom.getTextContent();
+                NodeList nPassword = eAdmin.getElementsByTagName("password");
+                Element ePassword = (Element) nPassword.item(0);
+                password = ePassword.getTextContent();
 
-				NodeList nDni = eClient.getElementsByTagName("dni");
-				Element eDni = (Element)nDni.item(0);
-				dni = eDni.getTextContent();
-				
-				NodeList nAdreca = eClient.getElementsByTagName("adreca");
-				Element eAdreca = (Element)nAdreca.item(0);
-				adreca = eAdreca.getTextContent();
-				
-				NodeList nUsuari = eClient.getElementsByTagName("usuari");
-				Element eUsuari = (Element)nUsuari.item(0);
-				usuari = eUsuari.getTextContent();
+                // Creem l'admin
+                dataManager.crearAdmin(id, nom, cognoms, usuari, password);
+            }
+        }
+    }
 
-				NodeList nPassword = eClient.getElementsByTagName("password");
-				Element ePassword = (Element)nPassword.item(0);
-				password = ePassword.getTextContent();
+    /**
+     * Obte informacio sobre els gestors dels locals
+     *
+     * @param doc fitxer XML del que obtenir les dades
+     */
+    private void obtenirGestors(Document doc) {
+        NodeList gestors = doc.getElementsByTagName("gerent");
+        String id, nom, usuari, password, cognoms;
+        int numGestors = gestors.getLength();
 
-				// Creem el client
-				dataManager.crearClient(id, nom, dni, adreca, usuari, password, vip, renovacio, faltes);
-			}
-		}
-	}
+        // Parsejo tots els elements admin
+        for (int i = 0; i < numGestors; i++) {
+            Node gestor = gestors.item(i);
+
+            if (gestor.getNodeType() == Node.ELEMENT_NODE) {
+                id = gestor.getAttributes().getNamedItem("id").getTextContent();
+                Element eGestor = (Element) gestor;
+
+                NodeList nNom = eGestor.getElementsByTagName("nom");
+                Element eNom = (Element) nNom.item(0);
+                nom = eNom.getTextContent();
+
+                NodeList nCognoms = eGestor.getElementsByTagName("cognoms");
+                Element eCognoms = (Element) nCognoms.item(0);
+                cognoms = eCognoms.getTextContent();
+
+                NodeList nUsuari = eGestor.getElementsByTagName("usuari");
+                Element eUsuari = (Element) nUsuari.item(0);
+                usuari = eUsuari.getTextContent();
+
+                NodeList nPassword = eGestor.getElementsByTagName("password");
+                Element ePassword = (Element) nPassword.item(0);
+                password = ePassword.getTextContent();
+
+                // Creem l'admin
+                dataManager.crearGestor(id, nom, cognoms, usuari, password);
+            }
+        }
+    }
+
+    /**
+     * Obte informacio sobre els clients
+     *
+     * @param doc fitxer XML del que obtenir les dades
+     */
+    private void obtenirClients(Document doc) {
+        NodeList clients = doc.getElementsByTagName("client");
+        String id, nom, usuari, password, vip, renovacio, faltes, dni, adreca, cognoms;
+        int numAdmins = clients.getLength();
+
+        // Parsejo tots els elements client
+        for (int i = 0; i < numAdmins; i++) {
+            Node client = clients.item(i);
+
+            if (client.getNodeType() == Node.ELEMENT_NODE) {
+                id = client.getAttributes().getNamedItem("id").getTextContent();
+                vip = client.getAttributes().getNamedItem("vip").getTextContent();
+                //renovacio = client.getAttributes().getNamedItem("renovacio").getTextContent();
+                faltes = client.getAttributes().getNamedItem("faltes").getTextContent();
+                Element eClient = (Element) client;
+
+                NodeList nNom = eClient.getElementsByTagName("nom");
+                Element eNom = (Element) nNom.item(0);
+                nom = eNom.getTextContent();
+
+                NodeList nCognoms = eClient.getElementsByTagName("cognoms");
+                Element eCognoms = (Element) nCognoms.item(0);
+                cognoms = eCognoms.getTextContent();
+
+                NodeList nDni = eClient.getElementsByTagName("dni");
+                Element eDni = (Element) nDni.item(0);
+                dni = eDni.getTextContent();
+
+                NodeList nAdreca = eClient.getElementsByTagName("adreca");
+                Element eAdreca = (Element) nAdreca.item(0);
+                adreca = eAdreca.getTextContent();
+
+                NodeList nUsuari = eClient.getElementsByTagName("usuari");
+                Element eUsuari = (Element) nUsuari.item(0);
+                usuari = eUsuari.getTextContent();
+
+                NodeList nPassword = eClient.getElementsByTagName("password");
+                Element ePassword = (Element) nPassword.item(0);
+                password = ePassword.getTextContent();
+
+                // Creem el client
+                dataManager.crearClient(id, nom, cognoms, dni, adreca, usuari, password, vip, /*renovacio,*/ faltes);
+            }
+        }
+    }
 }

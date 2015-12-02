@@ -17,7 +17,9 @@ public class Client extends Usuari implements Serializable{
     private ArrayList<Reserva> reserves;
     private Date fechaRegistro;
     private int deuda;
+    private boolean vip;
 
+    //id, nom, usuari, password, vip*, renovacio?, faltes, dni, adreca
     /**
      * Constructor vacío
      */
@@ -57,6 +59,25 @@ public class Client extends Usuari implements Serializable{
         reserves = new ArrayList();
     }
 
+    /**
+     * Constructor del parser XML
+     * @param dni
+     * @param correo
+     * @param faltas
+     * @param username
+     * @param password
+     * @param nombre
+     * @param apellidos 
+     */
+    public Client(String dni, String correo, int faltas, String username, String password, String nombre, String apellidos, boolean vip) {
+        super(username, password, nombre, apellidos);
+        this.dni = dni;
+        this.correo = correo;
+        this.faltas = faltas;
+        this.vip = vip;
+    }
+
+    
     public String getCorreo() {
         return correo;
     }
@@ -122,7 +143,7 @@ public class Client extends Usuari implements Serializable{
     }
     
     public boolean estaBloquejat(){
-        return true;
+        return this.faltas >= 3;
     }
     
     public boolean comprovarReserva(Reserva res){
@@ -134,7 +155,7 @@ public class Client extends Usuari implements Serializable{
     }
     
     public boolean isVIP(){
-        return true;
+        return this.vip;
     }
     
     public Reserva getReserva(){
