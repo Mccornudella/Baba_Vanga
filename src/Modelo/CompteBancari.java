@@ -10,30 +10,32 @@ package Modelo;
  * @author Jose
  */
 public class CompteBancari {
-
+    
     String pais;
     String control_iban;
     String entitat;
     String oficina;
     String control_compte;
     String num_compte;
-
-    public CompteBancari(String compte) {
+    
+    public CompteBancari(String compte){
         pais = compte.substring(0, 2);
-        control_iban = compte.substring(2, 4);
-        entitat = compte.substring(4, 8);
-        oficina = compte.substring(8, 12);
-        control_compte = compte.substring(12, 14);
-        num_compte = compte.substring(14, compte.length());
+        control_iban = compte.substring(2,4);
+        entitat = compte.substring(4,8);
+        oficina = compte.substring(8,12);
+        control_compte = compte.substring(12,14);
+        num_compte = compte.substring(14,compte.length());
     }
-
+    
     @Override
-    public String toString() {
-        return ("Pais: " + pais
-                + " ControlIBAN: " + control_iban
-                + " Entitat: " + entitat
-                + " Oficina: " + oficina
-                + " ControlCompte: " + control_compte
-                + " Numero de Compte: " + num_compte);
+    public String toString(){
+        return ("Pais: " + pais + 
+                " ControlIBAN: " + control_iban +
+                " Entitat: " + entitat +
+                " Oficina: " + oficina +
+                " ControlCompte: " + control_compte +
+                " Numero de Compte: " + num_compte );
     }
+    
+    
 }

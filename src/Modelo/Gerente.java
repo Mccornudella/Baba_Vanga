@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 package Modelo;
 
 import java.io.Serializable;
@@ -21,42 +22,39 @@ import java.io.Serializable;
 /**
  * @author rob3ns
  */
-public class Gerente extends Empleado implements Serializable {
+public class Gerente extends Empleado implements Serializable{
 
     public Gerente() {
     }
 
     /**
      * Constructor solo parámetros de empleado.
-     *
      * @param correo
-     * @param numeroPers
+     * @param numeroPers 
      */
     public Gerente(String correo, int numeroPers) {
         super(correo, numeroPers);
     }
 
-    /**
+        /**
      * Constructor solo parámetros de usuario.
-     *
      * @param username
      * @param password
      * @param nombre
-     * @param apellidos
+     * @param apellidos 
      */
     public Gerente(String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
     }
 
-    /**
+     /**
      * Constructor con parámetros de usuario y empleado.
-     *
      * @param correo
      * @param numeroPers
      * @param username
      * @param password
      * @param nombre
-     * @param apellidos
+     * @param apellidos 
      */
     public Gerente(String correo, int numeroPers, String username, String password, String nombre, String apellidos) {
         super(correo, numeroPers, username, password, nombre, apellidos);
@@ -66,4 +64,5 @@ public class Gerente extends Empleado implements Serializable {
     public String toString() {
         return "Gerente: " + super.toString();
     }
+
 }
