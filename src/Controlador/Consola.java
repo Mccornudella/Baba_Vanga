@@ -1,5 +1,5 @@
 // Poseu la consola al paquet que us vagi millor
-package Controlador;
+package controlador;
 
 import java.util.Date;
 import java.util.Scanner;

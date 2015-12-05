@@ -1,4 +1,4 @@
-package Modelo;
+package modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,10 +7,11 @@ import java.util.Date;
 /**
  * @author rob3ns
  */
-public class Client extends Usuari implements Serializable{
+public class Client extends Usuari implements Serializable {
 
     private String dni;
     private String correo;
+    private Direccio direccion;
     private int telefono;
     private CompteBancari compteBan;
     private int faltas;
@@ -19,7 +20,6 @@ public class Client extends Usuari implements Serializable{
     private int deuda;
     private boolean vip;
 
-    //id, nom, usuari, password, vip*, renovacio?, faltes, dni, adreca
     /**
      * Constructor vacío
      */
@@ -28,10 +28,11 @@ public class Client extends Usuari implements Serializable{
 
     /**
      * Constructor solo parámetros usuario.
-     * @param username
-     * @param password
-     * @param nombre
-     * @param apellidos 
+     *
+     * @param username usuari en el sistema del cliente
+     * @param password password del cliente
+     * @param nombre nombre del cliente
+     * @param apellidos apellidos del cliente
      */
     public Client(String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
@@ -39,14 +40,15 @@ public class Client extends Usuari implements Serializable{
 
     /**
      * Constructor con parámetros de usuario y cliente.
-     * @param dni
-     * @param correo
-     * @param telefono
-     * @param cuentaBanc
-     * @param username
-     * @param password
-     * @param nombre
-     * @param apellidos 
+     *
+     * @param dni dni del cliente
+     * @param correo correo electronico del cliente
+     * @param telefono telefono del cliente
+     * @param cuentaBanc cuenta bancaria del cliente
+     * @param username usuari en el sistema del cliente
+     * @param password password del cliente
+     * @param nombre nombre del cliente
+     * @param apellidos apellidos del cliente
      */
     public Client(String dni, String correo, int telefono, CompteBancari cuentaBanc, String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
@@ -61,23 +63,24 @@ public class Client extends Usuari implements Serializable{
 
     /**
      * Constructor del parser XML
-     * @param dni
-     * @param correo
-     * @param faltas
-     * @param username
-     * @param password
-     * @param nombre
-     * @param apellidos 
+     *
+     * @param dni dni del client
+     * @param direccion direccion del cliente
+     * @param faltas cantidad de faltas
+     * @param username usuari en el sistema del cliente
+     * @param password password del cliente
+     * @param nombre nombre del cliente
+     * @param apellidos apellidos del cliente
+     * @param vip true si el cliente es vip. false si no
      */
-    public Client(String dni, String correo, int faltas, String username, String password, String nombre, String apellidos, boolean vip) {
+    public Client(String dni, Direccio direccion, int faltas, String username, String password, String nombre, String apellidos, boolean vip) {
         super(username, password, nombre, apellidos);
         this.dni = dni;
-        this.correo = correo;
+        this.direccion = direccion;
         this.faltas = faltas;
         this.vip = vip;
     }
 
-    
     public String getCorreo() {
         return correo;
     }
@@ -103,7 +106,7 @@ public class Client extends Usuari implements Serializable{
     }
 
     public int getTelefono() {
-        return telefono; 
+        return telefono;
     }
 
     public void setCorreo(String correo) {
@@ -133,43 +136,43 @@ public class Client extends Usuari implements Serializable{
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
-    
-    public void addReserva(Reserva res){
+
+    public void addReserva(Reserva res) {
         reserves.add(res);
     }
 
     public boolean checkDNI(String dni) {
         return this.dni.equals(dni);
     }
-    
-    public boolean estaBloquejat(){
+
+    public boolean estaBloquejat() {
         return this.faltas >= 3;
     }
-    
-    public boolean comprovarReserva(Reserva res){
+
+    public boolean comprovarReserva(Reserva res) {
         return true;
     }
-    
-    public boolean comprobarCodigo(int codi){
+
+    public boolean comprobarCodigo(int codi) {
         return true;
     }
-    
-    public boolean isVIP(){
+
+    public boolean isVIP() {
         return this.vip;
     }
-    
-    public Reserva getReserva(){
+
+    public Reserva getReserva() {
         return null;
     }
-    
-    public void finalitzarRecollida(){
-        
+
+    public void finalitzarRecollida() {
+
     }
-    
-    public String infoReservas(int month){
+
+    public String infoReservas(int month) {
         return null;
     }
-    
+
     @Override
     public String toString() {
         return "Cliente: " + super.toString();

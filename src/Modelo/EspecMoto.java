@@ -1,10 +1,11 @@
-package Modelo;
+package modelo;
 
 /**
  *
  * @author Jose
  */
 public class EspecMoto {
+
     private String color;
     private String marca;
     private String model;
@@ -51,5 +52,12 @@ public class EspecMoto {
     public void setModel(String model) {
         this.model = model;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Marca: " + marca + "\n"
+                + "Model: " + model + "\n"
+                + "Color: " + color + "\n"
+                + "Cilindrada: " + cilindrada;
+    }
 }

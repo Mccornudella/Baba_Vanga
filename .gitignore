@@ -44,3 +44,4 @@ Temporary Items
 build/classes/Controlador/parser/MotoRentDataManager.class
 build/classes/Controlador/parser/MotoRentXMLParser.class
 build/classes/Controlador/parser/MotoRentXMLTest.class
+*.class

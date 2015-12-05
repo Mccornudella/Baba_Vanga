@@ -1,4 +1,4 @@
-package Vista;
+package vista;
 
 /**
  * @author rob3ns

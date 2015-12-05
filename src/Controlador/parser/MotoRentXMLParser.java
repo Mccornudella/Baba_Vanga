@@ -1,10 +1,10 @@
 package controlador.parser;
 
-import controlador.parser.MotoRentDataManager;
 import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import modelo.Moto;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -27,6 +27,8 @@ public class MotoRentXMLParser {
 
     /**
      * Constructor
+     *
+     * @param dataManager
      */
     public MotoRentXMLParser(MotoRentDataManager dataManager) {
         this.dataManager = dataManager;
@@ -45,8 +47,8 @@ public class MotoRentXMLParser {
             doc.getDocumentElement().normalize();
 
             // Obtenim dades
-            /*this.obtenirLocals(doc);
-            this.obtenirReserves(doc);*/
+            this.obtenirLocals(doc);
+            //this.obtenirReserves(doc);
             this.obtenirAdministradors(doc);
             this.obtenirGestors(doc);
             this.obtenirClients(doc);
@@ -119,7 +121,12 @@ public class MotoRentXMLParser {
                 color = moto.getAttributes().getNamedItem("color").getTextContent();
                 estat = moto.getAttributes().getNamedItem("estat").getTextContent();
 
-                dataManager.crearMoto(id, matricula, marca, model, color, estat);
+                //Creo la moto
+                Moto nMoto = dataManager.crearMoto(id, matricula, marca, model, color, estat);
+
+                //La añado al ultimo local creado
+                int ultimoLocal = dataManager.getMotoRent().getLocales().size() - 1;
+                dataManager.getMotoRent().getLocales().get(ultimoLocal).getMotos().add(nMoto);
             }
         }
     }
@@ -168,7 +175,7 @@ public class MotoRentXMLParser {
      */
     private void obtenirAdministradors(Document doc) {
         NodeList admins = doc.getElementsByTagName("admin");
-        String id, nom, usuari, password, cognoms;
+        String id, nom, usuari, password;
         int numAdmins = admins.getLength();
 
         // Parsejo tots els elements admin
@@ -183,10 +190,6 @@ public class MotoRentXMLParser {
                 Element eNom = (Element) nNom.item(0);
                 nom = eNom.getTextContent();
 
-                NodeList nCognoms = eAdmin.getElementsByTagName("cognoms");
-                Element eCognoms = (Element) nCognoms.item(0);
-                cognoms = eCognoms.getTextContent();
-
                 NodeList nUsuari = eAdmin.getElementsByTagName("usuari");
                 Element eUsuari = (Element) nUsuari.item(0);
                 usuari = eUsuari.getTextContent();
@@ -196,7 +199,7 @@ public class MotoRentXMLParser {
                 password = ePassword.getTextContent();
 
                 // Creem l'admin
-                dataManager.crearAdmin(id, nom, cognoms, usuari, password);
+                dataManager.crearAdmin(id, nom, usuari, password);
             }
         }
     }
@@ -208,7 +211,7 @@ public class MotoRentXMLParser {
      */
     private void obtenirGestors(Document doc) {
         NodeList gestors = doc.getElementsByTagName("gerent");
-        String id, nom, usuari, password, cognoms;
+        String id, nom, usuari, password;
         int numGestors = gestors.getLength();
 
         // Parsejo tots els elements admin
@@ -223,10 +226,6 @@ public class MotoRentXMLParser {
                 Element eNom = (Element) nNom.item(0);
                 nom = eNom.getTextContent();
 
-                NodeList nCognoms = eGestor.getElementsByTagName("cognoms");
-                Element eCognoms = (Element) nCognoms.item(0);
-                cognoms = eCognoms.getTextContent();
-
                 NodeList nUsuari = eGestor.getElementsByTagName("usuari");
                 Element eUsuari = (Element) nUsuari.item(0);
                 usuari = eUsuari.getTextContent();
@@ -236,7 +235,7 @@ public class MotoRentXMLParser {
                 password = ePassword.getTextContent();
 
                 // Creem l'admin
-                dataManager.crearGestor(id, nom, cognoms, usuari, password);
+                dataManager.crearGestor(id, nom, usuari, password);
             }
         }
     }
@@ -248,7 +247,7 @@ public class MotoRentXMLParser {
      */
     private void obtenirClients(Document doc) {
         NodeList clients = doc.getElementsByTagName("client");
-        String id, nom, usuari, password, vip, renovacio, faltes, dni, adreca, cognoms;
+        String id, nom, usuari, password, vip, renovacio, faltes, dni, adreca;
         int numAdmins = clients.getLength();
 
         // Parsejo tots els elements client
@@ -258,17 +257,13 @@ public class MotoRentXMLParser {
             if (client.getNodeType() == Node.ELEMENT_NODE) {
                 id = client.getAttributes().getNamedItem("id").getTextContent();
                 vip = client.getAttributes().getNamedItem("vip").getTextContent();
-                //renovacio = client.getAttributes().getNamedItem("renovacio").getTextContent();
+                renovacio = client.getAttributes().getNamedItem("renovacio").getTextContent();
                 faltes = client.getAttributes().getNamedItem("faltes").getTextContent();
                 Element eClient = (Element) client;
 
                 NodeList nNom = eClient.getElementsByTagName("nom");
                 Element eNom = (Element) nNom.item(0);
                 nom = eNom.getTextContent();
-
-                NodeList nCognoms = eClient.getElementsByTagName("cognoms");
-                Element eCognoms = (Element) nCognoms.item(0);
-                cognoms = eCognoms.getTextContent();
 
                 NodeList nDni = eClient.getElementsByTagName("dni");
                 Element eDni = (Element) nDni.item(0);
@@ -287,7 +282,7 @@ public class MotoRentXMLParser {
                 password = ePassword.getTextContent();
 
                 // Creem el client
-                dataManager.crearClient(id, nom, cognoms, dni, adreca, usuari, password, vip, /*renovacio,*/ faltes);
+                dataManager.crearClient(id, nom, dni, adreca, usuari, password, vip, renovacio, faltes);
             }
         }
     }

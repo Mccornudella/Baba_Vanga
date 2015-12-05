@@ -1,4 +1,4 @@
-package Modelo;
+package modelo;
 
 import java.util.ArrayList;
 
@@ -91,5 +91,13 @@ public class Local {
     public void veureMotos(){
         
     }
-    
+
+    @Override
+    public String toString() {
+        String str = direccio.toString() + "------------\n";
+        for (Moto m : motos) {
+            str += m.toString() + "\n";
+        }
+        return str;
+    }
 }

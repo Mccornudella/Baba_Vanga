@@ -1,12 +1,15 @@
 package controlador.parser;
 
 import controlador.Consola;
-import controlador.Consola;
 import controlador.MotoRent;
-import controlador.parser.MotoRentXMLParser;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import modelo.Admin;
 import modelo.Client;
+import modelo.Direccio;
 import modelo.Gerent;
+import modelo.Local;
+import modelo.Moto;
 
 /**
  * Data manager per MotoRent . Crea les estructures de dades necessàries per a
@@ -57,14 +60,29 @@ public class MotoRentDataManager {
      */
     public void crearLocal(String id, String capacitat, String gestorID, String adreca) {
 
-        /*  TODO: A partir d'aqui creeu el vostre objecte que contingui la informacio
-         *
-         */
+        //El nombre de la calle llega hasta el primero número
+        Matcher m = Pattern.compile("\\d").matcher(adreca);
+        int finCalle = m.find() ? m.start() + 1 : 0;
+
+        //Info dirección
+        String calle = adreca.substring(0, finCalle - 1);
+
+        String numero = adreca.substring(finCalle - 1, adreca.indexOf(","));
+        String cp = adreca.substring(adreca.indexOf(", ") + 2, adreca.indexOf(",") + 7);
+        String ciudad = adreca.substring(adreca.indexOf(",") + 9);
+
+        //Creo dirección
+        Direccio dir = new Direccio(ciudad, calle, Integer.valueOf(numero), cp);
+
+        //Crear local y ponerlo en motorent
+        Local loc = new Local(dir, Integer.valueOf(capacitat));
+        this.motoRent.getLocales().add(loc);
+
         Consola.escriu("\nlocal amb ID: " + id + "\n");
         Consola.escriu("--------------------------------------------------\n");
         Consola.escriu("Capacitat: " + capacitat + "\n");
         Consola.escriu("Gestor ID: " + gestorID + "\n");
-        Consola.escriu("Adreça: " + adreca + "\n");
+        Consola.escriu(dir.toString());
     }
 
     /**
@@ -77,11 +95,27 @@ public class MotoRentDataManager {
      * @param color color de la moto
      * @param estat estat de la moto: "true" representa moto activa i "false"
      * per reparar
+     * @return moto creada
      */
-    public void crearMoto(String id, String matricula, String marca, String model, String color, String estat) {
+    public Moto crearMoto(String id, String matricula, String marca, String model, String color, String estat) {
 
-        /* TODO: Aqui feu el necessari per a crear les vostres motos
-         */
+        //Cilindrada de la moto sacada del modelo
+        Matcher m = Pattern.compile("\\d").matcher(model);
+        int inicioCc = m.find() ? m.start() + 1 : 0;
+        int finCc = model.indexOf(" ", inicioCc);
+
+        if (finCc == -1) {
+            finCc = model.length();
+        }
+
+        String cilindrada = model.substring(inicioCc - 1, finCc);
+
+        //Estado e ID sin la letra 'm'
+        boolean estado = estat.equals("true");
+        id = id.substring(1, id.length());
+
+        Moto moto = new Moto(matricula, color, marca, model, Integer.valueOf(cilindrada), Integer.valueOf(id), estado);
+
         Consola.escriu("\nmoto amb ID: " + id + "\n");
         Consola.escriu("--------------------------------------\n");
         Consola.escriu("Matrícula: " + matricula + "\n");
@@ -89,6 +123,9 @@ public class MotoRentDataManager {
         Consola.escriu("Model: " + model + "\n");
         Consola.escriu("Color: " + color + "\n");
         Consola.escriu("Estat: " + estat + "\n");
+        Consola.escriu("Cilindradas: " + cilindrada + "\n");
+
+        return moto;
     }
 
     /**
@@ -129,8 +166,16 @@ public class MotoRentDataManager {
      * @param password password del administrador
      * @param cognoms del administrador
      */
-    public void crearAdmin(String id, String nom, String cognoms, String usuari, String password) {
+    public void crearAdmin(String id, String nom, String usuari, String password) {
 
+        //Separo nombre y apellidos
+        String cognoms = "";
+        if (nom.contains(" ")) {
+            cognoms = nom.substring(nom.indexOf(" ") + 1);
+            nom = nom.substring(0, nom.indexOf(" "));
+        }
+
+        //Crear admin y ponerlo en motorent
         Admin adm = new Admin(usuari, password, nom, cognoms);
         this.motoRent.setAdmin(adm);
 
@@ -151,8 +196,15 @@ public class MotoRentDataManager {
      * @param password password del gestor
      * @param cognoms cognoms del gestor
      */
-    public void crearGestor(String id, String nom, String cognoms, String usuari, String password) {
+    public void crearGestor(String id, String nom, String usuari, String password) {
 
+        //Separo nombre y apellidos
+        String cognoms = "";
+        if (nom.contains(" ")) {
+            cognoms = nom.substring(nom.indexOf(" ") + 1);
+            nom = nom.substring(0, nom.indexOf(" "));
+        }
+        //Crear gerente y ponerlo en motorent
         Gerent nGer = new Gerent(usuari, password, nom, cognoms);
         this.motoRent.getGerentes().add(nGer);
 
@@ -175,13 +227,36 @@ public class MotoRentDataManager {
      * @param usuari usuari al sistema del client
      * @param password password del client
      * @param vip true si el client es vip. false si no
+     * @param renovacio true si el client renova automaticament. false si no
      * @param faltes nombre de faltes
      */
-    public void crearClient(String id, String nom, String cognoms, String dni, String adreca, String usuari, String password, String vip, String faltes) {
+    public void crearClient(String id, String nom, String dni, String adreca, String usuari, String password, String vip, String renovacio, String faltes) {
+
+        //Separo nombre y apellidos
+        String cognoms = "";
+        if (nom.contains(" ")) {
+            cognoms = nom.substring(nom.indexOf(" ") + 1);
+            nom = nom.substring(0, nom.indexOf(" "));
+        }
+
+        //El nombre de la calle llega hasta el primero número
+        Matcher m = Pattern.compile("\\d").matcher(adreca);
+        int finCalle = m.find() ? m.start() + 1 : 0;
+
+        //Info dirección
+        String calle = adreca.substring(0, finCalle - 1);
+
+        String numero = adreca.substring(finCalle - 1, adreca.indexOf(","));
+        String cp = adreca.substring(adreca.indexOf(", ") + 2, adreca.indexOf(",") + 7);
+        String ciudad = adreca.substring(adreca.indexOf(",") + 9);
+
+        //Creo dirección
+        Direccio dir = new Direccio(ciudad, calle, Integer.valueOf(numero), cp);
 
         boolean esVip = vip.equals("true");
 
-        Client nCl = new Client(dni, adreca, Integer.valueOf(faltes), usuari, password, nom, cognoms, esVip);
+        //Crear cliente y ponerlo en motorent
+        Client nCl = new Client(dni, dir, Integer.valueOf(faltes), usuari, password, nom, cognoms, esVip);
         this.motoRent.getClientes().add(nCl);
 
         Consola.escriu("\nClient ID: " + id + "\n");
@@ -190,10 +265,14 @@ public class MotoRentDataManager {
         Consola.escriu("Cognoms: " + cognoms + "\n");
         Consola.escriu("Usuari: " + usuari + "\n");
         Consola.escriu("Dni: " + dni + "\n");
-        Consola.escriu("Adreça: " + adreca + "\n");
+        Consola.escriu(dir.toString());
         Consola.escriu("Password: " + password + "\n");
         Consola.escriu("Es VIP: " + vip + "\n");
-        //Consola.escriu("Renovació automàtica: " + renovacio + "\n");
+        Consola.escriu("Renovació automàtica: " + renovacio + "\n");
         Consola.escriu("Nombre de faltes: " + faltes + "\n");
+    }
+
+    public MotoRent getMotoRent() {
+        return motoRent;
     }
 }

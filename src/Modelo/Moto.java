@@ -1,4 +1,4 @@
-package Modelo;
+package modelo;
 
 /**
  *
@@ -9,6 +9,7 @@ public class Moto {
     private EspecMoto espec;
     private int ID;
     private boolean estat;
+    private String matricula;
 
     /**
      * Constructor buit.
@@ -22,6 +23,23 @@ public class Moto {
         this.estat = estat;
     }
 
+    /**
+     * Constructor XML
+     *
+     * @param matricula
+     * @param color
+     * @param marca
+     * @param model
+     * @param cilindrada
+     * @param ID
+     * @param estat
+     */
+    public Moto(String matricula, String color, String marca, String model, int cilindrada, int ID, boolean estat) {
+        this.matricula = matricula;
+        this.espec = new EspecMoto(color, marca, model, cilindrada);
+        this.ID = ID;
+        this.estat = estat;
+    }
 
     public String getColor() {
         return espec.getColor();
@@ -54,12 +72,12 @@ public class Moto {
     public void setID(int ID) {
         this.ID = ID;
     }
-    
-    public int getCilindrada(){
+
+    public int getCilindrada() {
         return espec.getCilindrada();
     }
-    
-    public void setCilindrada(int i){
+
+    public void setCilindrada(int i) {
         espec.setCilindrada(i);
     }
 
@@ -67,8 +85,16 @@ public class Moto {
         return estat;
     }
 
-
     public void disponible() {
         estat = true;
     }
+
+    @Override
+    public String toString() {
+        return "ID: " + ID + "\n" +
+               "Matricula: " + matricula + "\n" +
+                espec.toString() + "\n" +
+                "Estat: " + estat + "\n";
+    }
+    
 }

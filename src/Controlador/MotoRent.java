@@ -1,13 +1,14 @@
-package Controlador;
+package controlador;
 
-import Modelo.Admin;
-import Modelo.Client;
-import Modelo.CompteBancari;
-import Modelo.Gerent;
-import Modelo.Local;
-import Modelo.Usuari;
-import Vista.Interficie;
-import Vista.Menu;
+import controlador.parser.MotoRentDataManager;
+import modelo.Admin;
+import modelo.Client;
+import modelo.CompteBancari;
+import modelo.Gerent;
+import modelo.Local;
+import modelo.Usuari;
+import vista.Interficie;
+import vista.Menu;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class MotoRent implements Serializable {
                     log = login();
                     break;
                 case 1:  // Registrar
-                    Registrarse();
+                    registrarse();
                     break;
                 default: // Exit
                     break;
@@ -165,6 +166,7 @@ public class MotoRent implements Serializable {
                 case 1: //Veure locals sobre maxims
                     break;
                 case 2: //Veure motos locals
+                    veureMotosLocals();
                     break;
                 case 3: //Veure informe mensual
                     break;
@@ -253,7 +255,7 @@ public class MotoRent implements Serializable {
         inicioUsuario();
     }
 
-    private void Registrarse() {
+    private void registrarse() {
         interficie.escriu("Quin es el teu DNI?: ");
         String dni = interficie.llegeixDNI();
 
@@ -298,7 +300,9 @@ public class MotoRent implements Serializable {
     }
 
     public void veureMotosLocals() {
-
+        for (Local l : locales) {
+            interficie.escriu("------------\nLocal " + locales.indexOf(l) + ":\n" + l.toString());
+        }
     }
 
     public void veureInforme(int month) {

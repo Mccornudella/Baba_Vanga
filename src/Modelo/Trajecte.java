@@ -1,4 +1,4 @@
-package Modelo;
+package modelo;
 
 /**
  *
@@ -18,8 +18,8 @@ public class Trajecte {
     
     /**
      * Constructor simple.
-     * @param inici
-     * @param fi 
+     * @param inici Local inicio
+     * @param fi  Local fin
      */
     public Trajecte(Local inici, Local fi){
         this.inici = inici;
