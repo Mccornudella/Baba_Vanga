@@ -2,6 +2,13 @@ package controlador.parser;
 
 import controlador.Consola;
 import controlador.MotoRent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import modelo.Admin;
@@ -10,6 +17,9 @@ import modelo.Direccio;
 import modelo.Gerent;
 import modelo.Local;
 import modelo.Moto;
+import modelo.Reserva;
+import modelo.Trajecte;
+import vista.Interficie;
 
 /**
  * Data manager per MotoRent . Crea les estructures de dades necessàries per a
@@ -141,20 +151,60 @@ public class MotoRentDataManager {
      */
     public void crearReserva(String id, String client, String moto, String cost, String falta, String local_inici, String hora_inici, String fecha_inici, String local_fi, String hora_fi, String fecha_fi) {
 
-        /* TODO: A partir d'aqui creeu el trajecte
-         */
-        Consola.escriu("\nReserva amb ID: " + id + "\n");
-        Consola.escriu("--------------------------------------\n");
-        Consola.escriu("Client: " + client + "\n");
-        Consola.escriu("Moto: " + moto + "\n");
-        Consola.escriu("Cost: " + cost + "\n");
-        Consola.escriu("Faltes: " + falta + "\n");
-        Consola.escriu("Local d'inici: " + local_inici + "\n");
-        Consola.escriu("Hora d'inici: " + hora_inici + "\n");
-        Consola.escriu("Data d'inici: " + fecha_inici + "\n");
-        Consola.escriu("Local de finalització: " + local_fi + "\n");
-        Consola.escriu("Hora de finalització: " + hora_fi + "\n");
-        Consola.escriu("Data de finalització: " + fecha_fi + "\n");
+        Reserva r = new Reserva();
+
+        //Index del cliente segun su id
+        int indexC = Integer.valueOf(client.substring(1)) - 1;
+        System.out.println(indexC);
+        int indexLi = Integer.valueOf(local_inici.substring(1)) - 1;
+        int indexLf = Integer.valueOf(local_fi.substring(1)) - 1;
+        int idMoto = Integer.valueOf(moto.substring(1));
+
+        //TODO: tambien mirar el local ini?
+        Local locFin = this.motoRent.getLocales().get(indexLf);
+        Trajecte tr = new Trajecte(locFin, this.motoRent.getLocales().get(indexLf));
+
+        //Encontrar la moto con esa id en el local de inicio
+        boolean encontrada = false;
+        int i = 0;
+        Moto m = null;
+        while (!encontrada && i < locFin.getMotos().size()) {
+            m = (Moto) locFin.getMotos().get(i);
+            if (idMoto == m.getID()) {
+                encontrada = true;
+            }
+            i++;
+        }
+
+        if (encontrada) { //Si tenemos moto continua
+            //Pasamos las fechas a Date
+            DateFormat format = new SimpleDateFormat("dd/mm/yyyy", Locale.ENGLISH);
+            Date dIni = null;
+            Date dFIn = null;
+            try {
+                dIni = format.parse(fecha_inici);
+                dFIn = format.parse(fecha_fi);
+            } catch (ParseException ex) {
+                Logger.getLogger(Interficie.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            r = new Reserva(dIni, dFIn, tr, m);
+            Client cl = this.motoRent.getClientes().get(indexC);
+            cl.addReserva(r);
+
+            Consola.escriu("\nReserva amb ID: " + id + "\n");
+            Consola.escriu("--------------------------------------\n");
+            Consola.escriu("Client: " + client + "\n");
+            Consola.escriu("Moto: " + moto + "\n");
+            Consola.escriu("Cost: " + cost + "\n");
+            Consola.escriu("Faltes: " + falta + "\n");
+            Consola.escriu("Local d'inici: " + local_inici + "\n");
+            Consola.escriu("Hora d'inici: " + hora_inici + "\n");
+            Consola.escriu("Data d'inici: " + fecha_inici + "\n");
+            Consola.escriu("Local de finalització: " + local_fi + "\n");
+            Consola.escriu("Hora de finalització: " + hora_fi + "\n");
+            Consola.escriu("Data de finalització: " + fecha_fi + "\n");
+        }
     }
 
     /**

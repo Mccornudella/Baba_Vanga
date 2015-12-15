@@ -36,6 +36,7 @@ public class Client extends Usuari implements Serializable {
      */
     public Client(String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
+        reserves = new ArrayList();
     }
 
     /**
@@ -79,6 +80,7 @@ public class Client extends Usuari implements Serializable {
         this.direccion = direccion;
         this.faltas = faltas;
         this.vip = vip;
+        reserves = new ArrayList();
     }
 
     public String getCorreo() {
