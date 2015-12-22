@@ -1,5 +1,5 @@
-package Controlador;
 
+package controlador;
 import controlador.parser.MotoRentDataManager;
 import modelo.Admin;
 import modelo.Client;

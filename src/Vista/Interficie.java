@@ -137,7 +137,7 @@ public class Interficie {
      */
     public static Date llegeixData() {
         String s = sc.next();
-        DateFormat format = new SimpleDateFormat("dd/mm/yyyy", Locale.ENGLISH);
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm/dd/MM/yyyy", Locale.ENGLISH);
         Date d = null;
         try {
             d = format.parse(s);

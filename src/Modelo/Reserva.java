@@ -1,6 +1,8 @@
 package modelo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  *
@@ -41,6 +43,7 @@ public class Reserva {
         this.moto = moto;
         preu = calcularPreu();
         codi = crearCodi();
+        initEstado();
     }
 
     public double getPreu() {
@@ -121,4 +124,9 @@ public class Reserva {
     private int crearCodi() {
         return 0;
     }
+    
+   private void initEstado(){
+       Date d = new Date();
+       estado = new EstadoReserva()
+   }
 }
