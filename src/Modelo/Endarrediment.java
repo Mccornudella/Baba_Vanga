@@ -12,6 +12,10 @@ public class Endarrediment extends Penalitzacio{
     public Endarrediment(Date retras) {
         this.retras = retras;
     }
+    
+    public Endarrediment(){
+        retras = null;
+    }
 
     public void setRetras(Date retras) {
         this.retras = retras;

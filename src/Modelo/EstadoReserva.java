@@ -13,12 +13,11 @@ public class EstadoReserva {
     private Endarrediment retras;
     private Falta falta;
 
-    public EstadoReserva(boolean activa, boolean finalitzada, Endarrediment retras, Falta falta, boolean estadoMoto) {
+    public EstadoReserva(boolean activa, boolean finalitzada) {
         this.activa = activa;
         this.finalitzada = finalitzada;
-        this.retras = retras;
-        this.falta = falta;
-        this.estadoMoto = estadoMoto;
+        falta = new Falta("");
+        retras = new Endarrediment();
     }
     private boolean estadoMoto;
 

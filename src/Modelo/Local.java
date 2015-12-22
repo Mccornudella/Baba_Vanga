@@ -93,15 +93,12 @@ public class Local {
     }
     
     public void veureMotos(){
-        
+        Interficie.imprimirLista(motos);
     }
 
     @Override
     public String toString() {
-        String str = direccio.toString() + "------------\n";
-        for (Moto m : motos) {
-            str += m.toString() + "\n";
-        }
+        String str = direccio.toString() + "------------\n";      
         return str;
     }
 }

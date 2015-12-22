@@ -3,6 +3,7 @@ package modelo;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 /**
  *
@@ -14,7 +15,7 @@ public class Reserva {
     private final int precioDia = 15;
 
     private double preu;
-    private int codi;
+    private String codi;
     private Date inici;
     private Date fi;
     private Trajecte trajecte;
@@ -42,7 +43,7 @@ public class Reserva {
         this.trajecte = trajecte;
         this.moto = moto;
         preu = calcularPreu();
-        codi = crearCodi();
+        crearCodi();
         initEstado();
     }
 
@@ -50,7 +51,7 @@ public class Reserva {
         return preu;
     }
 
-    public int getCodi() {
+    public String getCodi() {
         return codi;
     }
 
@@ -113,20 +114,24 @@ public class Reserva {
     }
 
     /**
-     * Crea un codi aleatori de reserva a partir de les dates d'inici i fi, i
-     * del tajecte que es fara.
+     * Crea un codi aleatori de reserva
      *
-     * @param inici
-     * @param fi
-     * @param trajecte
      * @return
      */
-    private int crearCodi() {
-        return 0;
+    private void crearCodi() {
+        Random r = new Random();
+        int cd = 0;
+        while (cd < 1000000 && cd > 10000000){
+            cd = r.nextInt();
+        }
+        String scodi = Integer.toString(cd);
+        String concat = scodi.concat(moto.getMatricula());
+        codi = concat;
     }
     
    private void initEstado(){
        Date d = new Date();
-       estado = new EstadoReserva()
+       estado = new EstadoReserva(!d.after(fi),d.after(fi));
+       
    }
 }

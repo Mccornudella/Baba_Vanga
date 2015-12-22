@@ -89,6 +89,11 @@ public class Moto {
         estat = true;
     }
 
+    public String getMatricula() {
+        return matricula;
+    }
+    
+
     @Override
     public String toString() {
         return "ID: " + ID + "\n" +

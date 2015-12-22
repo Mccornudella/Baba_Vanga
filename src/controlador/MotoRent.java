@@ -355,7 +355,7 @@ public class MotoRent implements Serializable {
                 boolean esVIP = cl.isVIP();
                 Trajecte trajecte = new Trajecte(localSortida,localDesti);
                 Reserva reserva = new Reserva(dataInici,dataFinal,trajecte,moto);
-                int codiReserva = reserva.getCodi();
+                String codiReserva = reserva.getCodi();
                 if (esVIP){
                     reserva.realitzarDescompte();
                 }
