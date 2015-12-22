@@ -70,6 +70,10 @@ public class Reserva {
     public void setActiva() {
         estado.setActiva(!estado.isActiva());
     }
+    
+    public boolean isActiva(){
+        return estado.isActiva();
+    }
 
     public void setFinaliztada() {
         this.setActiva();

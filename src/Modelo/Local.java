@@ -1,5 +1,6 @@
 package modelo;
 
+import vista.Interficie;
 import java.util.ArrayList;
 
 /**
@@ -69,7 +70,10 @@ public class Local {
     }
     
     public Moto escollirMoto(){
-        return null;
+        Interficie.imprimirLista(motos);
+        int posMoto = Interficie.selNumLista(motos);
+        Moto moto1 = motos.get(posMoto);
+        return moto1;
     } 
     
     public boolean compCapacidad(int cantidad){

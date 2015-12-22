@@ -3,6 +3,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * @author rob3ns
@@ -151,8 +152,15 @@ public class Client extends Usuari implements Serializable {
         return this.faltas >= 3;
     }
 
-    public boolean comprovarReserva(Reserva res) {
-        return true;
+    public boolean comprovarReserva() {
+        boolean activa = false;
+        Iterator it = reserves.iterator();
+        Reserva res = null;
+        while (it.hasNext()){
+            res = (Reserva) it.next();
+            activa = res.isActiva();
+        }
+        return activa;
     }
 
     public boolean comprobarCodigo(int codi) {

@@ -21,7 +21,7 @@ public class Interficie {
 
     private static String lletres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static String numeros = "0123456789";
-    private Scanner sc;
+    private static Scanner sc;
 
     /**
      * Constructor de la classse.
@@ -40,7 +40,7 @@ public class Interficie {
      *
      * @param i
      */
-    public void escriu(int i) {
+    public static void escriu(int i) {
         System.out.println(i);
     }
 
@@ -49,7 +49,7 @@ public class Interficie {
      *
      * @param s
      */
-    public void escriu(String s) {
+    public static void escriu(String s) {
         System.out.println(s);
     }
 
@@ -58,7 +58,7 @@ public class Interficie {
      *
      * @param f
      */
-    public void escriu(float f) {
+    public static void escriu(float f) {
         System.out.println(f);
     }
 
@@ -67,7 +67,7 @@ public class Interficie {
      *
      * @param d
      */
-    public void escriu(Date d) {
+    public static void escriu(Date d) {
         System.out.println(d);
     }
 
@@ -76,7 +76,7 @@ public class Interficie {
      *
      * @param l Array a mostrar.
      */
-    private void imprimirLista(ArrayList l) {
+    public static void imprimirLista(ArrayList l) {
         if (!l.isEmpty()) {
             Iterator it = l.iterator();
 
@@ -95,7 +95,7 @@ public class Interficie {
      *
      * @return int
      */
-    public int llegeixInt() {
+    public static int llegeixInt() {
         while (!sc.hasNextInt()) {
             System.out.println("Eso no es un número.");
             sc.next();
@@ -108,12 +108,11 @@ public class Interficie {
      *
      * @return
      */
-    public String llegeixString() {
-        String s = sc.next();
-        return s;
+    public static String llegeixString() {
+        return sc.next();
     }
 
-    public int selNumMenu(String[] l) {
+    public static int selNumMenu(String[] l) {
         int num = llegeixInt();
         while (l.length + 1 < num) {
             System.out.println("El número debe pertenecer a la lista(máximo " + (l.length + 1) + ").");
@@ -122,7 +121,7 @@ public class Interficie {
         return num;
     }
 
-    public int selNumLista(ArrayList l) {
+    public static int selNumLista(ArrayList l) {
         int num = llegeixInt();
         while (l.size() - 1 < num) {
             System.out.println("El número debe pertenecer a la lista(máximo " + (l.size() - 1) + ").");
@@ -136,7 +135,7 @@ public class Interficie {
      *
      * @return
      */
-    public Date llegeixData() {
+    public static Date llegeixData() {
         String s = sc.next();
         DateFormat format = new SimpleDateFormat("dd/mm/yyyy", Locale.ENGLISH);
         Date d = null;
@@ -148,7 +147,7 @@ public class Interficie {
         return d;
     }
 
-    public String llegeixDNI() {
+    public static String llegeixDNI() {
         String s = sc.nextLine();
         boolean correcte = false;
         while (!correcte) {
@@ -176,7 +175,7 @@ public class Interficie {
         return s;
     }
 
-    public String llegeixCB() {
+    public static String llegeixCB() {
         String s = sc.nextLine();
         boolean correcte = false;
         while (!correcte) {

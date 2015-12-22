@@ -1,4 +1,4 @@
-package controlador;
+package Controlador;
 
 import controlador.parser.MotoRentDataManager;
 import modelo.Admin;
@@ -13,28 +13,30 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import modelo.Moto;
+import modelo.Reserva;
+import modelo.Trajecte;
 
 /**
  * @author rob3ns
  */
 public class MotoRent implements Serializable {
 
-    private List<Local> locales;
+    private ArrayList<Local> locals;
     private Admin admin;
     private List<Client> clientes;
     private List<Gerent> gerentes;
-    private Interficie interficie;
     private ArrayList<String[]> opciones;
     private Menu menu;
     private MotoRentDataManager dataMgr;
 
     public MotoRent() {
-        locales = new ArrayList();
+        locals = new ArrayList();
         gerentes = new ArrayList();
         clientes = new ArrayList();
-        interficie = new Interficie();
         dataMgr = new MotoRentDataManager();
 
         //Cargar datos
@@ -120,6 +122,7 @@ public class MotoRent implements Serializable {
             opc = menu.generarMenu();
             switch (opc) {
                 case 0: //Reservar moto
+                    reservarMoto(cl);
                     break;
                 case 1: //Modificar desti
                     break;
@@ -187,9 +190,9 @@ public class MotoRent implements Serializable {
         gerentes.add(g);
 
         System.out.println("Usuario: ");
-        String usuario = interficie.llegeixString();
+        String usuario = Interficie.llegeixString();
         System.out.println("Password: ");
-        String password = interficie.llegeixString();
+        String password = Interficie.llegeixString();
 
         int[] login = new int[2];
         Arrays.fill(login, 0);
@@ -256,8 +259,8 @@ public class MotoRent implements Serializable {
     }
 
     private void registrarse() {
-        interficie.escriu("Quin es el teu DNI?: ");
-        String dni = interficie.llegeixDNI();
+        Interficie.escriu("Quin es el teu DNI?: ");
+        String dni = Interficie.llegeixDNI();
 
         Iterator it = clientes.iterator();
         boolean esCliente = false;
@@ -275,33 +278,33 @@ public class MotoRent implements Serializable {
             String username;
             String contrasenya;
 
-            interficie.escriu("Quin es el teu Nom ?: ");
-            nom = interficie.llegeixString();
-            interficie.escriu("Quins son els teus cognoms?: ");
-            cognoms = interficie.llegeixString();
-            interficie.escriu("Quin es el teu telefon?: ");
-            telefon = interficie.llegeixInt();
-            interficie.escriu("Quin es el teu correu electronic?: ");
-            correu = interficie.llegeixString();
-            interficie.escriu("Quin es el teu compteBancari?: ");
-            compteBancari = interficie.llegeixCB();
-            interficie.escriu("Quin vols que sigui el teu Username?: ");
-            username = interficie.llegeixString();
-            interficie.escriu("Quina vols que sigui la teva contrasenya?: ");
-            contrasenya = interficie.llegeixString();
+            Interficie.escriu("Quin es el teu Nom ?: ");
+            nom = Interficie.llegeixString();
+            Interficie.escriu("Quins son els teus cognoms?: ");
+            cognoms = Interficie.llegeixString();
+            Interficie.escriu("Quin es el teu telefon?: ");
+            telefon = Interficie.llegeixInt();
+            Interficie.escriu("Quin es el teu correu electronic?: ");
+            correu = Interficie.llegeixString();
+            Interficie.escriu("Quin es el teu compteBancari?: ");
+            compteBancari = Interficie.llegeixCB();
+            Interficie.escriu("Quin vols que sigui el teu Username?: ");
+            username = Interficie.llegeixString();
+            Interficie.escriu("Quina vols que sigui la teva contrasenya?: ");
+            contrasenya = Interficie.llegeixString();
             CompteBancari cb = new CompteBancari(compteBancari);
 
             Client c = new Client(dni, correu, telefon, cb, username, contrasenya, nom, cognoms);
             clientes.add(c);
         } else {
-            interficie.escriu("Aquest dni ja esta registrat dins del sistema");
+            Interficie.escriu("Aquest dni ja esta registrat dins del sistema");
         }
 
     }
 
     public void veureMotosLocals() {
-        for (Local l : locales) {
-            interficie.escriu("------------\nLocal " + locales.indexOf(l) + ":\n" + l.toString());
+        for (Local l : locals) {
+            Interficie.escriu("------------\nLocal " + locals.indexOf(l) + ":\n" + l.toString());
         }
     }
 
@@ -322,10 +325,49 @@ public class MotoRent implements Serializable {
     }
 
     public List<Local> getLocales() {
-        return locales;
+        return locals;
     }
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
+    }
+    
+    private void reservarMoto(Client cl){
+        boolean bloquejat = cl.estaBloquejat();
+        boolean teReserva;
+        if (!bloquejat){
+            teReserva = cl.comprovarReserva();
+            if (!teReserva){
+                Interficie.escriu("Quin dia vols començar la teva reserva? (hh:mm/dd/mm/aaaa)");
+                Date dataInici = Interficie.llegeixData();
+                Interficie.escriu("Escull el local de sortida");
+                Interficie.imprimirLista(locals);
+                int posLocalSortida = Interficie.selNumLista(locals);
+                Local localSortida = locals.get(posLocalSortida);
+                Interficie.escriu("Escull la moto que vosl fer servir");
+                Moto moto = localSortida.escollirMoto();
+                Interficie.escriu("Quin dia vols acabar la teva reserva? (hh:mm/dd/mm/aaaa)");
+                Date dataFinal = Interficie.llegeixData();
+                Interficie.escriu("Escull el local d'arribada");
+                Interficie.imprimirLista(locals);
+                int posLocalDesti = Interficie.selNumLista(locals);
+                Local localDesti = locals.get(posLocalDesti);
+                boolean esVIP = cl.isVIP();
+                Trajecte trajecte = new Trajecte(localSortida,localDesti);
+                Reserva reserva = new Reserva(dataInici,dataFinal,trajecte,moto);
+                int codiReserva = reserva.getCodi();
+                if (esVIP){
+                    reserva.realitzarDescompte();
+                }
+                Interficie.escriu(codiReserva);
+                cl.addReserva(reserva);
+            }
+            else{
+                Interficie.escriu("Ja tens una reserva Activa");
+            }
+        }
+        else{
+            Interficie.escriu("Has sigut bloquejat per haver comes mes de 3 faltes");
+        }   
     }
 }
