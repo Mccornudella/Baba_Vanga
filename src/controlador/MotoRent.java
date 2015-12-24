@@ -340,15 +340,25 @@ public class MotoRent implements Serializable {
             if (!teReserva){
                 Interficie.escriu("Quin dia vols començar la teva reserva? (hh:mm/dd/mm/aaaa)");
                 Date dataInici = Interficie.llegeixData();
-                Interficie.escriu("Escull el local de sortida");
+                while (!comparaDataActual(dataInici)){
+                    Interficie.escriu("\nERROR! Introdueix si us plau una data posterior.\n");
+                    Interficie.escriu("Quin dia vols començar la teva reserva? (hh:mm/dd/mm/aaaa)");
+                    dataInici = Interficie.llegeixData();
+                }
+                Interficie.escriu("\nEscull el local de sortida\n");
                 Interficie.imprimirLista(locals);
                 int posLocalSortida = Interficie.selNumLista(locals);
                 Local localSortida = locals.get(posLocalSortida);
-                Interficie.escriu("Escull la moto que vosl fer servir");
+                Interficie.escriu("\nEscull la moto que vosl fer servir\n");
                 Moto moto = localSortida.escollirMoto();
-                Interficie.escriu("Quin dia vols acabar la teva reserva? (hh:mm/dd/mm/aaaa)");
+                Interficie.escriu("\nQuin dia vols acabar la teva reserva? (hh:mm/dd/mm/aaaa)");
                 Date dataFinal = Interficie.llegeixData();
-                Interficie.escriu("Escull el local d'arribada");
+                while (dataFinal.before(dataInici)){
+                    Interficie.escriu("\nERROR! La data de finalitzacio ha de ser posterior a la d'inici!!\n");
+                    Interficie.escriu("\nQuin dia vols acabar la teva reserva? (hh:mm/dd/mm/aaaa)");
+                    dataFinal = Interficie.llegeixData();
+                }
+                Interficie.escriu("\nEscull el local d'arribada\n");
                 Interficie.imprimirLista(locals);
                 int posLocalDesti = Interficie.selNumLista(locals);
                 Local localDesti = locals.get(posLocalDesti);
@@ -359,6 +369,7 @@ public class MotoRent implements Serializable {
                 if (esVIP){
                     reserva.realitzarDescompte();
                 }
+                Interficie.escriu("\nAquest es el teu codi de reserva:");
                 Interficie.escriu(codiReserva);
                 cl.addReserva(reserva);
             }
@@ -369,5 +380,10 @@ public class MotoRent implements Serializable {
         else{
             Interficie.escriu("Has sigut bloquejat per haver comes mes de 3 faltes");
         }   
+    }
+    
+    public boolean comparaDataActual(Date d){
+        Date actual_date = new Date();
+        return d.after(actual_date);
     }
 }

@@ -1,8 +1,6 @@
 package modelo;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -121,8 +119,11 @@ public class Reserva {
     private void crearCodi() {
         Random r = new Random();
         int cd = 0;
-        while (cd < 1000000 && cd > 10000000){
-            cd = r.nextInt();
+        boolean stop;
+        stop = false;
+        while(!stop){
+            cd = r.nextInt(10000000); 
+            stop = cd > 1000000;
         }
         String scodi = Integer.toString(cd);
         String concat = scodi.concat(moto.getMatricula());

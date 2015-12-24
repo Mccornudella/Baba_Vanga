@@ -135,14 +135,20 @@ public class Interficie {
      *
      * @return
      */
-    public static Date llegeixData() {
+    public static Date llegeixData(){
+        boolean bona = false;
         String s = sc.next();
         SimpleDateFormat format = new SimpleDateFormat("HH:mm/dd/MM/yyyy", Locale.ENGLISH);
         Date d = null;
-        try {
-            d = format.parse(s);
-        } catch (ParseException ex) {
-            Logger.getLogger(Interficie.class.getName()).log(Level.SEVERE, null, ex);
+        while (!bona){
+            try {
+                d = format.parse(s);
+                bona = true;
+            } catch (ParseException ex) {
+                System.out.println("Error a l'hora d'introduir la data, recorda (hh:mm/dd/MM/yyyy");
+                s = sc.next();
+                bona = false;
+            }
         }
         return d;
     }
