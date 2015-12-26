@@ -166,8 +166,10 @@ public class MotoRent implements Serializable {
             opc = menu.generarMenu();
             switch (opc) {
                 case 0: //Veure locals sota minims
+                    veureLocalsSotaMinims();
                     break;
                 case 1: //Veure locals sobre maxims
+                    veureLocalsSobreMaxims();
                     break;
                 case 2: //Veure motos locals
                     veureMotosLocals();
@@ -307,6 +309,7 @@ public class MotoRent implements Serializable {
     public void veureMotosLocals() {
         for (Local l : locals) {
             Interficie.escriu("------------\nLocal " + locals.indexOf(l) + ":\n" + l.toString());
+            l.veureMotos(); // imprime motos
         }
     }
 
@@ -316,6 +319,26 @@ public class MotoRent implements Serializable {
 
         if (mes < 13 && mes > 0) {
             Interficie.escriu(generarInforme(mes));
+        }
+    }
+
+    public void veureLocalsSotaMinims() {
+        for (Local l : locals) {
+            int cantMin = (int) (l.getCapacitatMax() * 0.05);
+            if (l.getMotos().size() <= cantMin) {
+                Interficie.escriu("Capacitat 5%: " + cantMin + "\nCantidad actual: " + l.getMotos().size());
+                Interficie.escriu(l.toString());
+            }
+        }
+    }
+
+    public void veureLocalsSobreMaxims() {
+        for (Local l : locals) {
+            int cantMax = (int) (l.getCapacitatMax() * 0.75f);
+            if (l.getMotos().size() >= cantMax) {
+                Interficie.escriu("Capacitat 75%: " + cantMax + "\nCantidad actual: " + l.getMotos().size());
+                Interficie.escriu(l.toString());
+            }
         }
     }
 
@@ -332,7 +355,7 @@ public class MotoRent implements Serializable {
                     for (Reserva r : res) {
                         Calendar cal = Calendar.getInstance();
                         cal.setTime(r.getDataInici());
-                        if ((12 - mes) == cal.get(Calendar.MONTH)) {
+                        if ((12 - mes) == cal.get(Calendar.MONTH)) { // Si el mes coincide, el 12 equivale a 0.
                             info += "_-_-_-_-_-_ \n";
                             info += "Local inici \n" + r.getTrajecte().getInici();
                             info += "Local fi \n" + r.getTrajecte().getFinal();
