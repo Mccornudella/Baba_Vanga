@@ -1,5 +1,5 @@
-
 package controlador;
+
 import controlador.parser.MotoRentDataManager;
 import modelo.Admin;
 import modelo.Client;
@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -172,6 +173,7 @@ public class MotoRent implements Serializable {
                     veureMotosLocals();
                     break;
                 case 3: //Veure informe mensual
+                    veureInformeMensual();
                     break;
                 case 4: //Log out
                     logout();
@@ -308,12 +310,43 @@ public class MotoRent implements Serializable {
         }
     }
 
-    public void veureInforme(int month) {
+    public void veureInformeMensual() {
+        Interficie.escriu("Introduce el mes (mm): ");
+        int mes = Interficie.llegeixInt();
 
+        if (mes < 13 && mes > 0) {
+            Interficie.escriu(generarInforme(mes));
+        }
     }
 
-    private String generarInforme(int month) {
-        return null;
+    private String generarInforme(int mes) {
+        String info = "";
+        int cantidad = 0;
+
+        if (!clientes.isEmpty()) {
+            for (Client cl : clientes) {
+                ArrayList<Reserva> res = cl.getReservas();
+                if (!res.isEmpty()) {
+                    info += "\n................\n" + cl.toString() + "\n";
+                    cantidad += cl.getReservas().size();
+                    for (Reserva r : res) {
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(r.getDataInici());
+                        if ((12 - mes) == cal.get(Calendar.MONTH)) {
+                            info += "_-_-_-_-_-_ \n";
+                            info += "Local inici \n" + r.getTrajecte().getInici();
+                            info += "Local fi \n" + r.getTrajecte().getFinal();
+                            int horas = cal.get(Calendar.HOUR);
+                            int min = cal.get(Calendar.MINUTE);
+                            info += "Retras: " + String.valueOf(horas) + ":" + String.valueOf(min);
+                            info += "\nEstado: " + r.getEstado().getFalta().getDescripcio() + "\n";
+                        }
+                    }
+                    info += cantidad;
+                }
+            }
+        }
+        return info;
     }
 
     public List<Client> getClientes() {
@@ -331,16 +364,16 @@ public class MotoRent implements Serializable {
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
-    
-    private void reservarMoto(Client cl){
+
+    private void reservarMoto(Client cl) {
         boolean bloquejat = cl.estaBloquejat();
         boolean teReserva;
-        if (!bloquejat){
+        if (!bloquejat) {
             teReserva = cl.comprovarReserva();
-            if (!teReserva){
+            if (!teReserva) {
                 Interficie.escriu("Quin dia vols començar la teva reserva? (hh:mm/dd/mm/aaaa)");
                 Date dataInici = Interficie.llegeixData();
-                while (!comparaDataActual(dataInici)){
+                while (!comparaDataActual(dataInici)) {
                     Interficie.escriu("\nERROR! Introdueix si us plau una data posterior.\n");
                     Interficie.escriu("Quin dia vols començar la teva reserva? (hh:mm/dd/mm/aaaa)");
                     dataInici = Interficie.llegeixData();
@@ -353,7 +386,7 @@ public class MotoRent implements Serializable {
                 Moto moto = localSortida.escollirMoto();
                 Interficie.escriu("\nQuin dia vols acabar la teva reserva? (hh:mm/dd/mm/aaaa)");
                 Date dataFinal = Interficie.llegeixData();
-                while (dataFinal.before(dataInici)){
+                while (dataFinal.before(dataInici)) {
                     Interficie.escriu("\nERROR! La data de finalitzacio ha de ser posterior a la d'inici!!\n");
                     Interficie.escriu("\nQuin dia vols acabar la teva reserva? (hh:mm/dd/mm/aaaa)");
                     dataFinal = Interficie.llegeixData();
@@ -363,26 +396,24 @@ public class MotoRent implements Serializable {
                 int posLocalDesti = Interficie.selNumLista(locals);
                 Local localDesti = locals.get(posLocalDesti);
                 boolean esVIP = cl.isVIP();
-                Trajecte trajecte = new Trajecte(localSortida,localDesti);
-                Reserva reserva = new Reserva(dataInici,dataFinal,trajecte,moto);
+                Trajecte trajecte = new Trajecte(localSortida, localDesti);
+                Reserva reserva = new Reserva(dataInici, dataFinal, trajecte, moto);
                 String codiReserva = reserva.getCodi();
-                if (esVIP){
+                if (esVIP) {
                     reserva.realitzarDescompte();
                 }
                 Interficie.escriu("\nAquest es el teu codi de reserva:");
                 Interficie.escriu(codiReserva);
                 cl.addReserva(reserva);
-            }
-            else{
+            } else {
                 Interficie.escriu("Ja tens una reserva Activa");
             }
-        }
-        else{
+        } else {
             Interficie.escriu("Has sigut bloquejat per haver comes mes de 3 faltes");
-        }   
+        }
     }
-    
-    public boolean comparaDataActual(Date d){
+
+    public boolean comparaDataActual(Date d) {
         Date actual_date = new Date();
         return d.after(actual_date);
     }

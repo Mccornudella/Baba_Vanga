@@ -155,7 +155,6 @@ public class MotoRentDataManager {
 
         //Index del cliente segun su id
         int indexC = Integer.valueOf(client.substring(1)) - 1;
-        System.out.println(indexC);
         int indexLi = Integer.valueOf(local_inici.substring(1)) - 1;
         int indexLf = Integer.valueOf(local_fi.substring(1)) - 1;
         int idMoto = Integer.valueOf(moto.substring(1));

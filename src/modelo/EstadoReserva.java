@@ -58,6 +58,10 @@ public class EstadoReserva {
         
     }
 
+    public Falta getFalta() {
+        return falta;
+    }
+
     @Override
     public String toString() {
         return super.toString();

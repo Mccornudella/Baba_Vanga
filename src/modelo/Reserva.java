@@ -133,6 +133,9 @@ public class Reserva {
    private void initEstado(){
        Date d = new Date();
        estado = new EstadoReserva(!d.after(fi),d.after(fi));
-       
    }
+
+    public EstadoReserva getEstado() {
+        return estado;
+    }
 }

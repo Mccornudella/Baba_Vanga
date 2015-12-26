@@ -78,6 +78,6 @@ public class Usuari implements Serializable{
     }
     @Override
     public String toString() {
-        return super.toString();
+        return username;
     }
 }

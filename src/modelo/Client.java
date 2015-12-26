@@ -156,7 +156,7 @@ public class Client extends Usuari implements Serializable {
         boolean activa = false;
         Iterator it = reserves.iterator();
         Reserva res = null;
-        while (it.hasNext()){
+        while (it.hasNext()) {
             res = (Reserva) it.next();
             activa = res.isActiva();
         }
@@ -171,8 +171,8 @@ public class Client extends Usuari implements Serializable {
         return this.vip;
     }
 
-    public Reserva getReserva() {
-        return null;
+    public ArrayList<Reserva> getReservas() {
+        return this.reserves;
     }
 
     public void finalitzarRecollida() {
