@@ -68,6 +68,7 @@ public class Menu {
 
     /**
      * Aquí iría lo de los hilos para el estado del local en gerente
+     * @return opción seleccionada
      */
     public int generarMenu() {
         System.out.println(titulo + this.concatTipoUsuario());

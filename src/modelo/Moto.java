@@ -85,21 +85,25 @@ public class Moto {
         return estat;
     }
 
-    public void disponible() {
-        estat = true;
+    public void setEstat(boolean estat) {
+        this.estat = estat;
+    }
+
+    public boolean disponible() {
+        return !estat;
     }
 
     public String getMatricula() {
         return matricula;
     }
-    
 
     @Override
     public String toString() {
+        String est = estat ? "No disponible" : "Disponible";
         return "ID: " + ID + "\n" +
                "Matricula: " + matricula + "\n" +
                 espec.toString() + "\n" +
-                "Estat: " + estat + "\n";
+                "Estat: " + est + "\n";
     }
     
 }

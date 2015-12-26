@@ -47,9 +47,9 @@ public class MotoRentXMLParser {
             doc.getDocumentElement().normalize();
 
             // Obtenim dades
+            this.obtenirGestors(doc);
             this.obtenirLocals(doc);
             this.obtenirAdministradors(doc);
-            this.obtenirGestors(doc);
             this.obtenirClients(doc);
             this.obtenirReserves(doc);
         } catch (SAXParseException err) {
@@ -210,7 +210,7 @@ public class MotoRentXMLParser {
      * @param doc fitxer XML del que obtenir les dades
      */
     private void obtenirGestors(Document doc) {
-        NodeList gestors = doc.getElementsByTagName("gerent");
+        NodeList gestors = doc.getElementsByTagName("gestor");
         String id, nom, usuari, password;
         int numGestors = gestors.getLength();
 
@@ -234,7 +234,7 @@ public class MotoRentXMLParser {
                 Element ePassword = (Element) nPassword.item(0);
                 password = ePassword.getTextContent();
 
-                // Creem l'admin
+                // Creem el gestor
                 dataManager.crearGestor(id, nom, usuari, password);
             }
         }

@@ -87,7 +87,11 @@ public class MotoRentDataManager {
         //Crear local y ponerlo en motorent
         Local loc = new Local(dir, Integer.valueOf(capacitat));
         this.motoRent.getLocales().add(loc);
-
+        
+        //Asigno al gerente el local que le pertenece
+        Gerent g = this.motoRent.getGerentes().get(Integer.valueOf(gestorID.substring(1)) - 1);
+        g.setLocal(loc);
+        
         Consola.escriu("\nlocal amb ID: " + id + "\n");
         Consola.escriu("--------------------------------------------------\n");
         Consola.escriu("Capacitat: " + capacitat + "\n");

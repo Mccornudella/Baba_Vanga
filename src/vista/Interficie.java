@@ -122,12 +122,15 @@ public class Interficie {
     }
 
     public static int selNumLista(ArrayList l) {
-        int num = llegeixInt();
-        while (l.size() - 1 < num) {
-            System.out.println("El número debe pertenecer a la lista(máximo " + (l.size() - 1) + ").");
-            num = llegeixInt();
+        if (!l.isEmpty()) {
+            int num = llegeixInt();
+            while (l.size() - 1 < num || num < 0) {
+                System.out.println("El número debe pertenecer a la lista(máximo " + (l.size() - 1) + ").");
+                num = llegeixInt();
+            }
+            return num;
         }
-        return num;
+        return -1;
     }
 
     /**
@@ -135,12 +138,12 @@ public class Interficie {
      *
      * @return
      */
-    public static Date llegeixData(){
+    public static Date llegeixData() {
         boolean bona = false;
         String s = sc.next();
         SimpleDateFormat format = new SimpleDateFormat("HH:mm/dd/MM/yyyy", Locale.ENGLISH);
         Date d = null;
-        while (!bona){
+        while (!bona) {
             try {
                 d = format.parse(s);
                 bona = true;

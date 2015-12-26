@@ -144,6 +144,7 @@ public class MotoRent implements Serializable {
             opc = menu.generarMenu();
             switch (opc) {
                 case 0: //Entregar moto
+                    ger.entregarMoto();
                     break;
                 case 1: //Recollir moto
                     break;

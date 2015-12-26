@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import vista.Interficie;
 
 /**
  * @author rob3ns
@@ -60,5 +61,19 @@ public class Gerent extends Empleat implements Serializable {
 
     public void setLocal(Local local) {
         this.local = local;
+    }
+
+    public void entregarMoto() {
+        Interficie.imprimirLista(local.getMotos());
+        int indice = Interficie.selNumLista(local.getMotos());
+        Moto m = (Moto) local.getMotos().get(indice);
+        
+        if (m.disponible()) {
+        Interficie.escriu("Moto entregda! \nMatricula: " + m.getMatricula());
+        m.setEstat(true);
+        }
+        else {
+            Interficie.escriu("La moto no está disponible!");
+        }
     }
 }
