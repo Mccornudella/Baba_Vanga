@@ -84,13 +84,19 @@ public class Moto {
     public boolean getEstat() {
         return estat;
     }
+    
 
+<<<<<<< Updated upstream
     public void setEstat(boolean estat) {
         this.estat = estat;
     }
 
     public boolean disponible() {
         return !estat;
+=======
+    public void setDisponible(boolean estat) {
+        this.estat = estat;
+>>>>>>> Stashed changes
     }
 
     public String getMatricula() {

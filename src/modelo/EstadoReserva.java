@@ -54,8 +54,17 @@ public class EstadoReserva {
         return estadoMoto;
     }
     
-    public void apuntarEndarrediment(Date retras){
-        
+    public void apuntarEndarrediment(int retras){
+        this.retras.setRetras(retras);
+    }
+    
+    public double getCostRetras(){
+        return retras.getCost();
+    }
+    
+    public void setFalta(Double importe, String desperfecte){
+        falta.setCost(importe);
+        falta.setDescripcio(desperfecte);
     }
 
     public Falta getFalta() {

@@ -8,17 +8,17 @@ import java.io.Serializable;
 
 public class Empleat extends Usuari implements Serializable{
 
-    private String correo;
-    private int numeroPers;
+    protected String correo;
+    protected String ID;
 
     /**
      * Constructor simple, solo parámetros de empleado.
      * @param correo
      * @param numeroPers Teléfono.
      */
-    public Empleat(String correo, int numeroPers) {
+    public Empleat(String correo, String ID) {
         this.correo = correo;
-        this.numeroPers = numeroPers;
+        this.ID = ID;
     }
     
     /**
@@ -27,6 +27,7 @@ public class Empleat extends Usuari implements Serializable{
      * @param password
      * @param nombre
      * @param apellidos 
+     * @param ID 
      */
     public Empleat(String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
@@ -35,16 +36,16 @@ public class Empleat extends Usuari implements Serializable{
     /**
      * Constructor con parámetros de usuario y empleado.
      * @param correo
-     * @param numeroPers
+     * @param ID
      * @param username
      * @param password
      * @param nombre
      * @param apellidos 
      */
-    public Empleat(String correo, int numeroPers, String username, String password, String nombre, String apellidos) {
+    public Empleat(String correo, String ID, String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
         this.correo = correo;
-        this.numeroPers = numeroPers;
+        this.ID = ID;
     }
     
     /**
@@ -58,16 +59,16 @@ public class Empleat extends Usuari implements Serializable{
         return correo;
     }
 
-    public int getNumeroPers() {
-        return numeroPers;
+    public String getID() {
+        return ID;
     }
 
     public void setCorreo(String correo) {
         this.correo = correo;
     }
 
-    public void setNumeroPers(int numeroPers) {
-        this.numeroPers = numeroPers;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     @Override

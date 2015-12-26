@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import vista.Interficie;
 
 /**
  * @author rob3ns
@@ -18,7 +19,7 @@ public class Client extends Usuari implements Serializable {
     private int faltas;
     private ArrayList<Reserva> reserves;
     private Date fechaRegistro;
-    private int deuda;
+    private double deuda;
     private boolean vip;
 
     /**
@@ -92,7 +93,7 @@ public class Client extends Usuari implements Serializable {
         return compteBan;
     }
 
-    public int getDeuda() {
+    public double getDeuda() {
         return deuda;
     }
 
@@ -120,7 +121,7 @@ public class Client extends Usuari implements Serializable {
         this.compteBan = cuentaBanc;
     }
 
-    public void setDeuda(int deuda) {
+    public void setDeuda(double deuda) {
         this.deuda = deuda;
     }
 
@@ -163,24 +164,131 @@ public class Client extends Usuari implements Serializable {
         return activa;
     }
 
-    public boolean comprobarCodigo(int codi) {
-        return true;
+    public boolean comprobarReservaActiva(String codi) {
+        Iterator it = reserves.iterator();
+        boolean check_codi = false;
+        boolean fin = false;
+        Reserva re = null;
+        while (it.hasNext() && !check_codi){
+            re = (Reserva) it.next();
+            check_codi = re.getCodi().equals(codi);
+        }
+        boolean activa = re.isActiva();
+        fin = re.isFinalitzada();
+        if (check_codi && !fin){
+            if (!activa){
+                return true;
+            }
+            else{
+                Interficie.escriu("La reserva ja esta activa, no es pot tornar a entregar una moto.");
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    public boolean comprobarReservaNoActiva(String codi){
+        Iterator it = reserves.iterator();
+        boolean check_codi = false;
+        boolean fin = false;
+        Reserva re = null;
+        while (it.hasNext() && !check_codi){
+            re = (Reserva) it.next();
+            check_codi = re.getCodi().equals(codi);
+        }
+        boolean activa = re.isActiva();
+        fin = re.isFinalitzada();
+        if (check_codi && !fin){
+            if (activa){
+                return true;
+            }
+            else{
+                Interficie.escriu("La reserva no esta activa, no es pot recollir la moto.");
+                return false;
+            }
+        }
+        return false;
     }
 
     public boolean isVIP() {
         return this.vip;
     }
 
+<<<<<<< Updated upstream
     public ArrayList<Reserva> getReservas() {
         return this.reserves;
+=======
+    public Reserva getReserva(String codi) {
+        Reserva re = null;
+        Iterator it = reserves.iterator();
+        boolean stop = false;
+        while (it.hasNext() && !stop){
+            Reserva r = (Reserva) it.next();
+            if (r.getCodi().equals(codi)){
+                re = r;
+            }
+        }
+        return re;
+>>>>>>> Stashed changes
     }
 
-    public void finalitzarRecollida() {
+    public void finalitzarRecollida(Reserva re) {
+        Interficie.escriu("Te la moto algun desperfecte?(si/no): ");
+        String desperfecte = Interficie.llegeixString();
+        while (!desperfecte.equals("si") || !desperfecte.equals("no")){
+            Interficie.escriu("No he entes la resposta, introdueix (si/no) si us plau.");
+            desperfecte = Interficie.llegeixString();
+        }
+        if (desperfecte.equals("si")){
+            Moto m1 = re.getMoto();
+            m1.setDisponible(false);
+            Double importDesperfecte = 0.0;
+            Interficie.escriu("Introdueix el cost del desperfecte");
+            importDesperfecte = Interficie.llegeixDouble();
+            deuda = deuda + importDesperfecte;
+            faltas = faltas + 1;
+            Interficie.escriu("Descriu el desperfecte de la moto");
+            desperfecte = Interficie.llegeixString();
+            re.setFalta(importDesperfecte,desperfecte);
+            
+        }
+        else{
+            Moto m1 = re.getMoto();
+            m1.setDisponible(true);
+        }
 
     }
 
     public String infoReservas(int month) {
         return null;
+    }
+    
+    public void sumaDeuda(double cost){
+        deuda = deuda + cost;
+    }
+    
+    public boolean comprobarLocalDestino(String IDGestor){
+        Iterator it = reserves.iterator();
+        boolean check = false;
+        while (it.hasNext() && !check){
+            Reserva re = (Reserva) it.next();
+            if (re.isActiva() && re.getTrajecte().getFinal().getIDGerent().equals(IDGestor)){
+                check = true;
+            }
+        }
+        return check;
+    }
+    
+    public boolean comprobarLocalInicio(String IDGestor){
+        Iterator it = reserves.iterator();
+        boolean check = false;
+        while (it.hasNext() && !check){
+            Reserva re = (Reserva) it.next();
+            if (re.isActiva() && re.getTrajecte().getInici().getIDGerent().equals(IDGestor)){
+                check = true;
+            }
+        }
+        return check;
     }
 
     @Override

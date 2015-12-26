@@ -1,32 +1,31 @@
 package modelo;
 
-import java.util.Date;
-
 /**
  *
  * @author Jose
  */
 public class Endarrediment extends Penalitzacio{
-    private Date retras;
+    private int retras;
 
-    public Endarrediment(Date retras) {
+    public Endarrediment(int retras) {
         this.retras = retras;
     }
     
     public Endarrediment(){
-        retras = null;
+        retras = 0;
     }
 
-    public void setRetras(Date retras) {
+    public void setRetras(int retras) {
         this.retras = retras;
+        calcularCost();
     }
 
-    public Date getRetras() {
+    public int getRetras() {
         return retras;
     }
     
     public void calcularCost(){
-         double preu = retras.getHours() * 2;
+         double preu = retras * 2;
          super.setCost(preu);
         
     }

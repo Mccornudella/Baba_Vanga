@@ -144,9 +144,14 @@ public class MotoRent implements Serializable {
             opc = menu.generarMenu();
             switch (opc) {
                 case 0: //Entregar moto
+<<<<<<< Updated upstream
                     ger.entregarMoto();
+=======
+                    entregarMoto(ger);
+>>>>>>> Stashed changes
                     break;
                 case 1: //Recollir moto
+                    recollirMoto(ger);
                     break;
                 case 2: //Gestionar local
                     break;
@@ -191,8 +196,7 @@ public class MotoRent implements Serializable {
         // Usuarios para probar login
         Client c = new Client("ssd", "asd", 888, new CompteBancari("4475869584758493847584938475849384"), "usuari1", "usuari1", "as", "d");
         clientes.add(c);
-        Gerent g = new Gerent("usuari2", "usuari2", "as", "d");
-        gerentes.add(g);
+
 
         System.out.println("Usuario: ");
         String usuario = Interficie.llegeixString();
@@ -402,11 +406,11 @@ public class MotoRent implements Serializable {
                     Interficie.escriu("Quin dia vols començar la teva reserva? (hh:mm/dd/mm/aaaa)");
                     dataInici = Interficie.llegeixData();
                 }
-                Interficie.escriu("\nEscull el local de sortida\n");
+                Interficie.escriu("\nEscull el local de sortida:\n");
                 Interficie.imprimirLista(locals);
                 int posLocalSortida = Interficie.selNumLista(locals);
                 Local localSortida = locals.get(posLocalSortida);
-                Interficie.escriu("\nEscull la moto que vosl fer servir\n");
+                Interficie.escriu("\nEscull la moto que vols fer servir:\n");
                 Moto moto = localSortida.escollirMoto();
                 Interficie.escriu("\nQuin dia vols acabar la teva reserva? (hh:mm/dd/mm/aaaa)");
                 Date dataFinal = Interficie.llegeixData();
@@ -426,8 +430,15 @@ public class MotoRent implements Serializable {
                 if (esVIP) {
                     reserva.realitzarDescompte();
                 }
-                Interficie.escriu("\nAquest es el teu codi de reserva:");
-                Interficie.escriu(codiReserva);
+                cl.sumaDeuda(reserva.getPreu());
+                Interficie.escriu("Reserva confirmada: Codi de Reserva --> " + codiReserva);
+                Interficie.escriu("-----------------------");
+                Interficie.escriu("Data d'inici: " + dataInici.toString());
+                Interficie.escriu("Local: " + localSortida.toString());
+                Interficie.escriu("Moto: " + moto.toString());
+                Interficie.escriu("Data de finalitzacio: " + dataFinal.toString());
+                Interficie.escriu("Local: " + localDesti.toString());
+                
                 cl.addReserva(reserva);
             } else {
                 Interficie.escriu("Ja tens una reserva Activa");
@@ -440,5 +451,86 @@ public class MotoRent implements Serializable {
     public boolean comparaDataActual(Date d) {
         Date actual_date = new Date();
         return d.after(actual_date);
+    }
+    
+    public void recollirMoto(Gerent g){
+        String codi;
+        String dni;
+        boolean check = false;
+        boolean check2 = false;
+        Interficie.escriu("Introdueix el codi de la reserva:");
+        codi = Interficie.llegeixString();
+        Interficie.escriu("Introdueix el DNI del client");
+        dni = Interficie.llegeixDNI();
+        Iterator it = clientes.iterator();
+        Client cl = null;
+        while (it.hasNext() && !check){
+            cl = (Client) it.next();
+            check = cl.checkDNI(dni);
+        }
+        if(check){
+            check = !check;
+            check = cl.comprobarReservaNoActiva(codi);
+            check2 = cl.comprobarLocalDestino(g.getID());
+            if (check2){
+                if (check){
+                    Reserva re = cl.getReserva(codi);
+                    cl.finalitzarRecollida(re);
+                    Date dataact = new Date();
+                    int retras = (int) ((dataact.getTime() - re.getDataFi().getTime()) /(60 * 60 * 1000));
+                    if (retras > 0){
+                        re.apuntarEndarrediment(retras);
+                        cl.sumaDeuda(re.getCostRetras());
+                    }
+                }
+                else{
+                    Interficie.escriu("No hi ha cap reserva activa que coincideixi amb el codi introduit");
+                }
+            }
+            else{
+                Interficie.escriu("Aquest local no correspon amb el local desti de la reserva");
+            }
+        }
+        else{
+            Interficie.escriu("No hi ha cap client que coincideixi amb el DNI introduit");
+        }
+    }
+    
+    public void entregarMoto(Gerent g){
+        String codi;
+        String dni;
+        boolean check = false;
+        boolean check2 = false;
+        Interficie.escriu("Introdueix el codi de la reserva:");
+        codi = Interficie.llegeixString();
+        Interficie.escriu("Introdueix el DNI del client");
+        dni = Interficie.llegeixDNI();
+        Iterator it = clientes.iterator();
+        Client cl = null;
+        while (it.hasNext() && !check){
+            cl = (Client) it.next();
+            check = cl.checkDNI(dni);
+        }
+        if(check){
+            check = !check;
+            check = cl.comprobarReservaActiva(codi);
+            check2 = cl.comprobarLocalInicio(g.getLocal().getIDGerent());
+            if (check2){
+                if (check){
+                    Reserva re = cl.getReserva(codi);
+                    re.setDisponibilitatMoto(false);
+                    re.setActiva();
+                }
+                else{
+                    Interficie.escriu("No hi ha cap reserva  que conicideixi amb aquest codi");
+                }
+            }
+            else{
+                Interficie.escriu("Aquest local no correspon amb el local d'inici de la reserva");
+            }
+        }
+        else{
+            Interficie.escriu("No hi ha cap client que coincideixi amb el DNI introduit.");
+        }
     }
 }

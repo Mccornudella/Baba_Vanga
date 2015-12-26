@@ -12,7 +12,7 @@ public class Local {
     private ArrayList<Moto> motos;
     private Direccio direccio;
     private int capacitat_max;
-
+    private String IDGerent;
     /**
      * Constructor buit.
      */
@@ -26,10 +26,11 @@ public class Local {
      * @param direccio
      * @param capacitat_max
      */
-    public Local(Direccio direccio, int capacitat_max) {
+    public Local(Direccio direccio, int capacitat_max, String IDGerent) {
         this.direccio = direccio;
         this.capacitat_max = capacitat_max;
         motos = new ArrayList<>(0);
+        this.IDGerent = IDGerent;
     }
 
     /**
@@ -79,6 +80,11 @@ public class Local {
     public boolean compCapacidad(int cantidad){
         return true;
     }
+
+    public String getIDGerent() {
+        return IDGerent;
+    }
+    
     
     public boolean compDisponibilidad(int cantidad){
         return true;

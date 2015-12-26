@@ -18,36 +18,38 @@ public class Gerent extends Empleat implements Serializable {
      * Constructor solo parámetros de empleado.
      *
      * @param correo correo electronico del gerente
-     * @param numeroPers numero de personal del gerente
+     * @param ID
      */
-    public Gerent(String correo, int numeroPers) {
-        super(correo, numeroPers);
+    public Gerent(String correo, String ID) {
+        super(correo, ID);
     }
 
     /**
      * Constructor solo parámetros de usuario.
      *
+     * @param ID
      * @param username usuari en el sistema del gerente
      * @param password password del gerente
      * @param nombre nombre del gerente
      * @param apellidos apellidos del gerente
      */
-    public Gerent(String username, String password, String nombre, String apellidos) {
+    public Gerent(String username, String password, String nombre, String apellidos,String ID) {
         super(username, password, nombre, apellidos);
+        this.ID = ID;
     }
 
     /**
      * Constructor con parámetros de usuario y empleado.
      *
      * @param correo correo electronico del gerente
-     * @param numeroPers numero de personal del gerente
+     * @param ID
      * @param username usuari en el sistema del gerente
      * @param password password del gerente
      * @param nombre nombre del gerente
      * @param apellidos apellidos del gerente
      */
-    public Gerent(String correo, int numeroPers, String username, String password, String nombre, String apellidos) {
-        super(correo, numeroPers, username, password, nombre, apellidos);
+    public Gerent(String correo, String ID, String username, String password, String nombre, String apellidos) {
+        super(correo, ID, username, password, nombre, apellidos);
     }
 
     @Override

@@ -102,6 +102,14 @@ public class Interficie {
         }
         return sc.nextInt();
     }
+    
+    public static double llegeixDouble(){
+        while (!sc.hasNextDouble()){
+            System.out.println("eso no es un numero.");
+            sc.next();
+        }
+        return sc.nextDouble();
+    }
 
     /**
      * Llegeix un String que s'ha entrat per teclat i el retorna.
@@ -157,7 +165,7 @@ public class Interficie {
     }
 
     public static String llegeixDNI() {
-        String s = sc.nextLine();
+        String s = sc.next();
         boolean correcte = false;
         while (!correcte) {
             boolean es_numero = true;
@@ -178,7 +186,7 @@ public class Interficie {
                 correcte = true;
             } else {
                 System.out.println("Aquest no es un dni valid, entra un DNI amb 8 numeros i una lletra MAJUSCULA si us plau: ");
-                s = sc.nextLine();
+                s = sc.next();
             }
         }
         return s;

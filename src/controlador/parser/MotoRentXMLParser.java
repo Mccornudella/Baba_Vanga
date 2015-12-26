@@ -49,6 +49,10 @@ public class MotoRentXMLParser {
             // Obtenim dades
             this.obtenirGestors(doc);
             this.obtenirLocals(doc);
+<<<<<<< Updated upstream
+=======
+            this.obtenirGestors(doc);
+>>>>>>> Stashed changes
             this.obtenirAdministradors(doc);
             this.obtenirClients(doc);
             this.obtenirReserves(doc);
@@ -214,7 +218,7 @@ public class MotoRentXMLParser {
         String id, nom, usuari, password;
         int numGestors = gestors.getLength();
 
-        // Parsejo tots els elements admin
+        // Parsejo tots els elements gestor
         for (int i = 0; i < numGestors; i++) {
             Node gestor = gestors.item(i);
 
