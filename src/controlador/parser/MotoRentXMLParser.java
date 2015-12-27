@@ -49,10 +49,6 @@ public class MotoRentXMLParser {
             // Obtenim dades
             this.obtenirGestors(doc);
             this.obtenirLocals(doc);
-<<<<<<< Updated upstream
-=======
-            this.obtenirGestors(doc);
->>>>>>> Stashed changes
             this.obtenirAdministradors(doc);
             this.obtenirClients(doc);
             this.obtenirReserves(doc);

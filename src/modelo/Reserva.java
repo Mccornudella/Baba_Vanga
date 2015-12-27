@@ -72,8 +72,8 @@ public class Reserva {
     public void setActiva() {
         estado.setActiva(!estado.isActiva());
     }
-    
-    public boolean isActiva(){
+
+    public boolean isActiva() {
         return estado.isActiva();
     }
 
@@ -81,16 +81,16 @@ public class Reserva {
         this.setActiva();
         estado.setFinalitzada(true);
     }
-    
-    public boolean isFinalitzada(){
+
+    public boolean isFinalitzada() {
         return estado.isFinalitzada();
     }
 
     public void apuntarEndarrediment(int retras) {
         estado.apuntarEndarrediment(retras);
     }
-   
-    public double getCostRetras(){
+
+    public double getCostRetras() {
         return estado.getCostRetras();
     }
 
@@ -101,8 +101,8 @@ public class Reserva {
     public boolean checkMonth(int month) {
         return true;
     }
-    
-    public void setDisponibilitatMoto(boolean estat){
+
+    public void setDisponibilitatMoto(boolean estat) {
         moto.setDisponible(estat);
     }
 
@@ -115,19 +115,18 @@ public class Reserva {
      * @return
      */
     private double calcularPreu() {
-        int hores = (int) ((fi.getTime() - inici.getTime()) /(60 * 60 * 1000));
+        int hores = (int) ((fi.getTime() - inici.getTime()) / (60 * 60 * 1000));
         double cost = 0.0;
         int dies = 0;
-        if (hores < 24){
+        if (hores < 24) {
             cost = hores;
             return cost;
-        }
-        else{
-            while (hores >= 24){
+        } else {
+            while (hores >= 24) {
                 hores = hores - 24;
                 dies = dies + 1;
             }
-            return hores + (dies*15);
+            return hores + (dies * 15);
         }
     }
 
@@ -141,31 +140,25 @@ public class Reserva {
         int cd = 0;
         boolean stop;
         stop = false;
-        while(!stop){
-            cd = r.nextInt(10000000); 
+        while (!stop) {
+            cd = r.nextInt(10000000);
             stop = cd > 1000000;
         }
         String scodi = Integer.toString(cd);
         String concat = scodi.concat(moto.getMatricula());
         codi = concat;
     }
-    
-   private void initEstado(){
-       Date d = new Date();
-<<<<<<< Updated upstream
-       estado = new EstadoReserva(!d.after(fi),d.after(fi));
-   }
+
+    private void initEstado() {
+        Date d = new Date();
+        estado = new EstadoReserva(!d.after(fi), d.after(fi));
+    }
 
     public EstadoReserva getEstado() {
         return estado;
     }
-=======
-       estado = new EstadoReserva(false,d.after(fi));
-       
-   }
-   
-   public void setFalta(Double importe, String desperfecte){
-       estado.setFalta(importe,desperfecte);
-   }
->>>>>>> Stashed changes
+
+    public void setFalta(Double importe, String desperfecte) {
+        estado.setFalta(importe, desperfecte);
+    }
 }

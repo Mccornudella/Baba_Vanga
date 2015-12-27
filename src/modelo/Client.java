@@ -214,10 +214,11 @@ public class Client extends Usuari implements Serializable {
         return this.vip;
     }
 
-<<<<<<< Updated upstream
+
     public ArrayList<Reserva> getReservas() {
         return this.reserves;
-=======
+    }
+    
     public Reserva getReserva(String codi) {
         Reserva re = null;
         Iterator it = reserves.iterator();
@@ -229,7 +230,6 @@ public class Client extends Usuari implements Serializable {
             }
         }
         return re;
->>>>>>> Stashed changes
     }
 
     public void finalitzarRecollida(Reserva re) {

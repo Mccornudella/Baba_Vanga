@@ -33,7 +33,7 @@ public class Gerent extends Empleat implements Serializable {
      * @param nombre nombre del gerente
      * @param apellidos apellidos del gerente
      */
-    public Gerent(String username, String password, String nombre, String apellidos,String ID) {
+    public Gerent(String username, String password, String nombre, String apellidos, String ID) {
         super(username, password, nombre, apellidos);
         this.ID = ID;
     }
@@ -69,12 +69,11 @@ public class Gerent extends Empleat implements Serializable {
         Interficie.imprimirLista(local.getMotos());
         int indice = Interficie.selNumLista(local.getMotos());
         Moto m = (Moto) local.getMotos().get(indice);
-        
-        if (m.disponible()) {
-        Interficie.escriu("Moto entregda! \nMatricula: " + m.getMatricula());
-        m.setEstat(true);
-        }
-        else {
+
+        if (m.getEstat()) {
+            Interficie.escriu("Moto entregda! \nMatricula: " + m.getMatricula());
+            m.setDisponible(false);
+        } else {
             Interficie.escriu("La moto no está disponible!");
         }
     }

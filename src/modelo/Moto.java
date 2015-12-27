@@ -84,19 +84,9 @@ public class Moto {
     public boolean getEstat() {
         return estat;
     }
-    
 
-<<<<<<< Updated upstream
-    public void setEstat(boolean estat) {
-        this.estat = estat;
-    }
-
-    public boolean disponible() {
-        return !estat;
-=======
     public void setDisponible(boolean estat) {
         this.estat = estat;
->>>>>>> Stashed changes
     }
 
     public String getMatricula() {
@@ -105,7 +95,7 @@ public class Moto {
 
     @Override
     public String toString() {
-        String est = estat ? "No disponible" : "Disponible";
+        String est = estat ? "Disponible" : "No disponible";
         return "ID: " + ID + "\n" +
                "Matricula: " + matricula + "\n" +
                 espec.toString() + "\n" +
