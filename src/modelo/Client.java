@@ -154,14 +154,14 @@ public class Client extends Usuari implements Serializable {
     }
 
     public boolean comprovarReserva() {
-        boolean activa = false;
+        boolean finalitzada = false;
         Iterator it = reserves.iterator();
         Reserva res = null;
-        while (it.hasNext()) {
+        while (it.hasNext() && !finalitzada) {
             res = (Reserva) it.next();
-            activa = res.isActiva();
+            finalitzada = res.isFinalitzada();
         }
-        return activa;
+        return finalitzada;
     }
 
     public boolean comprobarReservaNoActiva(String codi) {

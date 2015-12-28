@@ -95,7 +95,8 @@ public class Reserva {
     }
 
     public void realitzarDescompte() {
-
+        Double descompte = preu*0.1;
+        preu = preu - descompte;
     }
 
     public boolean checkMonth(int month) {
@@ -151,7 +152,7 @@ public class Reserva {
 
     private void initEstado() {
         Date d = new Date();
-        estado = new EstadoReserva(false, d.after(fi));
+        estado = new EstadoReserva(false, !d.after(fi));
     }
 
     public EstadoReserva getEstado() {
