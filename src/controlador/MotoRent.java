@@ -126,8 +126,10 @@ public class MotoRent implements Serializable {
                     reservarMoto(cl);
                     break;
                 case 1: //Modificar desti
+                    Interficie.escriu("No implementat");
                     break;
                 case 2: //Donar-se de baixa
+                    Interficie.escriu("No implementat");
                     break;
                 case 3: //Log out
                     logout();
@@ -150,8 +152,10 @@ public class MotoRent implements Serializable {
                     recollirMoto(ger);
                     break;
                 case 2: //Gestionar local
+                    Interficie.escriu("No implementat");
                     break;
                 case 3: //Veure estat d'un local
+                    Interficie.escriu("No implementat");
                     break;
                 case 4: //Log out
                     logout();
@@ -466,12 +470,12 @@ public class MotoRent implements Serializable {
         }
         if(check){
             check = !check;
-            check = cl.comprobarReservaNoActiva(codi);
+            check = cl.comprobarReservaActiva(codi);
             check2 = cl.comprobarLocalDestino(g.getID());
             if (check2){
                 if (check){
                     Reserva re = cl.getReserva(codi);
-                    cl.finalitzarRecollida(re);
+                    cl.finalitzarRecollida(codi);
                     Date dataact = new Date();
                     int retras = (int) ((dataact.getTime() - re.getDataFi().getTime()) /(60 * 60 * 1000));
                     if (retras > 0){
@@ -509,13 +513,15 @@ public class MotoRent implements Serializable {
         }
         if(check){
             check = !check;
-            check = cl.comprobarReservaActiva(codi);
+            check = cl.comprobarReservaNoActiva(codi);
             check2 = cl.comprobarLocalInicio(g.getLocal().getIDGerent());
             if (check2){
                 if (check){
                     Reserva re = cl.getReserva(codi);
                     re.setDisponibilitatMoto(false);
                     re.setActiva();
+                    cl.sumaDeuda(re.getPreu());
+                    Interficie.escriu("La moto ha sigut marcada com entregada, la reserva ja esta activa.");
                 }
                 else{
                     Interficie.escriu("No hi ha cap reserva  que conicideixi amb aquest codi");

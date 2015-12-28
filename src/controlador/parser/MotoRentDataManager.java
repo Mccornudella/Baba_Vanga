@@ -125,7 +125,7 @@ public class MotoRentDataManager {
         String cilindrada = model.substring(inicioCc - 1, finCc);
 
         //Estado e ID sin la letra 'm'
-        boolean estado = estat.equals("true");
+        boolean estado = estat.equals("disponible");
         id = id.substring(1, id.length());
 
         Moto moto = new Moto(matricula, color, marca, model, Integer.valueOf(cilindrada), Integer.valueOf(id), estado);

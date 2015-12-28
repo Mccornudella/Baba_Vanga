@@ -7,14 +7,15 @@
             <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Reserva.java</file>
             <file>file:/Users/Jose/Desktop/MotoRent/src/vista/Interficie.java</file>
             <file>file:/Users/Jose/Desktop/MotoRent/src/controlador/parser/MotoRentXMLParser.java</file>
-            <file>file:/Users/Jose/Desktop/MotoRent/src/controlador/MotoRent.java</file>
             <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Local.java</file>
+            <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Client.java</file>
+            <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Endarrediment.java</file>
+            <file>file:/Users/Jose/Desktop/MotoRent/src/controlador/MotoRent.java</file>
             <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Gerent.java</file>
             <file>file:/Users/Jose/Desktop/MotoRent/src/controlador/parser/MotoRentDataManager.java</file>
             <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Empleat.java</file>
-            <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Client.java</file>
+            <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Direccio.java</file>
             <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Admin.java</file>
-            <file>file:/Users/Jose/Desktop/MotoRent/src/modelo/Endarrediment.java</file>
         </group>
     </open-files>
 </project-private>

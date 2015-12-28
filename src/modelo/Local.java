@@ -2,6 +2,7 @@ package modelo;
 
 import vista.Interficie;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -71,9 +72,17 @@ public class Local {
     }
     
     public Moto escollirMoto(){
-        Interficie.imprimirLista(motos);
-        int posMoto = Interficie.selNumLista(motos);
-        Moto moto1 = motos.get(posMoto);
+        Iterator it = motos.iterator();
+        ArrayList<Moto> motos_disponibles = new ArrayList();
+        while(it.hasNext()){
+            Moto m = (Moto) it.next();
+            if (m.getEstat()){
+                motos_disponibles.add(m);
+            }
+        }
+        Interficie.imprimirLista(motos_disponibles);
+        int posMoto = Interficie.selNumLista(motos_disponibles);
+        Moto moto1 = motos_disponibles.get(posMoto);
         return moto1;
     } 
     

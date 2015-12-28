@@ -40,7 +40,7 @@ public class Reserva {
         this.fi = fi;
         this.trajecte = trajecte;
         this.moto = moto;
-        preu = calcularPreu();
+        this.preu = calcularPreu();
         crearCodi();
         initEstado();
     }
@@ -151,7 +151,7 @@ public class Reserva {
 
     private void initEstado() {
         Date d = new Date();
-        estado = new EstadoReserva(!d.after(fi), d.after(fi));
+        estado = new EstadoReserva(false, d.after(fi));
     }
 
     public EstadoReserva getEstado() {

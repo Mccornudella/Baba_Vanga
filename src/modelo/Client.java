@@ -164,7 +164,7 @@ public class Client extends Usuari implements Serializable {
         return activa;
     }
 
-    public boolean comprobarReservaActiva(String codi) {
+    public boolean comprobarReservaNoActiva(String codi) {
         Iterator it = reserves.iterator();
         boolean check_codi = false;
         boolean fin = false;
@@ -187,7 +187,7 @@ public class Client extends Usuari implements Serializable {
         return false;
     }
     
-    public boolean comprobarReservaNoActiva(String codi){
+    public boolean comprobarReservaActiva(String codi){
         Iterator it = reserves.iterator();
         boolean check_codi = false;
         boolean fin = false;
@@ -232,23 +232,26 @@ public class Client extends Usuari implements Serializable {
         return re;
     }
 
-    public void finalitzarRecollida(Reserva re) {
+    public void finalitzarRecollida(String codi) {
+        Reserva re = getReserva(codi);
         Interficie.escriu("Te la moto algun desperfecte?(si/no): ");
         String desperfecte = Interficie.llegeixString();
-        while (!desperfecte.equals("si") || !desperfecte.equals("no")){
+        boolean continua = desperfecte.equals("si") || desperfecte.equals("no");
+        while (!continua){
             Interficie.escriu("No he entes la resposta, introdueix (si/no) si us plau.");
             desperfecte = Interficie.llegeixString();
+            continua = desperfecte.equals("si") || desperfecte.equals("no");
         }
         if (desperfecte.equals("si")){
             Moto m1 = re.getMoto();
             m1.setDisponible(false);
             Double importDesperfecte = 0.0;
-            Interficie.escriu("Introdueix el cost del desperfecte");
+            Interficie.escriu("Descriu el desperfecte de la moto:");
+            desperfecte = Interficie.llegeixString();
+            Interficie.escriu("Introdueix el cost del desperfecte:");
             importDesperfecte = Interficie.llegeixDouble();
             deuda = deuda + importDesperfecte;
             faltas = faltas + 1;
-            Interficie.escriu("Descriu el desperfecte de la moto");
-            desperfecte = Interficie.llegeixString();
             re.setFalta(importDesperfecte,desperfecte);
             
         }
@@ -272,7 +275,7 @@ public class Client extends Usuari implements Serializable {
         boolean check = false;
         while (it.hasNext() && !check){
             Reserva re = (Reserva) it.next();
-            if (re.isActiva() && re.getTrajecte().getFinal().getIDGerent().equals(IDGestor)){
+            if (re.getTrajecte().getFinal().getIDGerent().equals(IDGestor)){
                 check = true;
             }
         }
@@ -284,7 +287,7 @@ public class Client extends Usuari implements Serializable {
         boolean check = false;
         while (it.hasNext() && !check){
             Reserva re = (Reserva) it.next();
-            if (re.isActiva() && re.getTrajecte().getInici().getIDGerent().equals(IDGestor)){
+            if (re.getTrajecte().getInici().getIDGerent().equals(IDGestor)){
                 check = true;
             }
         }

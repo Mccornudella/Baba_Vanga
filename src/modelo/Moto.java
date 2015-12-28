@@ -95,11 +95,10 @@ public class Moto {
 
     @Override
     public String toString() {
-        String est = estat ? "Disponible" : "No disponible";
+        
         return "ID: " + ID + "\n" +
                "Matricula: " + matricula + "\n" +
-                espec.toString() + "\n" +
-                "Estat: " + est + "\n";
+                espec.toString();
     }
     
 }
