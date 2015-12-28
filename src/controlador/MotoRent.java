@@ -193,11 +193,6 @@ public class MotoRent implements Serializable {
     }
 
     private int[] login() {
-        // Usuarios para probar login
-        Client c = new Client("ssd", "asd", 888, new CompteBancari("4475869584758493847584938475849384"), "usuari1", "usuari1", "as", "d");
-        clientes.add(c);
-
-
         System.out.println("Usuario: ");
         String usuario = Interficie.llegeixString();
         System.out.println("Password: ");
@@ -256,7 +251,6 @@ public class MotoRent implements Serializable {
         if (!corr) {
             i = -1;
         }
-
         return i;
     }
 
@@ -318,6 +312,9 @@ public class MotoRent implements Serializable {
         }
     }
 
+    /**
+     * Muestra por pantalla el informe del mes seleccionado.
+     */
     public void veureInformeMensual() {
         Interficie.escriu("Introduce el mes (mm): ");
         int mes = Interficie.llegeixInt();
@@ -327,6 +324,9 @@ public class MotoRent implements Serializable {
         }
     }
 
+    /**
+     * Muestra por pantalla los locales bajo mínimos (5% de su capacidad máx.).
+     */
     public void veureLocalsSotaMinims() {
         for (Local l : locals) {
             int cantMin = (int) (l.getCapacitatMax() * 0.05);
@@ -337,6 +337,10 @@ public class MotoRent implements Serializable {
         }
     }
 
+    /**
+     * Muestra por pantalla los locales sobre máximos (75% de su capacidad
+     * máx.).
+     */
     public void veureLocalsSobreMaxims() {
         for (Local l : locals) {
             int cantMax = (int) (l.getCapacitatMax() * 0.75f);
@@ -347,6 +351,12 @@ public class MotoRent implements Serializable {
         }
     }
 
+    /**
+     * Genera el informe de un mes concreto para todos los clientes.
+     *
+     * @param mes Número del mes seleccionado.
+     * @return String, informe.
+     */
     private String generarInforme(int mes) {
         String info = "";
         int cantidad = 0;
@@ -393,6 +403,12 @@ public class MotoRent implements Serializable {
         this.admin = admin;
     }
 
+    /**
+     * Reserva una moto para el cliente seleccionado. Los clientes bloqueados no
+     * pueden hacer reservas.
+     *
+     * @param cl Cliente.
+     */
     private void reservarMoto(Client cl) {
         boolean bloquejat = cl.estaBloquejat();
         boolean teReserva;
@@ -438,7 +454,7 @@ public class MotoRent implements Serializable {
                 Interficie.escriu("Moto: " + moto.toString());
                 Interficie.escriu("Data de finalitzacio: " + dataFinal.toString());
                 Interficie.escriu("Local: " + localDesti.toString());
-                
+
                 cl.addReserva(reserva);
             } else {
                 Interficie.escriu("Ja tens una reserva Activa");
@@ -448,12 +464,23 @@ public class MotoRent implements Serializable {
         }
     }
 
+    /**
+     * Comprueba si la fecha seleccionada es posterior a la actual del sistema.
+     *
+     * @param d Fecha.
+     * @return True en caso de ser posterior.
+     */
     public boolean comparaDataActual(Date d) {
         Date actual_date = new Date();
         return d.after(actual_date);
     }
-    
-    public void recollirMoto(Gerent g){
+
+    /**
+     * El gerente pasado como parámetro guarda una moto en su local.
+     *
+     * @param g Gerente.
+     */
+    public void recollirMoto(Gerent g) {
         String codi;
         String dni;
         boolean check = false;
@@ -464,39 +491,40 @@ public class MotoRent implements Serializable {
         dni = Interficie.llegeixDNI();
         Iterator it = clientes.iterator();
         Client cl = null;
-        while (it.hasNext() && !check){
+        while (it.hasNext() && !check) {
             cl = (Client) it.next();
             check = cl.checkDNI(dni);
         }
-        if(check){
-            check = !check;
+        if (check) {
             check = cl.comprobarReservaActiva(codi);
             check2 = cl.comprobarLocalDestino(g.getID());
-            if (check2){
-                if (check){
+            if (check2) {
+                if (check) {
                     Reserva re = cl.getReserva(codi);
                     cl.finalitzarRecollida(codi);
                     Date dataact = new Date();
-                    int retras = (int) ((dataact.getTime() - re.getDataFi().getTime()) /(60 * 60 * 1000));
-                    if (retras > 0){
+                    int retras = (int) ((dataact.getTime() - re.getDataFi().getTime()) / (60 * 60 * 1000));
+                    if (retras > 0) {
                         re.apuntarEndarrediment(retras);
                         cl.sumaDeuda(re.getCostRetras());
                     }
-                }
-                else{
+                } else {
                     Interficie.escriu("No hi ha cap reserva activa que coincideixi amb el codi introduit");
                 }
-            }
-            else{
+            } else {
                 Interficie.escriu("Aquest local no correspon amb el local desti de la reserva");
             }
-        }
-        else{
+        } else {
             Interficie.escriu("No hi ha cap client que coincideixi amb el DNI introduit");
         }
     }
-    
-    public void entregarMoto(Gerent g){
+
+    /**
+     * El gerente pasado como parámetro entrega una moto de su local.
+     *
+     * @param g Gerente.
+     */
+    public void entregarMoto(Gerent g) {
         String codi;
         String dni;
         boolean check = false;
@@ -507,31 +535,27 @@ public class MotoRent implements Serializable {
         dni = Interficie.llegeixDNI();
         Iterator it = clientes.iterator();
         Client cl = null;
-        while (it.hasNext() && !check){
+        while (it.hasNext() && !check) {
             cl = (Client) it.next();
             check = cl.checkDNI(dni);
         }
-        if(check){
-            check = !check;
+        if (check) {
             check = cl.comprobarReservaNoActiva(codi);
             check2 = cl.comprobarLocalInicio(g.getLocal().getIDGerent());
-            if (check2){
-                if (check){
+            if (check2) {
+                if (check) {
                     Reserva re = cl.getReserva(codi);
                     re.setDisponibilitatMoto(false);
                     re.setActiva();
                     cl.sumaDeuda(re.getPreu());
                     Interficie.escriu("La moto ha sigut marcada com entregada, la reserva ja esta activa.");
-                }
-                else{
+                } else {
                     Interficie.escriu("No hi ha cap reserva  que conicideixi amb aquest codi");
                 }
-            }
-            else{
+            } else {
                 Interficie.escriu("Aquest local no correspon amb el local d'inici de la reserva");
             }
-        }
-        else{
+        } else {
             Interficie.escriu("No hi ha cap client que coincideixi amb el DNI introduit.");
         }
     }

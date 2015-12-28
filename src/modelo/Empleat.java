@@ -5,14 +5,14 @@ import java.io.Serializable;
 /**
  * @author rob3ns
  */
-
-public class Empleat extends Usuari implements Serializable{
+public class Empleat extends Usuari implements Serializable {
 
     protected String correo;
     protected String ID;
 
     /**
      * Constructor simple, solo parámetros de empleado.
+     *
      * @param correo
      * @param numeroPers Teléfono.
      */
@@ -20,14 +20,15 @@ public class Empleat extends Usuari implements Serializable{
         this.correo = correo;
         this.ID = ID;
     }
-    
+
     /**
      * Constructor solo parámetros de usuario.
+     *
      * @param username
      * @param password
      * @param nombre
-     * @param apellidos 
-     * @param ID 
+     * @param apellidos
+     * @param ID
      */
     public Empleat(String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
@@ -35,25 +36,26 @@ public class Empleat extends Usuari implements Serializable{
 
     /**
      * Constructor con parámetros de usuario y empleado.
+     *
      * @param correo
      * @param ID
      * @param username
      * @param password
      * @param nombre
-     * @param apellidos 
+     * @param apellidos
      */
     public Empleat(String correo, String ID, String username, String password, String nombre, String apellidos) {
         super(username, password, nombre, apellidos);
         this.correo = correo;
         this.ID = ID;
     }
-    
+
     /**
      * Constructor vacío.
      */
     public Empleat() {
         super(null, null, null, null);
-    }     
+    }
 
     public String getCorreo() {
         return correo;
@@ -75,5 +77,5 @@ public class Empleat extends Usuari implements Serializable{
     public String toString() {
         return super.toString();
     }
-    
+
 }

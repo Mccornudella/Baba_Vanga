@@ -14,6 +14,7 @@ public class Local {
     private Direccio direccio;
     private int capacitat_max;
     private String IDGerent;
+
     /**
      * Constructor buit.
      */
@@ -70,13 +71,18 @@ public class Local {
     public void setCapacitatMax(int capacitat_max) {
         this.capacitat_max = capacitat_max;
     }
-    
-    public Moto escollirMoto(){
+
+    /**
+     * Muestra una lista de las motos disponibles y selecciona una.
+     *
+     * @return Moto seleccionada.
+     */
+    public Moto escollirMoto() {
         Iterator it = motos.iterator();
         ArrayList<Moto> motos_disponibles = new ArrayList();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             Moto m = (Moto) it.next();
-            if (m.getEstat()){
+            if (m.getEstat()) {
                 motos_disponibles.add(m);
             }
         }
@@ -84,36 +90,35 @@ public class Local {
         int posMoto = Interficie.selNumLista(motos_disponibles);
         Moto moto1 = motos_disponibles.get(posMoto);
         return moto1;
-    } 
-    
-    public boolean compCapacidad(int cantidad){
+    }
+
+    public boolean compCapacidad(int cantidad) {
         return true;
     }
 
     public String getIDGerent() {
         return IDGerent;
     }
-    
-    
-    public boolean compDisponibilidad(int cantidad){
+
+    public boolean compDisponibilidad(int cantidad) {
         return true;
     }
-    
-    public ArrayList agafarMotos(int cantidad){
+
+    public ArrayList agafarMotos(int cantidad) {
         return null;
     }
-    
-    public void afegirMotos(int motos){
-        
+
+    public void afegirMotos(int motos) {
+
     }
-    
-    public void veureMotos(){
+
+    public void veureMotos() {
         Interficie.imprimirLista(motos);
     }
 
     @Override
     public String toString() {
-        String str = direccio.toString() + "------------\n";      
+        String str = direccio.toString() + "------------\n";
         return str;
     }
 }

@@ -4,11 +4,11 @@ package modelo;
  *
  * @author Jose
  */
-public class Falta extends Penalitzacio{
+public class Falta extends Penalitzacio {
+
     private String descripcio;
-    
-    
-    public Falta(String descripcio){
+
+    public Falta(String descripcio) {
         this.descripcio = descripcio;
     }
 
@@ -19,6 +19,5 @@ public class Falta extends Penalitzacio{
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     }
-    
-    
+
 }

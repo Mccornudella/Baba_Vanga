@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author rob3ns
  */
-public class Admin extends Empleat implements Serializable{
+public class Admin extends Empleat implements Serializable {
 
     public Admin() {
     }
@@ -28,5 +28,4 @@ public class Admin extends Empleat implements Serializable{
         return "Admin: " + super.toString();
     }
 
-    
 }

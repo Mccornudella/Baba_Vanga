@@ -102,9 +102,9 @@ public class Interficie {
         }
         return sc.nextInt();
     }
-    
-    public static double llegeixDouble(){
-        while (!sc.hasNextDouble()){
+
+    public static double llegeixDouble() {
+        while (!sc.hasNextDouble()) {
             System.out.println("eso no es un numero.");
             sc.next();
         }
@@ -120,15 +120,29 @@ public class Interficie {
         return sc.next();
     }
 
+    /**
+     * Pide un número por pantalla hasta que se introduzca uno que pertenezca al
+     * array.
+     *
+     * @param l array
+     * @return Opción seleccionada.
+     */
     public static int selNumMenu(String[] l) {
         int num = llegeixInt();
-        while (l.length + 1 < num) {
+        while (l.length + 1 < num || num < 0) {
             System.out.println("El número debe pertenecer a la lista(máximo " + (l.length + 1) + ").");
             num = llegeixInt();
         }
         return num;
     }
 
+    /**
+     * Pide un número por pantalla hasta que se introduzca uno que pertenezca a
+     * la lista.
+     *
+     * @param l Lista.
+     * @return Opción seleccionada.
+     */
     public static int selNumLista(ArrayList l) {
         if (!l.isEmpty()) {
             int num = llegeixInt();
@@ -144,7 +158,7 @@ public class Interficie {
     /**
      * Llegeix un String que despres transforma en un Date i el retorna.
      *
-     * @return
+     * @return Date
      */
     public static Date llegeixData() {
         boolean bona = false;
@@ -164,6 +178,11 @@ public class Interficie {
         return d;
     }
 
+    /**
+     * Lee un string en formato DNI. 8 números y 1 letra mayúscula.
+     *
+     * @return DNI
+     */
     public static String llegeixDNI() {
         String s = sc.next();
         boolean correcte = false;
@@ -176,7 +195,6 @@ public class Interficie {
                     String c = s.substring(i, i + 1);
                     es_numero = numeros.contains(c);
                     i++;
-
                 }
                 String c = s.substring(8, 9);
                 es_lletra = lletres.contains(c);
@@ -192,6 +210,10 @@ public class Interficie {
         return s;
     }
 
+    /**
+     * Lee un número de cuenta bancaria.
+     * @return String
+     */
     public static String llegeixCB() {
         String s = sc.nextLine();
         boolean correcte = false;

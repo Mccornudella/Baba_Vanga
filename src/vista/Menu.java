@@ -43,6 +43,13 @@ public class Menu {
         return tipoUsuario;
     }
 
+    /**
+     * Crea un string según el tipo de usuario logueado o no logueado.
+     *
+     * @return String "No logueado." "Logueado como: Cliente." "Logueado como:
+     * Gerente." "Logueado como: Admin."
+     *
+     */
     private String concatTipoUsuario() {
         String s = "\n";
         switch (tipoUsuario) {
@@ -59,16 +66,18 @@ public class Menu {
                 s += "Logueado como: Admin.";
                 break;
             default:
-                s+= "Error.";
+                s += "Error.";
                 break;
         }
-        s+= "\n";
+        s += "\n";
         return s;
     }
 
     /**
-     * Aquí iría lo de los hilos para el estado del local en gerente
-     * @return opción seleccionada
+     * Muestra por pantalla el menú para el tipo de usuario logueado. En caso de
+     * no estar logueado, mostrará el menú de login.
+     *
+     * @return Opción seleccionada.
      */
     public int generarMenu() {
         System.out.println(titulo + this.concatTipoUsuario());
