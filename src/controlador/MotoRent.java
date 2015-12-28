@@ -305,6 +305,9 @@ public class MotoRent implements Serializable {
 
     }
 
+    /**
+     * Muestra por pantalla las motos de todos los locales.
+     */
     public void veureMotosLocals() {
         for (Local l : locals) {
             Interficie.escriu("------------\nLocal " + locals.indexOf(l) + ":\n" + l.toString());
@@ -497,7 +500,7 @@ public class MotoRent implements Serializable {
         }
         if (check) {
             check = cl.comprobarReservaActiva(codi);
-            check2 = cl.comprobarLocalDestino(g.getID());
+            check2 = cl.comprobarLocalDestino(g.getID(), codi);
             if (check2) {
                 if (check) {
                     Reserva re = cl.getReserva(codi);
@@ -541,7 +544,7 @@ public class MotoRent implements Serializable {
         }
         if (check) {
             check = cl.comprobarReservaNoActiva(codi);
-            check2 = cl.comprobarLocalInicio(g.getLocal().getIDGerent());
+            check2 = cl.comprobarLocalInicio(g.getLocal().getIDGerent(), codi);
             if (check2) {
                 if (check) {
                     Reserva re = cl.getReserva(codi);

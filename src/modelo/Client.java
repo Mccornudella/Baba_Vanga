@@ -235,6 +235,7 @@ public class Client extends Usuari implements Serializable {
 
     /**
      * Selecciona la reserva con el código pasado como parámetro.
+     *
      * @param codi Código reserva.
      * @return Reserva.
      */
@@ -253,6 +254,7 @@ public class Client extends Usuari implements Serializable {
 
     /**
      * Guarda información sobre los desperfectos de la moto entregada.
+     *
      * @param codi Código reserva.
      */
     public void finalitzarRecollida(String codi) {
@@ -284,32 +286,47 @@ public class Client extends Usuari implements Serializable {
 
     }
 
-    public String infoReservas(int month) {
-        return null;
-    }
-
+    /**
+     * Suma la cantidad pasada a la deuda total del cliente.
+     *
+     * @param cost
+     */
     public void sumaDeuda(double cost) {
         deuda = deuda + cost;
     }
 
-    public boolean comprobarLocalDestino(String IDGestor) {
+    /**
+     * Comprueba que el local de destino coincida con el del gestor.
+     *
+     * @param IDGestor
+     * @param codi Código reserva.
+     * @return True si coincide.
+     */
+    public boolean comprobarLocalDestino(String IDGestor, String codi) {
         Iterator it = reserves.iterator();
         boolean check = false;
         while (it.hasNext() && !check) {
             Reserva re = (Reserva) it.next();
-            if (re.getTrajecte().getFinal().getIDGerent().equals(IDGestor)) {
+            if (re.getCodi().equals(codi) && re.getTrajecte().getFinal().getIDGerent().equals(IDGestor)) {
                 check = true;
             }
         }
         return check;
     }
 
-    public boolean comprobarLocalInicio(String IDGestor) {
+    /**
+     * Comprueba que el local de inicio coincida con el del gestor.
+     *
+     * @param IDGestor
+     * @param codi Código reserva.
+     * @return True si coincide.
+     */
+    public boolean comprobarLocalInicio(String IDGestor, String codi) {
         Iterator it = reserves.iterator();
         boolean check = false;
         while (it.hasNext() && !check) {
             Reserva re = (Reserva) it.next();
-            if (re.getTrajecte().getInici().getIDGerent().equals(IDGestor)) {
+            if (re.getCodi().equals(codi) && re.getTrajecte().getInici().getIDGerent().equals(IDGestor)) {
                 check = true;
             }
         }
