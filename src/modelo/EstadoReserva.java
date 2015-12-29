@@ -41,7 +41,7 @@ public class EstadoReserva {
     public boolean isActiva() {
         return activa;
     }
-    
+
     public void apuntarEndarrediment(int retras) {
         this.retras.setRetras(retras);
     }

@@ -95,7 +95,7 @@ public class Reserva {
     }
 
     public void realitzarDescompte() {
-        Double descompte = preu*0.1;
+        Double descompte = preu * 0.1;
         preu = preu - descompte;
     }
 

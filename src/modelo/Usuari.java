@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author rob3ns
  */
-public class Usuari implements Serializable{
+public class Usuari implements Serializable {
 
     protected String username;
     protected String password;
@@ -14,6 +14,7 @@ public class Usuari implements Serializable{
 
     /**
      * Constructor simple.
+     *
      * @param username
      * @param password
      * @param nombre
@@ -30,7 +31,7 @@ public class Usuari implements Serializable{
         this.username = username;
         this.password = password;
     }
-        
+
     /**
      * Constructor vacío.
      */
@@ -72,7 +73,7 @@ public class Usuari implements Serializable{
     public boolean checkLogin(String username, String password) {
         return this.username.equals(username) && this.password.equals(password);
     }
-    
+
     @Override
     public String toString() {
         return username;

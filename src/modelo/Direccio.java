@@ -37,6 +37,7 @@ public class Direccio {
 
     /**
      * Constructor XML
+     *
      * @param ciutat
      * @param carrer
      * @param numero
@@ -91,10 +92,10 @@ public class Direccio {
 
     @Override
     public String toString() {
-        return "Ciudad: " + this.ciutat + "\n" +
-                "Calle: " + this.carrer + "\n" + 
-                "Numero: " + this.numero + "\n" + 
-                "CP: " + this.cp + "\n";
+        return "Ciudad: " + this.ciutat + "\n"
+                + "Calle: " + this.carrer + "\n"
+                + "Numero: " + this.numero + "\n"
+                + "CP: " + this.cp + "\n";
     }
-    
+
 }

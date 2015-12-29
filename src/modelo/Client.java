@@ -182,6 +182,7 @@ public class Client extends Usuari implements Serializable {
         r = res;
         return r;
     }
+
     /**
      * Comprueba que la reserva con el código introducido no esté activa.
      *
@@ -231,7 +232,7 @@ public class Client extends Usuari implements Serializable {
         boolean comprobacio = false;
         if (check_codi && !fin) {
             if (activa) {
-                comprobacio =  true;
+                comprobacio = true;
             } else {
                 Interficie.escriu("La reserva no esta activa, no es pot recollir la moto.");
                 comprobacio = false;
