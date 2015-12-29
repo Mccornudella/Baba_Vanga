@@ -7,10 +7,10 @@ import java.io.Serializable;
  */
 public class Usuari implements Serializable{
 
-    private String username;
-    private String password;
-    private String nom;
-    private String cognoms;
+    protected String username;
+    protected String password;
+    protected String nom;
+    protected String cognoms;
 
     /**
      * Constructor simple.
