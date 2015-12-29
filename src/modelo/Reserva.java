@@ -120,19 +120,19 @@ public class Reserva {
         double cost = 0.0;
         int dies = 0;
         if (hores < 24) {
-            cost = hores;
+            cost = hores * precioHora;
             return cost;
         } else {
             while (hores >= 24) {
                 hores = hores - 24;
-                dies = dies + 1;
+                dies++;
             }
-            return hores + (dies * 15);
+            return (hores * precioHora) + (dies * precioDia);
         }
     }
 
     /**
-     * Crea un codi aleatori de reserva
+     * Crea un codi aleatori de reserva unic.
      *
      * @return
      */
@@ -150,6 +150,9 @@ public class Reserva {
         codi = concat;
     }
 
+    /**
+     * Inicia estado de reserva, inactiva.
+     */
     private void initEstado() {
         Date d = new Date();
         estado = new EstadoReserva(false, !d.after(fi));

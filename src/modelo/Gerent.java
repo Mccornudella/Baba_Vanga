@@ -52,11 +52,6 @@ public class Gerent extends Empleat implements Serializable {
         super(correo, ID, username, password, nombre, apellidos);
     }
 
-    @Override
-    public String toString() {
-        return "Gerente: " + super.toString();
-    }
-
     public Local getLocal() {
         return local;
     }
@@ -65,16 +60,13 @@ public class Gerent extends Empleat implements Serializable {
         this.local = local;
     }
 
-    public void entregarMoto() {
-        Interficie.imprimirLista(local.getMotos());
-        int indice = Interficie.selNumLista(local.getMotos());
-        Moto m = (Moto) local.getMotos().get(indice);
-
-        if (m.getEstat()) {
-            Interficie.escriu("Moto entregda! \nMatricula: " + m.getMatricula());
-            m.setDisponible(false);
-        } else {
-            Interficie.escriu("La moto no está disponible!");
-        }
+    public void veureEstatLocal() {
+        this.local.veureEstat();
     }
+    
+    @Override
+    public String toString() {
+        return "Gerente: " + super.toString();
+    }
+
 }

@@ -85,17 +85,17 @@ public class MotoRentDataManager {
         Direccio dir = new Direccio(ciudad, calle, Integer.valueOf(numero), cp);
 
         //Crear local y ponerlo en motorent
-        Local loc = new Local(dir, Integer.valueOf(capacitat),gestorID);
+        Local loc = new Local(dir, Integer.valueOf(capacitat), gestorID);
         this.motoRent.getLocales().add(loc);
-        
+
         //Asigno al gerente el local que le pertenece
         Gerent g = this.motoRent.getGerentes().get(Integer.valueOf(gestorID.substring(1)) - 1);
         g.setLocal(loc);
-        
-        Interficie.escriu("\nlocal amb ID: " + id + "\n");
-        Interficie.escriu("--------------------------------------------------\n");
-        Interficie.escriu("Capacitat: " + capacitat + "\n");
-        Interficie.escriu("Gestor ID: " + gestorID + "\n");
+
+        Interficie.escriu("\nLocal amb ID: " + id);
+        Interficie.escriu("--------------------------------------------------");
+        Interficie.escriu("Capacitat: " + capacitat);
+        Interficie.escriu("Gestor ID: " + gestorID);
         Interficie.escriu(dir.toString());
     }
 
@@ -130,14 +130,14 @@ public class MotoRentDataManager {
 
         Moto moto = new Moto(matricula, color, marca, model, Integer.valueOf(cilindrada), Integer.valueOf(id), estado);
 
-        Interficie.escriu("\nmoto amb ID: " + id + "\n");
-        Interficie.escriu("--------------------------------------\n");
-        Interficie.escriu("Matrícula: " + matricula + "\n");
-        Interficie.escriu("Marca: " + marca + "\n");
-        Interficie.escriu("Model: " + model + "\n");
-        Interficie.escriu("Color: " + color + "\n");
-        Interficie.escriu("Estat: " + estat + "\n");
-        Interficie.escriu("Cilindradas: " + cilindrada + "\n");
+        Interficie.escriu("\nMoto amb ID: " + id);
+        Interficie.escriu("--------------------------------------");
+        Interficie.escriu("Matrícula: " + matricula);
+        Interficie.escriu("Marca: " + marca);
+        Interficie.escriu("Model: " + model);
+        Interficie.escriu("Color: " + color);
+        Interficie.escriu("Estat: " + estat);
+        Interficie.escriu("Cilindradas: " + cilindrada);
 
         return moto;
     }
@@ -163,20 +163,23 @@ public class MotoRentDataManager {
         int indexLf = Integer.valueOf(local_fi.substring(1)) - 1;
         int idMoto = Integer.valueOf(moto.substring(1));
 
-        //TODO: tambien mirar el local ini?
-        Local locFin = this.motoRent.getLocales().get(indexLf);
-        Trajecte tr = new Trajecte(locFin, this.motoRent.getLocales().get(indexLf));
+        Local locIni = this.motoRent.getLocales().get(indexLi);
+        Trajecte tr = new Trajecte(locIni, this.motoRent.getLocales().get(indexLf));
 
         //Encontrar la moto con esa id en el local de inicio
         boolean encontrada = false;
         int i = 0;
+        int j = 0;
         Moto m = null;
-        while (!encontrada && i < locFin.getMotos().size()) {
-            m = (Moto) locFin.getMotos().get(i);
-            if (idMoto == m.getID()) {
-                encontrada = true;
+        Local l = null;
+        while (!encontrada && j < motoRent.getLocales().size()) {
+            l = (Local) motoRent.getLocales().get(j++);
+            while (!encontrada && i < l.getMotos().size()) {
+                m = (Moto) l.getMotos().get(i++);
+                if (idMoto == m.getID()) {
+                    encontrada = true;
+                }
             }
-            i++;
         }
 
         if (encontrada) { //Si tenemos moto continua
@@ -195,18 +198,18 @@ public class MotoRentDataManager {
             Client cl = this.motoRent.getClientes().get(indexC);
             cl.addReserva(r);
 
-            Interficie.escriu("\nReserva amb ID: " + id + "\n");
-            Interficie.escriu("--------------------------------------\n");
-            Interficie.escriu("Client: " + client + "\n");
-            Interficie.escriu("Moto: " + moto + "\n");
-            Interficie.escriu("Cost: " + cost + "\n");
-            Interficie.escriu("Faltes: " + falta + "\n");
-            Interficie.escriu("Local d'inici: " + local_inici + "\n");
-            Interficie.escriu("Hora d'inici: " + hora_inici + "\n");
-            Interficie.escriu("Data d'inici: " + fecha_inici + "\n");
-            Interficie.escriu("Local de finalització: " + local_fi + "\n");
-            Interficie.escriu("Hora de finalització: " + hora_fi + "\n");
-            Interficie.escriu("Data de finalització: " + fecha_fi + "\n");
+            Interficie.escriu("\nReserva amb ID: " + id);
+            Interficie.escriu("--------------------------------------");
+            Interficie.escriu("Client: " + client);
+            Interficie.escriu("Moto: " + moto);
+            Interficie.escriu("Cost: " + cost);
+            Interficie.escriu("Faltes: " + falta);
+            Interficie.escriu("Local d'inici: " + local_inici);
+            Interficie.escriu("Hora d'inici: " + hora_inici);
+            Interficie.escriu("Data d'inici: " + fecha_inici);
+            Interficie.escriu("Local de finalització: " + local_fi);
+            Interficie.escriu("Hora de finalització: " + hora_fi);
+            Interficie.escriu("Data de finalització: " + fecha_fi);
         }
     }
 
@@ -229,15 +232,15 @@ public class MotoRentDataManager {
         }
 
         //Crear admin y ponerlo en motorent
-        Admin adm = new Admin(usuari, password, nom, cognoms,id);
+        Admin adm = new Admin(usuari, password, nom, cognoms, id);
         this.motoRent.setAdmin(adm);
 
-        Interficie.escriu("\nAdmin ID: " + id + "\n");
-        Interficie.escriu("-----------------\n");
-        Interficie.escriu("Nom: " + nom + "\n");
-        Interficie.escriu("Cognoms: " + cognoms + "\n");
-        Interficie.escriu("Usuari: " + usuari + "\n");
-        Interficie.escriu("Password: " + password + "\n");
+        Interficie.escriu("\nAdmin ID: " + id);
+        Interficie.escriu("-----------------");
+        Interficie.escriu("Nom: " + nom);
+        Interficie.escriu("Cognoms: " + cognoms);
+        Interficie.escriu("Usuari: " + usuari);
+        Interficie.escriu("Password: " + password);
     }
 
     /**
@@ -258,23 +261,23 @@ public class MotoRentDataManager {
             nom = nom.substring(0, nom.indexOf(" "));
         }
         //Crear gerente y ponerlo en motorent
-        Gerent nGer = new Gerent(usuari, password, nom, cognoms,id);
+        Gerent nGer = new Gerent(usuari, password, nom, cognoms, id);
         Iterator it = motoRent.getLocales().iterator();
         boolean found = false;
-        while (it.hasNext() && !found){
+        while (it.hasNext() && !found) {
             Local l = (Local) it.next();
-            if (l.getIDGerent().equals(id)){
+            if (l.getIDGerent().equals(id)) {
                 nGer.setLocal(l);
             }
         }
         this.motoRent.getGerentes().add(nGer);
 
-        Interficie.escriu("\nGestor ID: " + id + "\n");
-        Interficie.escriu("-----------------\n");
-        Interficie.escriu("Nom: " + nom + "\n");
-        Interficie.escriu("Cognoms: " + cognoms + "\n");
-        Interficie.escriu("Usuari: " + usuari + "\n");
-        Interficie.escriu("Password: " + password + "\n");
+        Interficie.escriu("\nGestor ID: " + id);
+        Interficie.escriu("-----------------");
+        Interficie.escriu("Nom: " + nom);
+        Interficie.escriu("Cognoms: " + cognoms);
+        Interficie.escriu("Usuari: " + usuari);
+        Interficie.escriu("Password: " + password);
     }
 
     /**
@@ -320,17 +323,17 @@ public class MotoRentDataManager {
         Client nCl = new Client(dni, dir, Integer.valueOf(faltes), usuari, password, nom, cognoms, esVip);
         this.motoRent.getClientes().add(nCl);
 
-        Interficie.escriu("\nClient ID: " + id + "\n");
-        Interficie.escriu("-----------------\n");
-        Interficie.escriu("Nom: " + nom + "\n");
-        Interficie.escriu("Cognoms: " + cognoms + "\n");
-        Interficie.escriu("Usuari: " + usuari + "\n");
-        Interficie.escriu("Dni: " + dni + "\n");
+        Interficie.escriu("\nClient ID: " + id);
+        Interficie.escriu("-----------------");
+        Interficie.escriu("Nom: " + nom);
+        Interficie.escriu("Cognoms: " + cognoms);
+        Interficie.escriu("Usuari: " + usuari);
+        Interficie.escriu("Dni: " + dni);
         Interficie.escriu(dir.toString());
-        Interficie.escriu("Password: " + password + "\n");
-        Interficie.escriu("Es VIP: " + vip + "\n");
-        Interficie.escriu("Renovació automàtica: " + renovacio + "\n");
-        Interficie.escriu("Nombre de faltes: " + faltes + "\n");
+        Interficie.escriu("Password: " + password);
+        Interficie.escriu("Es VIP: " + vip);
+        Interficie.escriu("Renovació automàtica: " + renovacio);
+        Interficie.escriu("Nombre de faltes: " + faltes);
     }
 
     public MotoRent getMotoRent() {

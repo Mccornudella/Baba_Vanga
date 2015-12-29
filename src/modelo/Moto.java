@@ -81,6 +81,11 @@ public class Moto {
         espec.setCilindrada(i);
     }
 
+    /**
+     * Estado de la moto.
+     *
+     * @return True si está disponible.
+     */
     public boolean getEstat() {
         return estat;
     }
@@ -95,10 +100,9 @@ public class Moto {
 
     @Override
     public String toString() {
-        
-        return "ID: " + ID + "\n" +
-               "Matricula: " + matricula + "\n" +
-                espec.toString();
+        return "ID: " + ID + "\n"
+                + "Matricula: " + matricula + "\n"
+                + espec.toString();
     }
-    
+
 }

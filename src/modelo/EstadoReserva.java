@@ -1,7 +1,5 @@
 package modelo;
 
-import java.util.Date;
-
 /**
  *
  * @author Jose
@@ -45,7 +43,6 @@ public class EstadoReserva {
         this.estadoMoto = estadoMoto;
     }
 
-
     public boolean isActiva() {
         return activa;
     }
@@ -53,16 +50,16 @@ public class EstadoReserva {
     public boolean isEstadoMoto() {
         return estadoMoto;
     }
-    
-    public void apuntarEndarrediment(int retras){
+
+    public void apuntarEndarrediment(int retras) {
         this.retras.setRetras(retras);
     }
-    
-    public double getCostRetras(){
+
+    public double getCostRetras() {
         return retras.getCost();
     }
-    
-    public void setFalta(Double importe, String desperfecte){
+
+    public void setFalta(Double importe, String desperfecte) {
         falta.setCost(importe);
         falta.setDescripcio(desperfecte);
     }
