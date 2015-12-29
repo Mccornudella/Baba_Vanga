@@ -12,7 +12,7 @@ public class Local {
 
     private ArrayList<Moto> motos;
     private Direccio direccio;
-    private int capacitat_max;
+    private int capacitatMax;
     private String IDGerent;
 
     /**
@@ -30,7 +30,7 @@ public class Local {
      */
     public Local(Direccio direccio, int capacitat_max, String IDGerent) {
         this.direccio = direccio;
-        this.capacitat_max = capacitat_max;
+        this.capacitatMax = capacitat_max;
         motos = new ArrayList<>(0);
         this.IDGerent = IDGerent;
     }
@@ -45,7 +45,7 @@ public class Local {
     public Local(ArrayList<Moto> motos, Direccio direccio, int capacitat_max) {
         this.motos = motos;
         this.direccio = direccio;
-        this.capacitat_max = capacitat_max;
+        this.capacitatMax = capacitat_max;
     }
 
     public ArrayList getMotos() {
@@ -65,11 +65,11 @@ public class Local {
     }
 
     public int getCapacitatMax() {
-        return capacitat_max;
+        return capacitatMax;
     }
 
     public void setCapacitatMax(int capacitat_max) {
-        this.capacitat_max = capacitat_max;
+        this.capacitatMax = capacitat_max;
     }
 
     /**
@@ -92,28 +92,42 @@ public class Local {
         return moto1;
     }
 
+    /**
+     * Comprueba la capacidad máx de un local.
+     *
+     * @param cantidad Cantidad a añadir.
+     * @return True si puede almacenar esas motos sin pasar del 75%.
+     */
     public boolean compCapacidad(int cantidad) {
-        return true;
+        int cantMax = (int) (capacitatMax * 0.75f);
+        return (motos.size() + cantidad) < cantMax;
     }
 
     public String getIDGerent() {
         return IDGerent;
     }
 
+    /**
+     * Comprueba la disponibilidad de un local.
+     *
+     * @param cantidad Cantidad a retirar.
+     * @return True si puede retirar esa cantidad de motos sin llegar al 5%.
+     */
     public boolean compDisponibilidad(int cantidad) {
-        return true;
+        int cantMin = (int) (capacitatMax * 0.05f);
+        return (motos.size() - cantidad) >= cantMin;
     }
 
     public void veureEstat() {
-        String info = "Capacidad máx: " + this.capacitat_max;
+        String info = "Capacidad máx: " + this.capacitatMax;
         info += "\nCantidad de motos: " + this.motos.size();
-        info += "\nPorcentaje: " + (this.motos.size() * 100) / this.capacitat_max;
+        info += "\nPorcentaje: " + (this.motos.size() * 100) / this.capacitatMax;
         Interficie.escriu(info);
     }
 
     public ArrayList agafarMotos(int cantidad) {
         ArrayList<Moto> mot = new ArrayList();
-        int i = 1;
+        int i = 0;
         while (i < cantidad && !this.motos.isEmpty()) {
             mot.add(this.motos.get(0));
             this.motos.remove(0);

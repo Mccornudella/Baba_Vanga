@@ -64,7 +64,7 @@ public class MotoRent implements Serializable {
     private void inicializarOpciones() {
         String[] usuario = {"Log in", "Registrar"};
         String[] cliente = {"Reservar moto", "Modificar desti", "Donar-se de baixa", "Log out"};
-        String[] gerente = {"Entregar moto", "Recollir moto", "Gestionar local", "Veure estat d'un local", "Log out"};
+        String[] gerente = {"Entregar moto", "Recollir moto", "Gestionar local", "Veure estat local", "Log out"};
         String[] admn = {"Veure locals sota minims", "Veure locals sobre maxims", "Veure motos locals", "Veure informe mensual", "Log out"};
 
         opciones.add(usuario);
@@ -154,7 +154,7 @@ public class MotoRent implements Serializable {
                 case 2: //Gestionar local
                     gestionarLocal(ger);
                     break;
-                case 3: //Veure estat d'un local
+                case 3: //Veure estat local
                     ger.veureEstatLocal();
                     break;
                 case 4: //Log out
@@ -217,7 +217,7 @@ public class MotoRent implements Serializable {
                 login[0] = 2; // Tipo 2: admin
             }
         }
-        
+
         //Buscar en gerentes
         if (pos == -1) {
             pos = buscarUsuario(gerentes, usuario, password);
@@ -608,20 +608,21 @@ public class MotoRent implements Serializable {
         locGer = ger.getLocal();
         Interficie.escriu("Vols moure motos del teu local a un altre? Si/No");
         opc = Interficie.llegeixString();
-        Interficie.escriu("introdueix el numero de motos que vols moure: ");
+        Interficie.escriu("Introdueix el numero de motos que vols moure: ");
         cantidad = Interficie.llegeixInt();
-        if ("No".equals(opc)) {
-            dummyLoc = locN;
-            locN = locGer;
-            locGer = dummyLoc;
-        }
+        boolean traer = "No".equals(opc);
+
         int cont = 0;
-        for (Local locale : this.locals) {
-            check = locale.compCapacidad(cantidad);
+        for (Local loc : this.locals) {
+            if (traer) {
+                check = loc.compDisponibilidad(cantidad);
+            } else {
+                check = loc.compCapacidad(cantidad);
+            }
             if (check) {
                 locBuits = true;
                 Interficie.escriu(cont);
-                Interficie.escriu(locale.toString());
+                Interficie.escriu(loc.toString());
             }
             cont++;
         }
@@ -629,7 +630,16 @@ public class MotoRent implements Serializable {
             Interficie.escriu("Selecciona una opció de la llista: ");
             num = Interficie.llegeixInt();
             locN = this.locals.get(num);
-            check = locGer.compDisponibilidad(cantidad);
+
+            if (traer) {
+                dummyLoc = locN;
+                locN = locGer;
+                locGer = dummyLoc;
+                check = locGer.compDisponibilidad(cantidad);
+            } else {
+                check = locGer.compCapacidad(cantidad);
+            }
+
             if (check) {
                 nMotos = locGer.agafarMotos(cantidad);
                 locN.afegirMotos(nMotos);
