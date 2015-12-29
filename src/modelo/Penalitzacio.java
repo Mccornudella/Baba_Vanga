@@ -6,7 +6,7 @@ package modelo;
  */
 public abstract class Penalitzacio {
 
-    private double cost;
+    protected double cost;
 
     /**
      * Constructor de la classe.

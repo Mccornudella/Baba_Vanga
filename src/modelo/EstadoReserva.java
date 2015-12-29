@@ -17,7 +17,6 @@ public class EstadoReserva {
         falta = new Falta("");
         retras = new Endarrediment();
     }
-    private boolean estadoMoto;
 
     /**
      * Constructor vacio.
@@ -39,18 +38,10 @@ public class EstadoReserva {
         this.finalitzada = finalitzada;
     }
 
-    public void setEstadoMoto(boolean estadoMoto) {
-        this.estadoMoto = estadoMoto;
-    }
-
     public boolean isActiva() {
         return activa;
     }
-
-    public boolean isEstadoMoto() {
-        return estadoMoto;
-    }
-
+    
     public void apuntarEndarrediment(int retras) {
         this.retras.setRetras(retras);
     }

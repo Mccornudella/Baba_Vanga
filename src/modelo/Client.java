@@ -282,7 +282,7 @@ public class Client extends Usuari implements Serializable {
         }
         if (desperfecte.equals("si")) {
             Moto m1 = re.getMoto();
-            m1.setDisponible(false);
+            m1.setEstat(false);
             Double importDesperfecte = 0.0;
             Interficie.escriu("Descriu el desperfecte de la moto:");
             desperfecte = Interficie.llegeixString();
@@ -294,7 +294,7 @@ public class Client extends Usuari implements Serializable {
 
         } else {
             Moto m1 = re.getMoto();
-            m1.setDisponible(true);
+            m1.setEstat(true);
         }
 
     }

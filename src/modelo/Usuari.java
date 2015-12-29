@@ -7,10 +7,10 @@ import java.io.Serializable;
  */
 public class Usuari implements Serializable{
 
-    private String username;
-    private String password;
-    private String nom;
-    private String cognoms;
+    protected String username;
+    protected String password;
+    protected String nom;
+    protected String cognoms;
 
     /**
      * Constructor simple.
@@ -73,9 +73,6 @@ public class Usuari implements Serializable{
         return this.username.equals(username) && this.password.equals(password);
     }
     
-    public boolean checkUserName(String username){
-        return true;
-    }
     @Override
     public String toString() {
         return username;

@@ -104,7 +104,7 @@ public class Reserva {
     }
 
     public void setDisponibilitatMoto(boolean estat) {
-        moto.setDisponible(estat);
+        moto.setEstat(estat);
     }
 
     /**

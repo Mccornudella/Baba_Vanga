@@ -8,14 +8,12 @@ public class Menu {
     private String[] opciones;
     private String titulo;
     private String tipoUsuario;
-    private Interficie teclado;
 
     public Menu() {
     }
 
     public Menu(String[] opciones) {
         this.opciones = opciones;
-        this.teclado = new Interficie();
         this.titulo = "";
     }
 
@@ -87,7 +85,7 @@ public class Menu {
         System.out.println((opciones.length + 1) + "- " + "Exit");
 
         System.out.println("\nSelecciona una opción: ");
-        int opc = teclado.selNumMenu(opciones);
+        int opc = Interficie.selNumMenu(opciones);
 
         if (opc == (opciones.length + 1)) {
             System.out.println("Hasta pronto!");
