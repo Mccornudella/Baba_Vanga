@@ -317,7 +317,7 @@ public class MotoRent implements Serializable {
     /**
      * Muestra por pantalla las motos de todos los locales.
      */
-    public void veureMotosLocals() {
+    private void veureMotosLocals() {
         for (Local l : locals) {
             Interficie.escriu("------------\nLocal " + locals.indexOf(l) + ":\n" + l.toString());
             l.veureMotos(); // imprime motos
@@ -327,7 +327,7 @@ public class MotoRent implements Serializable {
     /**
      * Muestra por pantalla el informe del mes seleccionado.
      */
-    public void veureInformeMensual() {
+    private void veureInformeMensual() {
         Interficie.escriu("Introduce el mes (mm): ");
         int mes = Interficie.llegeixInt();
 
@@ -339,7 +339,7 @@ public class MotoRent implements Serializable {
     /**
      * Muestra por pantalla los locales bajo mínimos (5% de su capacidad máx.).
      */
-    public void veureLocalsSotaMinims() {
+    private void veureLocalsSotaMinims() {
         for (Local l : locals) {
             int cantMin = (int) (l.getCapacitatMax() * 0.05);
             if (l.getMotos().size() <= cantMin) {
@@ -353,7 +353,7 @@ public class MotoRent implements Serializable {
      * Muestra por pantalla los locales sobre máximos (75% de su capacidad
      * máx.).
      */
-    public void veureLocalsSobreMaxims() {
+    private void veureLocalsSobreMaxims() {
         for (Local l : locals) {
             int cantMax = (int) (l.getCapacitatMax() * 0.75f);
             if (l.getMotos().size() >= cantMax) {
@@ -503,7 +503,7 @@ public class MotoRent implements Serializable {
      * @param d Fecha.
      * @return True en caso de ser posterior.
      */
-    public boolean comparaDataActual(Date d) {
+    private boolean comparaDataActual(Date d) {
         Date actual_date = new Date();
         return d.after(actual_date);
     }
@@ -513,7 +513,7 @@ public class MotoRent implements Serializable {
      *
      * @param g Gerente.
      */
-    public void recollirMoto(Gerent g) {
+    private void recollirMoto(Gerent g) {
         String codi;
         String dni;
         boolean check = false;
@@ -540,7 +540,10 @@ public class MotoRent implements Serializable {
                     if (retras > 0) {
                         re.apuntarEndarrediment(retras);
                         cl.sumaDeuda(re.getCostRetras());
+                        
                     }
+                    re.setFinaliztada();
+                    Interficie.escriu("Reserva finalitzada");
                 } else {
                     Interficie.escriu("No hi ha cap reserva activa que coincideixi amb el codi introduit");
                 }
@@ -593,7 +596,7 @@ public class MotoRent implements Serializable {
         }
     }
 
-    public void gestionarLocal(Gerent ger) {
+    private void gestionarLocal(Gerent ger) {
         Local locGer;
         Local locN = null;
         Local dummyLoc;

@@ -90,7 +90,7 @@ public class Moto {
         return estat;
     }
 
-    public void setDisponible(boolean estat) {
+    public void setEstat(boolean estat) {
         this.estat = estat;
     }
 
