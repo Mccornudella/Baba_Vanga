@@ -98,6 +98,10 @@ public class Moto {
         return matricula;
     }
 
+    public EspecMoto getEspec() {
+        return espec;
+    }
+
     @Override
     public String toString() {
         return "ID: " + ID + "\n"

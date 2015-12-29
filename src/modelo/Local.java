@@ -112,7 +112,8 @@ public class Local {
      * Comprueba la disponibilidad de un local.
      *
      * @param cantidad Cantidad a retirar.
-     * @return True si puede retirar esa cantidad de motos sin quedarse con menos de 5.
+     * @return True si puede retirar esa cantidad de motos sin quedarse con
+     * menos de 5.
      */
     public boolean compDisponibilidad(int cantidad) {
         return (motos.size() - cantidad) > 5;
@@ -143,7 +144,15 @@ public class Local {
     }
 
     public void veureMotos() {
-        Interficie.imprimirLista(motos);
+        for (Moto m : motos) {
+            Interficie.escriu("ID: " + m.getID());
+            Interficie.escriu("Matricula: " + m.getMatricula());
+            EspecMoto esp = m.getEspec();
+            Interficie.escriu("Color: " + esp.getColor());
+            Interficie.escriu("Marca: " + esp.getMarca());
+            Interficie.escriu("Model: " + esp.getModel());
+            Interficie.escriu("Cilindrada: " + esp.getCilindrada() + "\n");
+        }
     }
 
     @Override
