@@ -82,7 +82,8 @@ public class Local {
         ArrayList<Moto> motos_disponibles = new ArrayList();
         while (it.hasNext()) {
             Moto m = (Moto) it.next();
-            if (m.getEstat()) {
+            boolean estat = m.getEstat();
+            if (estat) {
                 motos_disponibles.add(m);
             }
         }
@@ -111,11 +112,10 @@ public class Local {
      * Comprueba la disponibilidad de un local.
      *
      * @param cantidad Cantidad a retirar.
-     * @return True si puede retirar esa cantidad de motos sin llegar al 5%.
+     * @return True si puede retirar esa cantidad de motos sin quedarse con menos de 5.
      */
     public boolean compDisponibilidad(int cantidad) {
-        int cantMin = (int) (capacitatMax * 0.05f);
-        return (motos.size() - cantidad) >= cantMin;
+        return (motos.size() - cantidad) > 5;
     }
 
     public void veureEstat() {

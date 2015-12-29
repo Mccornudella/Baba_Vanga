@@ -102,7 +102,7 @@ public class Moto {
     public String toString() {
         return "ID: " + ID + "\n"
                 + "Matricula: " + matricula + "\n"
-                + espec.toString();
+                + espec.toString() + "\n";
     }
 
 }

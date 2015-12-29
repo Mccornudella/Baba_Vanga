@@ -1,6 +1,5 @@
 package vista;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,8 +7,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Classe que s'encarrega de l'interacció del programa amb el teclat i la

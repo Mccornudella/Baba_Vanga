@@ -33,12 +33,14 @@ public class MotoRent implements Serializable {
     private ArrayList<String[]> opciones;
     private Menu menu;
     private MotoRentDataManager dataMgr;
+    private Interficie interficie;
 
     public MotoRent() {
         locals = new ArrayList();
         gerentes = new ArrayList();
         clientes = new ArrayList();
         dataMgr = new MotoRentDataManager();
+        interficie = new Interficie();
 
         //Cargar datos
         iniciarManager();
@@ -448,9 +450,7 @@ public class MotoRent implements Serializable {
                     dataInici = Interficie.llegeixData();
                 }
                 Interficie.escriu("\nEscull el local de sortida:\n");
-                Interficie.imprimirLista(locals);
-                int posLocalSortida = Interficie.selNumLista(locals);
-                Local localSortida = locals.get(posLocalSortida);
+                Local localSortida = seleccionarLocal(0);
                 Interficie.escriu("\nEscull la moto que vols fer servir:\n");
                 Moto moto = localSortida.escollirMoto();
                 Interficie.escriu("\nQuin dia vols acabar la teva reserva? (hh:mm/dd/mm/aaaa)");
@@ -461,9 +461,7 @@ public class MotoRent implements Serializable {
                     dataFinal = Interficie.llegeixData();
                 }
                 Interficie.escriu("\nEscull el local d'arribada\n");
-                Interficie.imprimirLista(locals);
-                int posLocalDesti = Interficie.selNumLista(locals);
-                Local localDesti = locals.get(posLocalDesti);
+                Local localDesti = seleccionarLocal(1);
                 boolean esVIP = cl.isVIP();
                 Trajecte trajecte = new Trajecte(localSortida, localDesti);
                 Reserva reserva = new Reserva(dataInici, dataFinal, trajecte, moto);
@@ -664,5 +662,40 @@ public class MotoRent implements Serializable {
             }
 
         }
+    }
+    
+    /**
+     * Muestra los locales disponilbes segun su capacidad o disponibilidad y selecciona uno.
+     * @param caso
+     * @return 
+     */
+    private Local seleccionarLocal (int caso){
+        ArrayList<Local> locals_disponibles = new ArrayList();
+        Iterator it = locals.iterator();
+        Local l = null;
+        if (caso == 0){ //compruebo por disponibilidad para entregar moto
+            while(it.hasNext()){
+                l = (Local) it.next();
+                boolean añadir = l.compDisponibilidad(1);
+                if(añadir){
+                    locals_disponibles.add(l);
+                }
+            }
+        }
+        else{ //compruebo por capacidad para recoger moto
+            while(it.hasNext()){
+                l = (Local) it.next();
+                boolean añadir = l.compCapacidad(1);
+                if(añadir){
+                    locals_disponibles.add(l);
+                }
+            }
+        }
+        
+        Interficie.imprimirLista(locals_disponibles);
+        int num = Interficie.selNumLista(locals_disponibles);
+        l = locals_disponibles.get(num);
+        return l;
+                
     }
 }
