@@ -199,15 +199,16 @@ public class Client extends Usuari implements Serializable {
         }
         boolean activa = re.isActiva();
         fin = re.isFinalitzada();
+        boolean comprobacio = false;
         if (check_codi && !fin) {
             if (!activa) {
-                return true;
+                comprobacio = true;
             } else {
                 Interficie.escriu("La reserva ja esta activa, no es pot tornar a entregar una moto.");
-                return false;
+                comprobacio = false;
             }
         }
-        return false;
+        return comprobacio;
     }
 
     /**
@@ -227,15 +228,16 @@ public class Client extends Usuari implements Serializable {
         }
         boolean activa = re.isActiva();
         fin = re.isFinalitzada();
+        boolean comprobacio = false;
         if (check_codi && !fin) {
             if (activa) {
-                return true;
+                comprobacio =  true;
             } else {
                 Interficie.escriu("La reserva no esta activa, no es pot recollir la moto.");
-                return false;
+                comprobacio = false;
             }
         }
-        return false;
+        return comprobacio;
     }
 
     public boolean isVIP() {
@@ -337,9 +339,18 @@ public class Client extends Usuari implements Serializable {
     public boolean comprobarLocalInicio(String IDGestor, String codi) {
         Iterator it = reserves.iterator();
         boolean check = false;
+        boolean check_codi = false;
+        String codiR = "";
         while (it.hasNext() && !check) {
             Reserva re = (Reserva) it.next();
-            if (re.getCodi().equals(codi) && re.getTrajecte().getInici().getIDGerent().equals(IDGestor)) {
+            codiR = re.getCodi();
+            check_codi = codi.equals(codiR);
+            Trajecte t = re.getTrajecte();
+            Local l = t.getInici();
+            String ID = l.getIDGerent();
+            boolean check_ID = false;
+            check_ID = ID.equals(IDGestor);
+            if (check_codi && check_ID) {
                 check = true;
             }
         }
