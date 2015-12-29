@@ -100,7 +100,7 @@ public class MotoRentXMLParser {
     }
 
     /**
-     * Obte informacio sobre les bicicletes d'una estacio
+     * Obte informacio sobre les bicicletes d'una estacio.
      *
      * @param eLocal estacio del que buscar les biciletes
      */

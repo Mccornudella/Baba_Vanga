@@ -143,7 +143,7 @@ public class MotoRentDataManager {
     }
 
     /**
-     * Crea un trajecte a partir de la informacio obtinguda del fitxer XML
+     * Crea una reserva a partir de la informacio obtinguda del fitxer XML
      *
      * @param id id del trajecte. El podeu utilitzar o no
      * @param client identificador del client. El podeu utilitzar o no

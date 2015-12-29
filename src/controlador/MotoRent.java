@@ -32,7 +32,6 @@ public class MotoRent implements Serializable {
     private List<Gerent> gerentes;
     private ArrayList<String[]> opciones;
     private Menu menu;
-    private MotoRentDataManager dataMgr;
     private Interficie interficie;
     private String[] informe;
 
@@ -40,7 +39,6 @@ public class MotoRent implements Serializable {
         locals = new ArrayList();
         gerentes = new ArrayList();
         clientes = new ArrayList();
-        dataMgr = new MotoRentDataManager();
         interficie = new Interficie();
         informe = new String[12];
 
@@ -61,6 +59,7 @@ public class MotoRent implements Serializable {
     }
 
     private void iniciarManager() {
+        MotoRentDataManager dataMgr = new MotoRentDataManager();
         dataMgr.iniciar(this);
         dataMgr.obtenirDades("data/MotoRent.xml");
     }
