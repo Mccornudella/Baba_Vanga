@@ -488,7 +488,7 @@ public class MotoRent implements Serializable {
                 }
             }
             r.getTrajecte().setFinal(l);
-            Interficie.escriu("Destino moficiado!\n\n"
+            Interficie.escriu("Destino modificado!\n\n"
                     + l.toString());
         } else {
             Interficie.escriu("No tienes reservas activas.");
