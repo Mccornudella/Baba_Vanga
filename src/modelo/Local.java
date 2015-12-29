@@ -104,6 +104,13 @@ public class Local {
         return true;
     }
 
+    public void veureEstat() {
+        String info = "Capacidad máx: " + this.capacitat_max;
+        info += "\nCantidad de motos: " + this.motos.size();
+        info += "\nPorcentaje: " + (this.motos.size() * 100) / this.capacitat_max;
+        Interficie.escriu(info);
+    }
+
     public ArrayList agafarMotos(int cantidad) {
         ArrayList<Moto> mot = new ArrayList();
         int i = 1;

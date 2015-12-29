@@ -169,6 +169,18 @@ public class Client extends Usuari implements Serializable {
         return activa;
     }
 
+    public Reserva getReservaActiva() {
+        Reserva r = null;
+        boolean activa = false;
+        Iterator it = reserves.iterator();
+        Reserva res = null;
+        while (it.hasNext() && !activa) {
+            res = (Reserva) it.next();
+            activa = res.isActiva();
+        }
+        r = res;
+        return r;
+    }
     /**
      * Comprueba que la reserva con el código introducido no esté activa.
      *

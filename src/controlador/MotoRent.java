@@ -126,10 +126,10 @@ public class MotoRent implements Serializable {
                     reservarMoto(cl);
                     break;
                 case 1: //Modificar desti
-                    Interficie.escriu("No implementat");
+                    modificarDestino(cl);
                     break;
                 case 2: //Donar-se de baixa
-                    Interficie.escriu("No implementat");
+                    darseBaja(cl);
                     break;
                 case 3: //Log out
                     logout();
@@ -155,7 +155,7 @@ public class MotoRent implements Serializable {
                     gestionarLocal(ger);
                     break;
                 case 3: //Veure estat d'un local
-                    Interficie.escriu("No implementat");
+                    ger.veureEstatLocal();
                     break;
                 case 4: //Log out
                     logout();
@@ -257,8 +257,15 @@ public class MotoRent implements Serializable {
     private void logout() {
         menu.setOpciones(opciones.get(0)); // usuario
         menu.setTipoUsuario("usuario");
-        System.out.println("\nHas deslogueado con exito.");
+        System.out.println("\nHas deslogueado con éxito.");
         inicioUsuario();
+    }
+
+    private void darseBaja(Client cl) {
+        clientes.remove(cl);
+        Interficie.escriu("Te has dado de baja! \n"
+                + "Tus datos ya no están en nuestro sistema.");
+        logout();
     }
 
     private void registrarse() {
@@ -464,6 +471,27 @@ public class MotoRent implements Serializable {
             }
         } else {
             Interficie.escriu("Has sigut bloquejat per haver comes mes de 3 faltes");
+        }
+    }
+
+    private void modificarDestino(Client cl) {
+        if (cl.comprovarReserva()) {
+            Interficie.escriu("Selecciona el nuevo local de destino: ");
+            Reserva r = cl.getReservaActiva();
+            Local l = r.getTrajecte().getFinal();
+            Local antiguo = r.getTrajecte().getFinal();
+            while (l == antiguo) { //No puede poner el que tenia antes
+                Interficie.imprimirLista(locals);
+                l = locals.get(Interficie.selNumLista(locals));
+                if (l == antiguo) {
+                    Interficie.escriu("Debes seleccionar un local distinto al que tenías!");
+                }
+            }
+            r.getTrajecte().setFinal(l);
+            Interficie.escriu("Destino moficiado!\n\n"
+                    + l.toString());
+        } else {
+            Interficie.escriu("No tienes reservas activas.");
         }
     }
 

@@ -60,6 +60,10 @@ public class Gerent extends Empleat implements Serializable {
         this.local = local;
     }
 
+    public void veureEstatLocal() {
+        this.local.veureEstat();
+    }
+    
     @Override
     public String toString() {
         return "Gerente: " + super.toString();
