@@ -34,6 +34,7 @@ public class MotoRent implements Serializable {
     private Menu menu;
     private MotoRentDataManager dataMgr;
     private Interficie interficie;
+    private String[] informe;
 
     public MotoRent() {
         locals = new ArrayList();
@@ -41,6 +42,7 @@ public class MotoRent implements Serializable {
         clientes = new ArrayList();
         dataMgr = new MotoRentDataManager();
         interficie = new Interficie();
+        informe = new String[12];
 
         //Cargar datos
         iniciarManager();
@@ -347,7 +349,10 @@ public class MotoRent implements Serializable {
         int mes = Interficie.llegeixInt();
 
         if (mes < 13 && mes > 0) {
-            Interficie.escriu(generarInforme(mes));
+            if (informe[mes - 1] == null) {
+                informe[mes - 1] = generarInforme(mes);
+            }
+            Interficie.escriu(informe[mes - 1]);
         }
     }
 
@@ -393,7 +398,7 @@ public class MotoRent implements Serializable {
                 ArrayList<Reserva> res = cl.getReservas();
                 if (!res.isEmpty()) {
                     info += "\n................\n" + cl.toString() + "\n";
-                    cantidad += cl.getReservas().size();
+                    cantidad += res.size();
                     for (Reserva r : res) {
                         Calendar cal = Calendar.getInstance();
                         cal.setTime(r.getDataInici());
@@ -401,10 +406,9 @@ public class MotoRent implements Serializable {
                             info += "_-_-_-_-_-_ \n";
                             info += "Local inici \n" + r.getTrajecte().getInici();
                             info += "Local fi \n" + r.getTrajecte().getFinal();
-                            int horas = cal.get(Calendar.HOUR);
-                            int min = cal.get(Calendar.MINUTE);
-                            info += "Retras: " + String.valueOf(horas) + ":" + String.valueOf(min);
+                            info += "Retras: " + r.getCostRetras();
                             info += "\nEstado: " + r.getEstado().getFalta().getDescripcio() + "\n";
+                            info += "Moto: " + r.getMoto().getMatricula();
                         }
                     }
                     info += cantidad;
@@ -551,7 +555,7 @@ public class MotoRent implements Serializable {
                     if (retras > 0) {
                         re.apuntarEndarrediment(retras);
                         cl.sumaDeuda(re.getCostRetras());
-                        
+
                     }
                     re.setFinaliztada();
                     Interficie.escriu("Reserva finalitzada");
@@ -663,39 +667,40 @@ public class MotoRent implements Serializable {
 
         }
     }
-    
+
     /**
-     * Muestra los locales disponilbes segun su capacidad o disponibilidad y selecciona uno.
+     * Muestra los locales disponilbes segun su capacidad o disponibilidad y
+     * selecciona uno.
+     *
      * @param caso
-     * @return 
+     * @return
      */
-    private Local seleccionarLocal (int caso){
+    private Local seleccionarLocal(int caso) {
         ArrayList<Local> locals_disponibles = new ArrayList();
         Iterator it = locals.iterator();
         Local l = null;
-        if (caso == 0){ //compruebo por disponibilidad para entregar moto
-            while(it.hasNext()){
+        if (caso == 0) { //compruebo por disponibilidad para entregar moto
+            while (it.hasNext()) {
                 l = (Local) it.next();
                 boolean añadir = l.compDisponibilidad(1);
-                if(añadir){
+                if (añadir) {
                     locals_disponibles.add(l);
                 }
             }
-        }
-        else{ //compruebo por capacidad para recoger moto
-            while(it.hasNext()){
+        } else { //compruebo por capacidad para recoger moto
+            while (it.hasNext()) {
                 l = (Local) it.next();
                 boolean añadir = l.compCapacidad(1);
-                if(añadir){
+                if (añadir) {
                     locals_disponibles.add(l);
                 }
             }
         }
-        
+
         Interficie.imprimirLista(locals_disponibles);
         int num = Interficie.selNumLista(locals_disponibles);
         l = locals_disponibles.get(num);
         return l;
-                
+
     }
 }
