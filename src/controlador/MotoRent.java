@@ -201,32 +201,34 @@ public class MotoRent implements Serializable {
         int[] login = new int[2];
         Arrays.fill(login, 0);
         int pos = 0;
+        boolean check = false;
 
         //Buscar en clientes
         pos = buscarUsuario(clientes, usuario, password);
         if (pos != -1) {
             login[0] = 1; // Tipo 1: cliente
             login[1] = pos - 1; // pos cliente en array
-            return login;
         }
 
         //Admin
-        if (admin != null) {
-            if (admin.checkLogin(usuario, password)) {
+        if (pos == -1 && admin != null) {
+            check = admin.checkLogin(usuario, password);
+            if (check) {
                 login[0] = 2; // Tipo 2: admin
-                return login;
+            }
+        }
+        
+        //Buscar en gerentes
+        if (pos == -1) {
+            pos = buscarUsuario(gerentes, usuario, password);
+            if (pos != -1) {
+                login[0] = 3; // Tipo 3: gerente
+                login[1] = pos - 1; // pos gerente en array
+            } else {
+                System.out.println("Datos incorrectos.");
             }
         }
 
-        //Buscar en gerentes
-        pos = buscarUsuario(gerentes, usuario, password);
-        if (pos != -1) {
-            login[0] = 3; // Tipo 3: gerente
-            login[1] = pos - 1; // pos gerente en array
-            return login;
-        }
-
-        System.out.println("Datos incorrectos.");
         return login;
     }
 
