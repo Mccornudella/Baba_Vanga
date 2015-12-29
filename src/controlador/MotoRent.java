@@ -335,8 +335,9 @@ public class MotoRent implements Serializable {
      * Muestra por pantalla las motos de todos los locales.
      */
     private void veureMotosLocals() {
+        int i = 0;
         for (Local l : locals) {
-            Interficie.escriu("------------\nLocal " + locals.indexOf(l) + ":\n" + l.toString());
+            Interficie.escriu("------------\nLocal " + i++ + ":\n" + l.getDireccio());
             l.veureMotos(); // imprime motos
         }
     }
