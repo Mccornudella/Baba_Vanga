@@ -287,7 +287,7 @@ public class MotoRent implements Serializable {
             int telefon;
             String correu;
             String compteBancari;
-            String username;
+            String username = "";
             String contrasenya;
 
             Interficie.escriu("Quin es el teu Nom ?: ");
@@ -300,8 +300,21 @@ public class MotoRent implements Serializable {
             correu = Interficie.llegeixString();
             Interficie.escriu("Quin es el teu compteBancari?: ");
             compteBancari = Interficie.llegeixCB();
-            Interficie.escriu("Quin vols que sigui el teu Username?: ");
-            username = Interficie.llegeixString();
+            boolean esUsuari = true;
+            while (esUsuari) {
+                Interficie.escriu("Quin vols que sigui el teu Username?: ");
+                username = Interficie.llegeixString();
+                int i = 0;
+                esUsuari = false;
+                while (!esUsuari && i < clientes.size()) {
+                    Client c = (Client) clientes.get(i);
+                    esUsuari = c.getUsername().equals(username);
+                    i++;
+                }
+                if (esUsuari) {
+                    Interficie.escriu("Aquest usuari ja existeix!");
+                }
+            }
             Interficie.escriu("Quina vols que sigui la teva contrasenya?: ");
             contrasenya = Interficie.llegeixString();
             CompteBancari cb = new CompteBancari(compteBancari);
