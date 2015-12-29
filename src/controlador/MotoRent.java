@@ -152,7 +152,7 @@ public class MotoRent implements Serializable {
                     recollirMoto(ger);
                     break;
                 case 2: //Gestionar local
-                    Interficie.escriu("No implementat");
+                    gestionarLocal(ger);
                     break;
                 case 3: //Veure estat d'un local
                     Interficie.escriu("No implementat");
@@ -560,6 +560,53 @@ public class MotoRent implements Serializable {
             }
         } else {
             Interficie.escriu("No hi ha cap client que coincideixi amb el DNI introduit.");
+        }
+    }
+
+    public void gestionarLocal(Gerent ger) {
+        Local locGer;
+        Local locN = null;
+        Local dummyLoc;
+        String opc;
+        int cantidad = 0;
+        ArrayList nLocals = new ArrayList();
+        boolean check = false;
+        boolean locBuits = false;
+        int num = 0;
+        ArrayList nMotos = new ArrayList();
+
+        locGer = ger.getLocal();
+        Interficie.escriu("Vols moure motos del teu local a un altre? Si/No");
+        opc = Interficie.llegeixString();
+        Interficie.escriu("introdueix el numero de motos que vols moure: ");
+        cantidad = Interficie.llegeixInt();
+        if ("No".equals(opc)) {
+            dummyLoc = locN;
+            locN = locGer;
+            locGer = dummyLoc;
+        }
+        int cont = 0;
+        for (Local locale : this.locals) {
+            check = locale.compCapacidad(cantidad);
+            if (check) {
+                locBuits = true;
+                Interficie.escriu(cont);
+                Interficie.escriu(locale.toString());
+            }
+            cont++;
+        }
+        if (locBuits) {
+            Interficie.escriu("Selecciona una opció de la llista: ");
+            num = Interficie.llegeixInt();
+            locN = this.locals.get(num);
+            check = locGer.compDisponibilidad(cantidad);
+            if (check) {
+                nMotos = locGer.agafarMotos(cantidad);
+                locN.afegirMotos(nMotos);
+            } else {
+                Interficie.escriu("El local no te suficients motos.");
+            }
+
         }
     }
 }

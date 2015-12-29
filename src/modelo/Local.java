@@ -105,11 +105,20 @@ public class Local {
     }
 
     public ArrayList agafarMotos(int cantidad) {
-        return null;
+        ArrayList<Moto> mot = new ArrayList();
+        int i = 1;
+        while (i < cantidad && !this.motos.isEmpty()) {
+            mot.add(this.motos.get(0));
+            this.motos.remove(0);
+            i++;
+        }
+        return mot;
     }
 
-    public void afegirMotos(int motos) {
-
+    public void afegirMotos(ArrayList<Moto> Mot) {
+        for (Moto m : Mot) {
+            this.motos.add(m);
+        }
     }
 
     public void veureMotos() {
